@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders - FoodieExpress</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <div class="page-header">
+    <div class="container page-header-content">
+      <h1 class="page-title">📦 My Orders</h1>
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="profile.html">Profile</a>
+        <span class="sep">›</span>
+        <span class="current">Orders</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding:40px 24px 80px">
+
+    <!-- Filter tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap">
+      <button class="filter-chip active" data-status="all" onclick="filterOrders('all', this)">All Orders</button>
+      <button class="filter-chip" data-status="delivered" onclick="filterOrders('delivered', this)">✅ Delivered</button>
+      <button class="filter-chip" data-status="processing" onclick="filterOrders('processing', this)">🔄 Processing</button>
+      <button class="filter-chip" data-status="cancelled" onclick="filterOrders('cancelled', this)">❌ Cancelled</button>
+    </div>
+
+    <div id="ordersList">
+      <!-- Orders will be rendered here -->
+    </div>
+
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let allOrders = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.isLoggedIn()) {
+        window.location.href = '../pages/login.html';
+        return;
+      }
+
+      // Load from localStorage
+      allOrders = JSON.parse(localStorage.getItem('fe-orders') || '[]');
+
+      // Add some demo orders if none exist
+      if (allOrders.length === 0) {
+        allOrders = generateDemoOrders();
+        localStorage.setItem('fe-orders', JSON.stringify(allOrders));
+      }
+
+      renderOrders(allOrders);
+    });
+
+    function generateDemoOrders() {
+      return [
+        {
+          id: 'FE001234',
+          restaurantName: 'Spice Garden',
+          items: [{ name: 'Chicken Biryani', qty: 2, price: 299 }, { name: 'Garlic Naan', qty: 4, price: 49 }],
+          total: 794,
+          status: 'delivered',
+          placedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          address: { address: '123 MG Road, Koramangala', city: 'Bangalore' },
+        },
+        {
+          id: 'FE001235',
+          restaurantName: 'The Burger Lab',
+          items: [{ name: 'Classic Smash Burger', qty: 1, price: 249 }, { name: 'Loaded Fries', qty: 1, price: 149 }],
+          total: 456,
+          status: 'delivered',
+          placedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          address: { address: '123 MG Road, Koramangala', city: 'Bangalore' },
+        },
+        {
+          id: 'FE001236',
+          restaurantName: 'Pizza Paradise',
+          items: [{ name: 'Pepperoni Pizza', qty: 1, price: 399 }],
+          total: 399,
+          status: 'cancelled',
+          placedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+          address: { address: '456 Tech Park', city: 'Bangalore' },
+        },
+      ];
+    }
+
+    function filterOrders(status, btn) {
+      document.querySelectorAll('[data-status]').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const filtered = status === 'all' ? allOrders : allOrders.filter(o => o.status === status);
+      renderOrders(filtered);
+    }
+
+    function renderOrders(orders) {
+      const el = document.getElementById('ordersList');
+
+      if (orders.length === 0) {
+        el.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📦</div>
+            <h3>No orders found</h3>
+            <p>You haven't placed any orders yet.</p>
+            <a href="restaurants.html" class="btn btn-primary">Browse Restaurants</a>
+          </div>`;
+        return;
+      }
+
+      el.innerHTML = orders.map(order => {
+        const date = new Date(order.placedAt).toLocaleDateString('en-IN', {
+          day: 'numeric', month: 'long', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+
+        const statusLabels = {
+          delivered: '<span class="order-status-badge delivered">✅ Delivered</span>',
+          processing: '<span class="order-status-badge processing">🔄 Processing</span>',
+          pending: '<span class="order-status-badge pending">⏳ Pending</span>',
+          cancelled: '<span class="order-status-badge cancelled">❌ Cancelled</span>',
+          confirmed: '<span class="order-status-badge processing">✅ Confirmed</span>',
+        };
+
+        return `
+          <div class="order-card">
+            <div class="order-card-header">
+              <div>
+                <div style="font-weight:700;font-size:16px;margin-bottom:2px">${order.restaurantName || 'FoodieExpress Order'}</div>
+                <div style="font-size:13px;color:var(--text-muted)">Order #${order.id} · ${date}</div>
+              </div>
+              ${statusLabels[order.status] || statusLabels.processing}
+            </div>
+            <div class="order-card-body">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                <div>
+                  <div style="font-size:14px;color:var(--text-secondary);margin-bottom:6px">
+                    ${order.items?.map(i => `${i.name} ×${i.qty}`).join(' · ') || 'Order items'}
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text-muted)">
+                    📍 ${order.address?.address || 'Delivery address'}, ${order.address?.city || 'Bangalore'}
+                  </div>
+                </div>
+                <div style="text-align:right;flex-shrink:0">
+                  <div style="font-size:18px;font-weight:700;color:var(--primary)">${formatCurrency(order.total)}</div>
+                  <div style="font-size:12px;color:var(--text-muted)">${order.items?.length || 0} item${(order.items?.length || 0) !== 1 ? 's' : ''}</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+                ${order.status === 'delivered' ? `
+                  <button class="btn btn-primary btn-sm" onclick="reorderItems(${JSON.stringify(order.id)})">🔄 Reorder</button>
+                  <button class="btn btn-ghost btn-sm">⭐ Rate Order</button>
+                ` : ''}
+                ${order.status === 'processing' || order.status === 'confirmed' ? `
+                  <button class="btn btn-secondary btn-sm">📍 Track Order</button>
+                  <button class="btn btn-ghost btn-sm" style="color:var(--error)">❌ Cancel</button>
+                ` : ''}
+                <button class="btn btn-ghost btn-sm" onclick="toggleOrderDetails('${order.id}')">📋 View Details</button>
+              </div>
+              <div id="details-${order.id}" style="display:none;margin-top:14px;padding:14px;background:var(--bg-secondary);border-radius:var(--radius-sm)">
+                ${order.items?.map(i => `
+                  <div style="display:flex;justify-content:space-between;font-size:14px;padding:4px 0;color:var(--text-secondary)">
+                    <span>${i.name} × ${i.qty}</span>
+                    <span>${formatCurrency(i.price * i.qty)}</span>
+                  </div>
+                `).join('') || ''}
+                <div style="border-top:1px dashed var(--border);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-weight:700">
+                  <span>Total</span><span style="color:var(--primary)">${formatCurrency(order.total)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleOrderDetails(id) {
+      const el = document.getElementById('details-' + id);
+      if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function reorderItems(orderId) {
+      const order = allOrders.find(o => o.id === orderId);
+      if (!order || !order.items) return;
+      order.items.forEach(item => {
+        Cart.add({ id: Date.now() + Math.random(), name: item.name, price: item.price, img: '', qty: 0 });
+      });
+      Toast.success('Items Added!', 'Your previous order has been added to cart.');
+    }
+  </script>
+</body>
+</html>

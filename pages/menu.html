@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Menu - FoodieExpress</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <div style="padding-top:var(--nav-height)">
+
+    <!-- Restaurant Header -->
+    <div class="menu-restaurant-header" id="restaurantHeaderCard">
+      <div style="position:relative">
+        <img class="menu-restaurant-banner" id="restaurantBanner" src="" alt="" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.6))"></div>
+      </div>
+      <div class="menu-restaurant-info">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+              <h1 id="restaurantName" style="font-size:26px;font-weight:800"></h1>
+              <span id="restaurantStatusBadge" class="restaurant-status"></span>
+            </div>
+            <p id="restaurantCuisine" style="color:var(--text-secondary);margin-bottom:10px"></p>
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--text-secondary)">
+              <span id="restaurantRating" style="font-weight:700;color:#B7791F"></span>
+              <span>🕐 <span id="restaurantTime"></span> min</span>
+              <span>📍 <span id="restaurantDistance"></span></span>
+              <span>🛵 Min order: <span id="restaurantMinOrder"></span></span>
+              <span id="restaurantDelivery"></span>
+            </div>
+          </div>
+          <button onclick="Wishlist.toggle(currentRestaurantId,'restaurant')" class="btn btn-secondary btn-sm" id="wishlistRestBtn">❤️ Wishlist</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px" id="restaurantTags"></div>
+        <div id="restaurantDiscount" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="filters-bar" style="top:var(--nav-height)">
+      <div class="container">
+        <div class="filters-inner">
+          <div style="position:relative;flex-shrink:0;min-width:200px">
+            <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px">🔍</span>
+            <input type="text" id="menuSearch" placeholder="Search menu items..." class="form-control"
+              style="padding-left:32px;height:36px;font-size:13px;border-radius:var(--radius-full)" />
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;flex-shrink:0">
+            <input type="checkbox" id="vegOnlyToggle" style="accent-color:var(--veg)">
+            <span style="color:var(--veg);font-weight:600">🥦 Veg Only</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Content -->
+    <div class="container" style="padding:32px 24px">
+      <div class="menu-grid">
+        <!-- Sidebar (categories) -->
+        <div class="menu-sidebar">
+          <div class="menu-categories-nav">
+            <h4>Menu Categories</h4>
+            <div id="menuCatNav"></div>
+          </div>
+        </div>
+
+        <!-- Menu Items -->
+        <div id="menuItemsContainer">
+          <!-- Loading skeleton -->
+          ${Array(4).fill(0).map(() => `
+            <div style="background:var(--bg-card);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;display:grid;grid-template-columns:90px 1fr;gap:16px">
+              <div class="skeleton" style="height:90px;border-radius:var(--radius-xs)"></div>
+              <div>
+                <div class="skeleton skeleton-line medium" style="margin-bottom:8px"></div>
+                <div class="skeleton skeleton-line short"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Floating Cart Button -->
+  <div id="floatingCart" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:500">
+    <button onclick="CartSidebar.open()" class="btn btn-primary btn-lg" style="box-shadow:var(--shadow-primary);gap:16px;min-width:280px">
+      <span>🛒</span>
+      <span>View Cart</span>
+      <span id="floatingCartInfo" style="background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:var(--radius-full);font-size:13px"></span>
+    </button>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let currentRestaurantId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = parseInt(params.get('id')) || 1;
+      currentRestaurantId = id;
+
+      const restaurant = RESTAURANTS.find(r => r.id === id);
+      if (!restaurant) {
+        window.location.href = '../pages/404.html';
+        return;
+      }
+
+      // Populate header
+      document.getElementById('restaurantBanner').src = restaurant.img;
+      document.getElementById('restaurantBanner').alt = restaurant.name;
+      document.getElementById('restaurantName').textContent = restaurant.name;
+      document.getElementById('restaurantCuisine').textContent = restaurant.cuisine;
+      document.getElementById('restaurantRating').textContent = `⭐ ${restaurant.rating} (${restaurant.ratingCount.toLocaleString()}+)`;
+      document.getElementById('restaurantTime').textContent = restaurant.deliveryTime;
+      document.getElementById('restaurantDistance').textContent = restaurant.distance;
+      document.getElementById('restaurantMinOrder').textContent = formatCurrency(restaurant.minOrder);
+
+      const statusBadge = document.getElementById('restaurantStatusBadge');
+      statusBadge.textContent = restaurant.status === 'open' ? '🟢 Open' : '🔴 Closed';
+      statusBadge.className = `restaurant-status ${restaurant.status}`;
+
+      const deliveryEl = document.getElementById('restaurantDelivery');
+      deliveryEl.innerHTML = restaurant.deliveryFee === 0
+        ? '<span style="color:var(--success);font-weight:600">🚚 Free Delivery</span>'
+        : `🚚 Delivery: ${formatCurrency(restaurant.deliveryFee)}`;
+
+      const tagsEl = document.getElementById('restaurantTags');
+      tagsEl.innerHTML = restaurant.tags.map(t => `<span class="restaurant-tag">${t}</span>`).join('');
+
+      if (restaurant.discount) {
+        document.getElementById('restaurantDiscount').innerHTML = `
+          <div class="restaurant-discount" style="display:inline-flex">🏷️ ${restaurant.discount}</div>`;
+      }
+
+      document.title = `${restaurant.name} Menu - FoodieExpress`;
+
+      Search.initMenuFilters(id);
+      updateFloatingCart();
+    });
+
+    function updateFloatingCart() {
+      const count = Cart.getCount();
+      const floatingCart = document.getElementById('floatingCart');
+      const info = document.getElementById('floatingCartInfo');
+      if (count > 0) {
+        floatingCart.style.display = 'block';
+        const { total } = Cart.getSummary();
+        info.textContent = `${count} item${count > 1 ? 's' : ''} · ${formatCurrency(total)}`;
+      } else {
+        floatingCart.style.display = 'none';
+      }
+    }
+
+    // Override Cart.add to update floating cart
+    const origAdd = Cart.add.bind(Cart);
+    Cart.add = function(item) {
+      origAdd(item);
+      updateFloatingCart();
+    };
+    const origUpdate = Cart.updateQty.bind(Cart);
+    Cart.updateQty = function(id, qty) {
+      origUpdate(id, qty);
+      updateFloatingCart();
+    };
+  </script>
+</body>
+</html>

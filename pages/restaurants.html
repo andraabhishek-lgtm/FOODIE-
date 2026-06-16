@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse 500+ restaurants near you. Filter by cuisine, rating, delivery time and more." />
+  <title>Restaurants - FoodieExpress</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container page-header-content">
+      <h1 class="page-title">🍽️ Restaurants Near You</h1>
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Restaurants</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Bar -->
+  <div class="filters-bar">
+    <div class="container">
+      <div class="filters-inner">
+        <!-- Search -->
+        <div style="position:relative;flex-shrink:0;min-width:220px">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted)">🔍</span>
+          <input type="text" id="restaurantSearch" class="form-control" placeholder="Search restaurants..."
+            style="padding-left:36px;height:38px;font-size:13px;border-radius:var(--radius-full)" />
+        </div>
+
+        <span style="color:var(--border);flex-shrink:0">|</span>
+
+        <!-- Category filters -->
+        <span class="filter-chip active" data-filter-cat="all">All</span>
+        <span class="filter-chip" data-filter-cat="pizza">🍕 Pizza</span>
+        <span class="filter-chip" data-filter-cat="burger">🍔 Burger</span>
+        <span class="filter-chip" data-filter-cat="biryani">🍛 Biryani</span>
+        <span class="filter-chip" data-filter-cat="chinese">🥡 Chinese</span>
+        <span class="filter-chip" data-filter-cat="south-indian">🥘 South Indian</span>
+        <span class="filter-chip" data-filter-cat="healthy">🥗 Healthy</span>
+        <span class="filter-chip" data-filter-cat="desserts">🍰 Desserts</span>
+        <span class="filter-chip" data-filter-cat="beverages">🧃 Beverages</span>
+        <span class="filter-chip" data-filter-cat="fast-food">🌮 Fast Food</span>
+
+        <span style="color:var(--border);flex-shrink:0">|</span>
+
+        <!-- Rating filter -->
+        <span class="filter-chip" data-filter-rating="4.5">⭐ 4.5+</span>
+        <span class="filter-chip" data-filter-rating="4.0">⭐ 4.0+</span>
+
+        <span style="color:var(--border);flex-shrink:0">|</span>
+
+        <!-- Delivery time -->
+        <span class="filter-chip" data-filter-time="30">🕐 &lt;30 min</span>
+        <span class="filter-chip" data-filter-time="45">🕐 &lt;45 min</span>
+
+        <span style="color:var(--border);flex-shrink:0">|</span>
+
+        <!-- Status -->
+        <span class="filter-chip" data-filter-status="all">All</span>
+        <span class="filter-chip" data-filter-status="open">🟢 Open Now</span>
+
+        <span style="margin-left:auto;flex-shrink:0">
+          <select id="restaurantSort" class="sort-select">
+            <option value="popularity">Sort: Popularity</option>
+            <option value="rating">Sort: Rating</option>
+            <option value="delivery-time">Sort: Fastest</option>
+            <option value="price-low">Sort: Price Low</option>
+            <option value="price-high">Sort: Price High</option>
+            <option value="distance">Sort: Distance</option>
+          </select>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restaurants Section -->
+  <section class="section" style="padding:40px 0 80px">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <p id="restaurantCount" style="font-size:15px;color:var(--text-secondary);font-weight:500">Loading restaurants...</p>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)">
+          <span>📍 Bangalore, Karnataka</span>
+        </div>
+      </div>
+
+      <div class="restaurants-grid" id="restaurantsGrid">
+        <!-- Skeleton loaders -->
+        ${Array(6).fill(0).map(() => `
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-img"></div>
+            <div class="skeleton skeleton-line medium" style="margin-top:8px"></div>
+            <div class="skeleton skeleton-line short"></div>
+            <div class="skeleton skeleton-line medium"></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check URL params
+      const params = new URLSearchParams(window.location.search);
+      const catParam = params.get('cat');
+      const qParam = params.get('q');
+
+      if (catParam) {
+        const chip = document.querySelector(`[data-filter-cat="${catParam}"]`);
+        if (chip) {
+          document.querySelectorAll('[data-filter-cat]').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          Search.currentFilters.category = catParam;
+        }
+      }
+
+      if (qParam) {
+        const searchEl = document.getElementById('restaurantSearch');
+        if (searchEl) {
+          searchEl.value = qParam;
+          Search.currentFilters.query = qParam;
+        }
+      }
+
+      Search.initRestaurantFilters();
+
+      if (catParam || qParam) {
+        Search.applyRestaurantFilters();
+      }
+    });
+  </script>
+</body>
+</html>

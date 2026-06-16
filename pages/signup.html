@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account - FoodieExpress</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+</head>
+<body>
+
+  <div style="position:fixed;top:0;left:0;right:0;height:60px;background:var(--bg-primary);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100">
+    <a href="../index.html" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800;color:var(--text-primary)">
+      <div style="width:34px;height:34px;background:linear-gradient(135deg,#FF6B35,#E55824);border-radius:8px;display:flex;align-items:center;justify-content:center">🍔</div>
+      Foodie<span style="color:#FF6B35">Express</span>
+    </a>
+    <button onclick="ThemeManager.toggle()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:16px">🌙</button>
+  </div>
+
+  <div class="auth-page" style="padding-top:60px">
+
+    <!-- Visual Panel -->
+    <div class="auth-visual">
+      <div class="auth-visual-content">
+        <div style="font-size:48px;margin-bottom:16px">🎉</div>
+        <h2>Join FoodieExpress!</h2>
+        <p>Create your account today and get ₹120 OFF on your first order, plus exclusive member deals every week.</p>
+
+        <div style="margin-top:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:14px;background:rgba(255,255,255,0.08);border-radius:12px">
+            <span style="font-size:24px">🎁</span>
+            <div style="text-align:left">
+              <h4 style="font-size:14px;color:white;margin-bottom:2px">Welcome Bonus</h4>
+              <p style="font-size:12px;opacity:0.6">₹120 OFF on first order</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:14px;background:rgba(255,255,255,0.08);border-radius:12px">
+            <span style="font-size:24px">🔥</span>
+            <div style="text-align:left">
+              <h4 style="font-size:14px;color:white;margin-bottom:2px">Member Deals</h4>
+              <p style="font-size:12px;opacity:0.6">Exclusive offers every week</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:14px;background:rgba(255,255,255,0.08);border-radius:12px">
+            <span style="font-size:24px">📍</span>
+            <div style="text-align:left">
+              <h4 style="font-size:14px;color:white;margin-bottom:2px">Save Addresses</h4>
+              <p style="font-size:12px;opacity:0.6">Faster checkout every time</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,0.08);border-radius:12px">
+            <span style="font-size:24px">⭐</span>
+            <div style="text-align:left">
+              <h4 style="font-size:14px;color:white;margin-bottom:2px">Loyalty Rewards</h4>
+              <p style="font-size:12px;opacity:0.6">Earn points on every order</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="auth-form-section" style="overflow-y:auto">
+      <div class="auth-form-wrapper">
+        <div class="auth-form-header">
+          <a href="../index.html" class="back-link">← Back to Home</a>
+          <h1>Create Account</h1>
+          <p>Fill in the details below to get started.</p>
+        </div>
+
+        <div class="social-login">
+          <button class="social-login-btn" type="button">
+            <span style="font-size:18px">🔵</span> Sign up with Google
+          </button>
+          <button class="social-login-btn" type="button">
+            <span style="font-size:18px">🔷</span> Sign up with Facebook
+          </button>
+        </div>
+
+        <div class="auth-divider"><span>or create with email</span></div>
+
+        <form id="signupForm" novalidate>
+
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" name="fullName" id="signupName" class="form-control" placeholder="John Doe" autocomplete="name" />
+            <div class="error-msg" id="nameError" style="display:none"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" name="email" id="signupEmail" class="form-control" placeholder="you@example.com" autocomplete="email" />
+            <div class="error-msg" id="emailError" style="display:none"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" name="phone" id="signupPhone" class="form-control" placeholder="+91 98765 43210" autocomplete="tel" />
+            <div class="error-msg" id="phoneError" style="display:none"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <div class="password-field" style="position:relative">
+              <input type="password" name="password" id="signupPassword" class="form-control" placeholder="Min 8 characters" autocomplete="new-password" />
+              <button type="button" class="password-toggle">👁️</button>
+            </div>
+            <div class="password-strength">
+              <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+              <span class="strength-text" id="strengthText"></span>
+            </div>
+            <div class="error-msg" id="passwordError" style="display:none"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password *</label>
+            <div class="password-field" style="position:relative">
+              <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Repeat your password" autocomplete="new-password" />
+              <button type="button" class="password-toggle">👁️</button>
+            </div>
+            <div class="error-msg" id="confirmPasswordError" style="display:none"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-field">
+              <input type="checkbox" name="terms" id="termsCheck" />
+              <label for="termsCheck">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-field">
+              <input type="checkbox" name="newsletter" id="newsletterCheck" checked />
+              <label for="newsletterCheck">Send me exclusive deals and offers via email</label>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:14px">
+            Create Account 🎉
+          </button>
+        </form>
+
+        <div class="auth-switch">
+          Already have an account? <a href="login.html">Sign In →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ThemeManager.init();
+      ThemeManager.updateIcon(ThemeManager.get());
+      Toast.init();
+
+      if (Auth.isLoggedIn()) {
+        window.location.href = '../index.html';
+        return;
+      }
+
+      Auth.initSignupForm();
+      Auth.initPasswordToggle();
+
+      // Real-time email validation
+      const emailInput = document.getElementById('signupEmail');
+      if (emailInput) {
+        emailInput.addEventListener('blur', () => {
+          if (emailInput.value && !Auth.validateEmail(emailInput.value)) {
+            Auth.showFieldError('emailError', 'Please enter a valid email address');
+          } else {
+            Auth.clearFieldError('emailError');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

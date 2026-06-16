@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FoodieExpress - Order food online from the best restaurants near you. Fast delivery, great food, amazing experience." />
+  <meta name="keywords" content="food delivery, order food online, restaurants, pizza, burger, biryani" />
+  <meta property="og:title" content="FoodieExpress - Delicious Food Delivered Fast" />
+  <meta property="og:description" content="Order from 500+ restaurants with blazing fast delivery." />
+  <title>FoodieExpress - Delicious Food Delivered Fast 🍔</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/dark-theme.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+</head>
+<body>
+
+  <!-- HEADER (injected by JS) -->
+  <div id="header"></div>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <!-- Text -->
+        <div class="hero-text">
+          <div class="hero-tag">
+            <span class="dot"></span>
+            🚀 Fastest Delivery in Town
+          </div>
+          <h1 class="hero-title">
+            Craving Something<br>
+            <span class="highlight">Delicious?</span><br>
+            We've Got You!
+          </h1>
+          <p class="hero-subtitle">
+            Order from 500+ restaurants and get your favourite food delivered hot & fresh at your doorstep in 30 minutes or less.
+          </p>
+
+          <div class="hero-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="heroSearch" placeholder="Search food, restaurants, cuisines..." autocomplete="off" />
+            <button class="btn btn-primary" onclick="window.location.href='pages/restaurants.html?q='+encodeURIComponent(document.getElementById('heroSearch').value)">
+              Search
+            </button>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <h3><span data-counter="500" data-suffix="+">500+</span></h3>
+              <p>Restaurants</p>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+              <h3><span data-counter="50000" data-suffix="+">50K+</span></h3>
+              <p>Happy Customers</p>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+              <h3><span data-counter="30" data-suffix=" min">30 min</span></h3>
+              <p>Avg Delivery</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual -->
+        <div class="hero-visual">
+          <div class="hero-img-wrapper">
+            <img
+              class="hero-main-img"
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=85&auto=format&fit=crop"
+              alt="Delicious food spread"
+            />
+
+            <div class="hero-float-card" style="bottom:15%;left:-10%">
+              <div class="float-icon orange">🏍️</div>
+              <div>
+                <h4>Fast Delivery</h4>
+                <p>30 min avg time</p>
+              </div>
+            </div>
+
+            <div class="hero-float-card" style="top:18%;right:-8%">
+              <div class="float-icon green">⭐</div>
+              <div>
+                <h4>4.8 Rating</h4>
+                <p>50K+ reviews</p>
+              </div>
+            </div>
+
+            <div class="hero-float-card" style="top:5%;left:8%">
+              <div class="float-icon blue">🎟️</div>
+              <div>
+                <h4>Best Deals</h4>
+                <p>Up to 40% OFF</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CATEGORIES ===================== -->
+  <section class="section" style="background:var(--bg-primary);padding:48px 0">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">🍽️ Explore Menu</div>
+        <h2 class="section-title">What Are You <span>Craving?</span></h2>
+        <p class="section-subtitle">Browse through our wide variety of food categories</p>
+      </div>
+      <div class="categories-grid" id="categoriesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== POPULAR RESTAURANTS ===================== -->
+  <section class="section" style="background:var(--bg-secondary)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">🏆 Top Picks</div>
+        <h2 class="section-title">Popular <span>Restaurants</span></h2>
+        <p class="section-subtitle">Handpicked restaurants loved by thousands of food lovers like you</p>
+      </div>
+      <div class="restaurants-grid" id="popularRestaurantsGrid"></div>
+      <div style="text-align:center;margin-top:40px">
+        <a href="pages/restaurants.html" class="btn btn-secondary btn-lg">View All Restaurants →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRENDING DISHES ===================== -->
+  <section class="section" style="background:var(--bg-primary)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">🔥 Trending Now</div>
+        <h2 class="section-title">Most <span>Loved Dishes</span></h2>
+        <p class="section-subtitle">These are the dishes everyone's ordering right now</p>
+      </div>
+      <div class="dishes-grid" id="trendingDishesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURED OFFERS ===================== -->
+  <section class="section" style="background:var(--bg-secondary)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">💰 Hot Deals</div>
+        <h2 class="section-title">Featured <span>Offers</span></h2>
+        <p class="section-subtitle">Don't miss out on these amazing limited-time deals!</p>
+      </div>
+      <div class="offers-grid" id="offersGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY CHOOSE US ===================== -->
+  <section class="section" style="background:var(--bg-primary)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">💡 Why Us</div>
+        <h2 class="section-title">Why Choose <span>FoodieExpress?</span></h2>
+        <p class="section-subtitle">We're more than just food delivery – we're your dining experience partner</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightning Fast Delivery</h3>
+          <p>Our optimised delivery network ensures your food arrives hot and fresh within 30 minutes.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-1">
+          <div class="feature-icon">🍽️</div>
+          <h3>500+ Restaurant Partners</h3>
+          <p>Choose from hundreds of curated restaurants across multiple cuisines in your city.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-2">
+          <div class="feature-icon">🔒</div>
+          <h3>100% Safe & Hygienic</h3>
+          <p>All our partner restaurants follow strict hygiene protocols and food safety standards.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-3">
+          <div class="feature-icon">💰</div>
+          <h3>Best Price Guarantee</h3>
+          <p>Get the best prices with exclusive deals, coupons and cashback offers every day.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-4">
+          <div class="feature-icon">🎯</div>
+          <h3>Live Order Tracking</h3>
+          <p>Track your order in real-time from restaurant to your doorstep on the map.</p>
+        </div>
+        <div class="feature-card animate-on-scroll delay-5">
+          <div class="feature-icon">🌟</div>
+          <h3>24/7 Support</h3>
+          <p>Our dedicated customer support team is always ready to help you, day or night.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="section" style="background:var(--bg-secondary)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">📱 Process</div>
+        <h2 class="section-title">How It <span>Works</span></h2>
+        <p class="section-subtitle">Getting your favourite food delivered is just 4 easy steps away</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card animate-on-scroll">
+          <div class="step-number">1</div>
+          <div class="step-icon">📍</div>
+          <h3>Set Your Location</h3>
+          <p>Enter your delivery address to discover restaurants near you.</p>
+        </div>
+        <div class="step-card animate-on-scroll delay-1">
+          <div class="step-number">2</div>
+          <div class="step-icon">🍕</div>
+          <h3>Choose Your Food</h3>
+          <p>Browse menus, add your favourite items to cart with one click.</p>
+        </div>
+        <div class="step-card animate-on-scroll delay-2">
+          <div class="step-number">3</div>
+          <div class="step-icon">💳</div>
+          <h3>Place Your Order</h3>
+          <p>Checkout securely using your preferred payment method.</p>
+        </div>
+        <div class="step-card animate-on-scroll delay-3">
+          <div class="step-number">4</div>
+          <div class="step-icon">🚀</div>
+          <h3>Fast Delivery</h3>
+          <p>Sit back and track your order as it comes to your door!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="section" style="background:var(--bg-primary)">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">💬 Reviews</div>
+        <h2 class="section-title">What Our <span>Customers Say</span></h2>
+        <p class="section-subtitle">Join thousands of satisfied customers who love FoodieExpress</p>
+      </div>
+      <div class="testimonials-grid" id="testimonialsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== APP DOWNLOAD ===================== -->
+  <section class="section" style="background:var(--bg-secondary)">
+    <div class="container">
+      <div class="app-download animate-on-scroll">
+        <div class="app-download-text">
+          <div class="section-tag" style="margin-bottom:16px">📱 Mobile App</div>
+          <h2>Get the <span>FoodieExpress</span><br>App & Save More!</h2>
+          <p>Download our app and enjoy exclusive app-only deals, faster checkout, live tracking, and much more. Available on iOS and Android.</p>
+          <div class="app-buttons">
+            <a href="#" class="app-btn">
+              <span class="app-btn-icon">🍎</span>
+              <div class="app-btn-text">
+                <h4>Download on the</h4>
+                <span>App Store</span>
+              </div>
+            </a>
+            <a href="#" class="app-btn">
+              <span class="app-btn-icon">🤖</span>
+              <div class="app-btn-text">
+                <h4>Get it on</h4>
+                <span>Google Play</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="app-mockup">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&q=80&auto=format&fit=crop" alt="App mockup" style="border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4)" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NEWSLETTER ===================== -->
+  <section class="section" style="background:var(--bg-primary)">
+    <div class="container">
+      <div class="newsletter animate-on-scroll">
+        <div class="section-tag" style="margin-bottom:14px">📧 Newsletter</div>
+        <h2>Stay in the Loop!</h2>
+        <p>Subscribe to get exclusive deals, new restaurant alerts, and foodie tips delivered to your inbox.</p>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" placeholder="Enter your email address..." required />
+          <button class="btn btn-primary" type="submit">Subscribe 🎉</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (injected by JS) -->
+  <div id="footer"></div>
+
+  <!-- Scripts -->
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // ---- HOME PAGE INIT ----
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategories();
+      renderPopularRestaurants();
+      renderTrendingDishes();
+      renderOffers();
+      renderTestimonials();
+
+      // Hero search
+      const heroSearchInput = document.getElementById('heroSearch');
+      if (heroSearchInput) {
+        heroSearchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            window.location.href = 'pages/restaurants.html?q=' + encodeURIComponent(heroSearchInput.value);
+          }
+        });
+      }
+    });
+
+    function renderCategories() {
+      const grid = document.getElementById('categoriesGrid');
+      if (!grid) return;
+      grid.innerHTML = CATEGORIES.map(cat => `
+        <div class="category-card animate-on-scroll" onclick="window.location.href='pages/restaurants.html?cat=${cat.id}'">
+          <span class="cat-icon">${cat.icon}</span>
+          <div class="cat-name">${cat.name}</div>
+          <div class="cat-count">${cat.count}+ items</div>
+        </div>
+      `).join('');
+    }
+
+    function renderPopularRestaurants() {
+      const grid = document.getElementById('popularRestaurantsGrid');
+      if (!grid) return;
+      const featured = RESTAURANTS.filter(r => r.status === 'open').slice(0, 6);
+      grid.innerHTML = featured.map(r => buildRestaurantCard(r)).join('');
+    }
+
+    function renderTrendingDishes() {
+      const grid = document.getElementById('trendingDishesGrid');
+      if (!grid) return;
+      const popular = MENU_ITEMS.filter(m => m.popular).slice(0, 8);
+      grid.innerHTML = popular.map(item => buildDishCard(item)).join('');
+    }
+
+    function renderOffers() {
+      const grid = document.getElementById('offersGrid');
+      if (!grid) return;
+      grid.innerHTML = OFFERS.map(o => `
+        <div class="offer-card ${o.color} animate-on-scroll" onclick="copyCode('${o.code}')">
+          <span class="offer-tag">${o.tag}</span>
+          <h3>${o.title}</h3>
+          <p>${o.desc}</p>
+          <div class="offer-code">
+            🏷️ ${o.code}
+            <span style="font-size:11px;opacity:0.8">Click to copy</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderTestimonials() {
+      const grid = document.getElementById('testimonialsGrid');
+      if (!grid) return;
+      grid.innerHTML = TESTIMONIALS.map(t => `
+        <div class="testimonial-card animate-on-scroll">
+          <div class="testimonial-rating">${'⭐'.repeat(t.rating)}</div>
+          <p class="testimonial-text">${t.text}</p>
+          <div class="testimonial-author">
+            <img class="testimonial-avatar" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=FF6B35&color=fff'">
+            <div>
+              <h4>${t.name}</h4>
+              <p>${t.role}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function copyCode(code) {
+      navigator.clipboard.writeText(code).then(() => {
+        Toast.success('Coupon Copied! 🎉', `Code "${code}" copied to clipboard`);
+      }).catch(() => {
+        Toast.info('Coupon Code', code);
+      });
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const email = e.target.querySelector('input').value;
+      Toast.success('Subscribed! 🎉', `We'll send great deals to ${email}`);
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile - FoodieExpress</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <div class="page-header">
+    <div class="container page-header-content">
+      <h1 class="page-title">👤 My Profile</h1>
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Profile</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container profile-grid">
+
+    <!-- Sidebar -->
+    <div class="profile-sidebar">
+      <div class="profile-card">
+        <div class="profile-avatar-wrap">
+          <img class="profile-avatar" id="sidebarAvatar" src="https://ui-avatars.com/api/?name=User&background=FF6B35&color=fff&size=90" alt="Profile" />
+          <div class="profile-avatar-edit" title="Change photo">📷</div>
+        </div>
+        <h3 id="sidebarName">Loading...</h3>
+        <p id="sidebarEmail">user@email.com</p>
+      </div>
+
+      <div class="profile-nav">
+        <div class="profile-nav-item active" data-section="profile" onclick="switchSection('profile', this)">
+          <span class="nav-icon">👤</span> My Profile
+        </div>
+        <div class="profile-nav-item" data-section="orders" onclick="switchSection('orders', this)">
+          <span class="nav-icon">📦</span> My Orders
+        </div>
+        <div class="profile-nav-item" data-section="addresses" onclick="switchSection('addresses', this)">
+          <span class="nav-icon">📍</span> Addresses
+        </div>
+        <div class="profile-nav-item" data-section="wishlist" onclick="switchSection('wishlist', this)">
+          <span class="nav-icon">❤️</span> Wishlist
+        </div>
+        <div class="profile-nav-item" data-section="settings" onclick="switchSection('settings', this)">
+          <span class="nav-icon">⚙️</span> Settings
+        </div>
+        <div class="profile-nav-item danger" onclick="Auth.logout()" style="color:var(--error)">
+          <span class="nav-icon">🚪</span> Logout
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="profile-content">
+
+      <!-- Profile Info Section -->
+      <div id="section-profile">
+        <div class="profile-content-header">
+          <h2>Personal Information</h2>
+          <button onclick="toggleProfileEdit()" class="btn btn-secondary btn-sm" id="editBtn">✏️ Edit Profile</button>
+        </div>
+        <div class="profile-content-body">
+          <form id="profileForm">
+            <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px">
+              <div class="profile-avatar-wrap" style="width:80px">
+                <img class="profile-avatar" id="profileAvatar" src="" alt="Avatar" style="width:80px;height:80px" />
+                <div class="profile-avatar-edit" onclick="document.getElementById('avatarInput').click()">📷</div>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="handleAvatarChange(event)" />
+              </div>
+              <div>
+                <h3 id="profileNameDisplay" style="font-size:20px;font-weight:700"></h3>
+                <p id="profileEmailDisplay" style="color:var(--text-muted)"></p>
+                <span class="badge badge-success" style="margin-top:6px">✅ Verified Account</span>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="profileName" id="profileName" class="form-control" disabled />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="profileEmail" id="profileEmail" class="form-control" disabled />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" name="profilePhone" id="profilePhone" class="form-control" placeholder="+91 XXXXX XXXXX" disabled />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" name="profileDob" class="form-control" disabled />
+              </div>
+            </div>
+
+            <div id="profileFormActions" style="display:none;margin-top:8px">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <button type="button" class="btn btn-ghost" onclick="toggleProfileEdit()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Orders Section -->
+      <div id="section-orders" style="display:none">
+        <div class="profile-content-header">
+          <h2>My Orders</h2>
+          <a href="orders.html" class="btn btn-ghost btn-sm">View All →</a>
+        </div>
+        <div class="profile-content-body" id="profileOrdersList">
+          <div class="empty-state">
+            <div class="empty-icon">📦</div>
+            <h3>No orders yet</h3>
+            <p>Your order history will appear here</p>
+            <a href="restaurants.html" class="btn btn-primary">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Addresses Section -->
+      <div id="section-addresses" style="display:none">
+        <div class="profile-content-header">
+          <h2>Saved Addresses</h2>
+          <button class="btn btn-secondary btn-sm" onclick="showAddAddressForm()">+ Add Address</button>
+        </div>
+        <div class="profile-content-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="addressesList">
+            <div class="address-card active">
+              <div class="addr-type">🏠 Home</div>
+              <p>123 MG Road, Koramangala, Bangalore - 560034</p>
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <button class="btn btn-ghost btn-sm">✏️ Edit</button>
+                <button class="btn btn-ghost btn-sm" style="color:var(--error)">🗑️ Delete</button>
+              </div>
+            </div>
+            <div class="address-card">
+              <div class="addr-type">💼 Work</div>
+              <p>456 Tech Park, Whitefield, Bangalore - 560066</p>
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <button class="btn btn-ghost btn-sm">✏️ Edit</button>
+                <button class="btn btn-ghost btn-sm" style="color:var(--error)">🗑️ Delete</button>
+              </div>
+            </div>
+            <div class="address-card" style="border-style:dashed;display:flex;align-items:center;justify-content:center;cursor:pointer;min-height:100px" onclick="showAddAddressForm()">
+              <div style="text-align:center">
+                <div style="font-size:28px;margin-bottom:6px">+</div>
+                <div style="font-size:14px;color:var(--text-muted)">Add new address</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wishlist Section -->
+      <div id="section-wishlist" style="display:none">
+        <div class="profile-content-header">
+          <h2>My Wishlist</h2>
+        </div>
+        <div class="profile-content-body" id="wishlistContent">
+          <div class="empty-state">
+            <div class="empty-icon">❤️</div>
+            <h3>Your wishlist is empty</h3>
+            <p>Save your favourite restaurants and dishes here</p>
+            <a href="restaurants.html" class="btn btn-primary">Explore Restaurants</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="section-settings" style="display:none">
+        <div class="profile-content-header">
+          <h2>Account Settings</h2>
+        </div>
+        <div class="profile-content-body">
+          <div style="display:flex;flex-direction:column;gap:16px">
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--bg-secondary);border-radius:var(--radius-sm)">
+              <div>
+                <h4 style="font-size:15px;margin-bottom:4px">🌙 Dark Mode</h4>
+                <p style="font-size:13px;color:var(--text-muted)">Switch between light and dark theme</p>
+              </div>
+              <button onclick="ThemeManager.toggle()" class="btn btn-secondary btn-sm" id="themeSettingBtn">Toggle</button>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--bg-secondary);border-radius:var(--radius-sm)">
+              <div>
+                <h4 style="font-size:15px;margin-bottom:4px">🔔 Notifications</h4>
+                <p style="font-size:13px;color:var(--text-muted)">Receive order updates and offers</p>
+              </div>
+              <label style="cursor:pointer">
+                <input type="checkbox" checked style="accent-color:var(--primary);width:18px;height:18px">
+              </label>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--bg-secondary);border-radius:var(--radius-sm)">
+              <div>
+                <h4 style="font-size:15px;margin-bottom:4px">📧 Email Updates</h4>
+                <p style="font-size:13px;color:var(--text-muted)">Get weekly deals and newsletters</p>
+              </div>
+              <label style="cursor:pointer">
+                <input type="checkbox" checked style="accent-color:var(--primary);width:18px;height:18px">
+              </label>
+            </div>
+
+            <div style="margin-top:8px">
+              <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;color:var(--error)">⚠️ Danger Zone</h3>
+              <button class="btn btn-ghost" style="color:var(--error);border:1px solid var(--error)" onclick="Auth.logout()">
+                🚪 Logout from All Devices
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.initProfilePage();
+      loadProfileOrders();
+
+      // Check hash for tab switching
+      const hash = window.location.hash.replace('#', '');
+      if (hash) switchSection(hash, document.querySelector(`[data-section="${hash}"]`));
+    });
+
+    function switchSection(name, btn) {
+      document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = 'none');
+      document.getElementById('section-' + name).style.display = 'block';
+      document.querySelectorAll('.profile-nav-item').forEach(el => el.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      window.location.hash = name;
+    }
+
+    function toggleProfileEdit() {
+      const inputs = document.querySelectorAll('#profileForm input');
+      const actions = document.getElementById('profileFormActions');
+      const btn = document.getElementById('editBtn');
+      const isDisabled = inputs[0]?.disabled;
+
+      inputs.forEach(i => { i.disabled = !isDisabled; });
+      actions.style.display = isDisabled ? 'flex' : 'none';
+      btn.textContent = isDisabled ? '✕ Cancel' : '✏️ Edit Profile';
+    }
+
+    function loadProfileOrders() {
+      const orders = JSON.parse(localStorage.getItem('fe-orders') || '[]');
+      const el = document.getElementById('profileOrdersList');
+      if (!el || orders.length === 0) return;
+
+      el.innerHTML = orders.slice(0, 3).map(o => `
+        <div class="order-card" style="margin-bottom:12px">
+          <div class="order-card-header">
+            <div>
+              <div style="font-size:13px;color:var(--text-muted)">Order #${o.id}</div>
+              <div style="font-size:14px;font-weight:600">${new Date(o.placedAt).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}</div>
+            </div>
+            <span class="order-status-badge delivered">Delivered</span>
+          </div>
+          <div class="order-card-body" style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:14px;margin-bottom:4px">${o.items?.length || 0} items · ${formatCurrency(o.total)}</div>
+              <div style="font-size:13px;color:var(--text-muted)">${o.items?.map(i => i.name).slice(0, 2).join(', ')}${o.items?.length > 2 ? '...' : ''}</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="window.location.href='orders.html'">Reorder</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAvatarChange(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        document.getElementById('profileAvatar').src = ev.target.result;
+        document.getElementById('sidebarAvatar').src = ev.target.result;
+        const user = Auth.getUser();
+        if (user) { user.avatar = ev.target.result; Auth.setUser(user); }
+        Toast.success('Avatar Updated!');
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - FoodieExpress</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+</head>
+<body>
+
+  <!-- Minimal header bar -->
+  <div style="position:fixed;top:0;left:0;right:0;height:60px;background:var(--bg-primary);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100">
+    <a href="../index.html" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800;color:var(--text-primary)">
+      <div style="width:34px;height:34px;background:linear-gradient(135deg,#FF6B35,#E55824);border-radius:8px;display:flex;align-items:center;justify-content:center">🍔</div>
+      Foodie<span style="color:var(--primary)">Express</span>
+    </a>
+    <button onclick="ThemeManager.toggle()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:16px">🌙</button>
+  </div>
+
+  <div class="auth-page" style="padding-top:60px">
+
+    <!-- Visual Panel -->
+    <div class="auth-visual">
+      <div class="auth-visual-content">
+        <div style="font-size:48px;margin-bottom:16px">🍔</div>
+        <h2>Welcome Back!</h2>
+        <p>Log in to access your orders, saved addresses, exclusive deals and much more.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;text-align:left">
+          <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:16px">
+            <div style="font-size:24px;margin-bottom:6px">🚀</div>
+            <h4 style="font-size:14px;color:white">Fast Delivery</h4>
+            <p style="font-size:12px;opacity:0.6">30 min avg</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:16px">
+            <div style="font-size:24px;margin-bottom:6px">💰</div>
+            <h4 style="font-size:14px;color:white">Best Deals</h4>
+            <p style="font-size:12px;opacity:0.6">Up to 40% OFF</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:16px">
+            <div style="font-size:24px;margin-bottom:6px">⭐</div>
+            <h4 style="font-size:14px;color:white">Top Rated</h4>
+            <p style="font-size:12px;opacity:0.6">500+ restaurants</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:12px;padding:16px">
+            <div style="font-size:24px;margin-bottom:6px">🔒</div>
+            <h4 style="font-size:14px;color:white">Secure</h4>
+            <p style="font-size:12px;opacity:0.6">100% safe</p>
+          </div>
+        </div>
+        <div style="margin-top:28px;padding:16px;background:rgba(255,107,53,0.15);border-radius:12px;border:1px solid rgba(255,107,53,0.3)">
+          <p style="font-size:13px;opacity:0.9">🎉 New user? Get <strong>40% OFF</strong> on your first order with code <strong>FIRST40</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="auth-form-section">
+      <div class="auth-form-wrapper">
+        <div class="auth-form-header">
+          <a href="../index.html" class="back-link">← Back to Home</a>
+          <h1>Sign In</h1>
+          <p>Welcome back! Please enter your credentials.</p>
+        </div>
+
+        <!-- Social login -->
+        <div class="social-login">
+          <button class="social-login-btn" onclick="Auth.initSocialLogin && Auth.initSocialLogin('google')">
+            <span style="font-size:18px">🔵</span> Continue with Google
+          </button>
+          <button class="social-login-btn" onclick="Auth.initSocialLogin && Auth.initSocialLogin('facebook')">
+            <span style="font-size:18px">🔷</span> Continue with Facebook
+          </button>
+        </div>
+
+        <div class="auth-divider"><span>or sign in with email</span></div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" name="email" class="form-control" placeholder="you@example.com" autocomplete="email" />
+            <div class="error-msg" id="emailError" style="display:none"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword" style="display:flex;justify-content:space-between">
+              Password
+              <a href="#" id="forgotPassword" style="color:var(--primary);font-size:13px">Forgot password?</a>
+            </label>
+            <div class="password-field" style="position:relative">
+              <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" />
+              <button type="button" class="password-toggle">👁️</button>
+            </div>
+            <div class="error-msg" id="passwordError" style="display:none"></div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <label class="checkbox-field">
+              <input type="checkbox" name="remember" id="rememberMe">
+              <label for="rememberMe">Remember me for 30 days</label>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:14px">
+            Sign In 🚀
+          </button>
+        </form>
+
+        <div class="auth-switch">
+          Don't have an account? <a href="signup.html">Create Account →</a>
+        </div>
+
+        <div style="margin-top:20px;padding:14px;background:var(--bg-secondary);border-radius:var(--radius-sm);font-size:13px;color:var(--text-muted);text-align:center">
+          💡 <strong>Demo:</strong> Use any email & password (6+ chars) to sign in
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ThemeManager.init();
+      ThemeManager.updateIcon(ThemeManager.get());
+      Toast.init();
+
+      // Redirect if already logged in
+      if (Auth.isLoggedIn()) {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        window.location.href = redirect ? decodeURIComponent(redirect) : '../index.html';
+        return;
+      }
+
+      Auth.initLoginForm();
+      Auth.initPasswordToggle();
+    });
+  </script>
+</body>
+</html>

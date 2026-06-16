@@ -1,0 +1,501 @@
+/* =====================================================
+   FOODIE EXPRESS - Dark Theme
+   ===================================================== */
+
+[data-theme="dark"] {
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #1A1A2E;
+
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --bg-tertiary: #283548;
+  --bg-card: #1E293B;
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+
+  --border: #2D3748;
+  --border-light: #243044;
+
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.35);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.45);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.55);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.7);
+
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Body & Base ---- */
+[data-theme="dark"] body {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* ---- Navbar ---- */
+[data-theme="dark"] .navbar {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .navbar.scrolled {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .navbar.glass {
+  background: rgba(15, 23, 42, 0.85);
+}
+
+[data-theme="dark"] .nav-search input {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .nav-search input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .nav-search input:focus {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .nav-btn {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .nav-btn:hover {
+  background: rgba(255,107,53,0.2);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .search-dropdown,
+[data-theme="dark"] .user-dropdown {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .search-result-item:hover,
+[data-theme="dark"] .dropdown-item:hover {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .mobile-menu {
+  background: var(--bg-primary);
+}
+
+/* ---- Hero ---- */
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #0D1117 0%, #161B27 50%, #0D1B2A 100%);
+}
+
+[data-theme="dark"] .hero-search {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .hero-search input {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .hero-float-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+/* ---- Cards ---- */
+[data-theme="dark"] .card,
+[data-theme="dark"] .restaurant-card,
+[data-theme="dark"] .dish-card,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .order-card,
+[data-theme="dark"] .team-card,
+[data-theme="dark"] .stat-box {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .category-card {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-xs);
+}
+
+[data-theme="dark"] .cat-name { color: var(--text-primary); }
+[data-theme="dark"] .cat-count { color: var(--text-muted); }
+
+/* ---- Buttons ---- */
+[data-theme="dark"] .btn-secondary {
+  background: transparent;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+[data-theme="dark"] .btn-ghost {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .btn-ghost:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* ---- Form controls ---- */
+[data-theme="dark"] .form-control {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .form-control:focus {
+  background: var(--bg-secondary);
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .sort-select {
+  background-color: var(--bg-primary);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+/* ---- Filter chips ---- */
+[data-theme="dark"] .filter-chip {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .filter-chip:hover {
+  background: rgba(255,107,53,0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .filter-chip.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* ---- Filters bar ---- */
+[data-theme="dark"] .filters-bar {
+  background: var(--bg-primary);
+  border-bottom-color: var(--border);
+}
+
+/* ---- Restaurant Tags ---- */
+[data-theme="dark"] .restaurant-tag {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .restaurant-discount {
+  background: rgba(255,107,53,0.12);
+}
+
+/* ---- Cart Sidebar ---- */
+[data-theme="dark"] .cart-sidebar {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .cart-header,
+[data-theme="dark"] .cart-footer {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cart-close {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .cart-item {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .cart-item:hover {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .cart-coupon input {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .cart-summary {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .cart-qty-btn {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+}
+
+/* ---- Cart Page ---- */
+[data-theme="dark"] .cart-page-items,
+[data-theme="dark"] .order-summary-card,
+[data-theme="dark"] .checkout-section,
+[data-theme="dark"] .profile-sidebar,
+[data-theme="dark"] .profile-content {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cart-page-header,
+[data-theme="dark"] .order-summary-header,
+[data-theme="dark"] .checkout-section-header,
+[data-theme="dark"] .profile-content-header {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .cart-page-item {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .cart-page-item:hover {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .coupon-apply {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .coupon-apply input {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .summary-row.total {
+  border-top-color: var(--border);
+}
+
+/* ---- Address Cards ---- */
+[data-theme="dark"] .address-card {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .address-card:hover,
+[data-theme="dark"] .address-card.active {
+  border-color: var(--primary);
+  background: rgba(255,107,53,0.08);
+}
+
+/* ---- Payment Methods ---- */
+[data-theme="dark"] .payment-method {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .payment-method:hover,
+[data-theme="dark"] .payment-method.active {
+  border-color: var(--primary);
+  background: rgba(255,107,53,0.08);
+}
+
+/* ---- Profile Nav ---- */
+[data-theme="dark"] .profile-nav-item {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .profile-nav-item:hover,
+[data-theme="dark"] .profile-nav-item.active {
+  background: rgba(255,107,53,0.12);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .profile-card {
+  border-bottom-color: var(--border);
+}
+
+/* ---- Order Cards ---- */
+[data-theme="dark"] .order-card-header {
+  background: var(--bg-tertiary);
+  border-bottom-color: var(--border);
+}
+
+/* ---- Success Page ---- */
+[data-theme="dark"] .success-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .order-id-box {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .track-step .track-icon {
+  background: var(--bg-tertiary);
+  border-color: var(--border);
+}
+
+/* ---- Auth Pages ---- */
+[data-theme="dark"] .auth-form-section {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .social-login-btn {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .social-login-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .auth-divider::before,
+[data-theme="dark"] .auth-divider::after {
+  background: var(--border);
+}
+
+/* ---- Toasts ---- */
+[data-theme="dark"] .toast {
+  background: var(--bg-card);
+  border-color: var(--border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+/* ---- Modal ---- */
+[data-theme="dark"] .modal {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .modal-header {
+  border-bottom-color: var(--border);
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .modal-footer {
+  border-top-color: var(--border);
+}
+
+/* ---- Accordion ---- */
+[data-theme="dark"] .accordion-item {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .accordion-header {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .accordion-header:hover {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .accordion-header.open {
+  background: rgba(255,107,53,0.08);
+}
+
+[data-theme="dark"] .accordion-body p {
+  border-top-color: var(--border);
+}
+
+/* ---- Skeleton loader ---- */
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+}
+
+[data-theme="dark"] .skeleton-card {
+  background: var(--bg-card);
+}
+
+/* ---- Menu ---- */
+[data-theme="dark"] .menu-restaurant-header {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .menu-categories-nav {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .menu-categories-nav h4 {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .menu-cat-link:hover,
+[data-theme="dark"] .menu-cat-link.active {
+  background: rgba(255,107,53,0.12);
+}
+
+[data-theme="dark"] .menu-item {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .menu-item:hover {
+  border-color: var(--primary-glow);
+}
+
+[data-theme="dark"] .menu-section h2 {
+  border-bottom-color: var(--border);
+}
+
+/* ---- Contact ---- */
+[data-theme="dark"] .contact-form-card {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- Footer ---- */
+[data-theme="dark"] .footer {
+  background: #080D14;
+}
+
+[data-theme="dark"] .footer-bottom {
+  border-top-color: rgba(255,255,255,0.06);
+}
+
+/* ---- Section BG ---- */
+[data-theme="dark"] .section-alternate {
+  background: var(--bg-primary);
+}
+
+/* ---- Newsletter ---- */
+[data-theme="dark"] .newsletter {
+  background: linear-gradient(135deg, rgba(255,107,53,0.06), rgba(255,142,94,0.03));
+  border-color: rgba(255,107,53,0.12);
+}
+
+[data-theme="dark"] .newsletter-form input {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* ---- Page header ---- */
+[data-theme="dark"] .page-header {
+  background: linear-gradient(135deg, #080D14 0%, #0D1624 100%);
+}
+
+/* ---- Scrollbar ---- */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+/* ---- Qty selector ---- */
+[data-theme="dark"] .qty-selector {
+  background: var(--bg-tertiary);
+}
+
+/* ---- Theme transition ---- */
+[data-theme="dark"] * {
+  transition: background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease,
+              box-shadow 0.3s ease;
+}
