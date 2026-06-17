@@ -178,7 +178,7 @@ const Cart = {
 
     el.innerHTML = items.map(item => `
       <div class="cart-page-item" id="cart-item-${item.id}">
-        <img src="${item.img}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/80x80?text=🍔'">
+        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null;this.src=(location.pathname.includes('/pages/')?'../':'./') + 'images/food-placeholder.webp'">
         <div class="cart-page-item-info">
           <h3>${item.name}</h3>
           <p>${item.restaurantName || ''}</p>

@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — FoodieExpress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f3f4f6; min-height: 100vh; }
+
+    /* ── Layout ───────────────────────────────────────── */
+    .db-wrap { display: flex; min-height: 100vh; }
+
+    /* ── Sidebar ──────────────────────────────────────── */
+    .db-sidebar {
+      width: 240px; background: #111; position: fixed; top: 0; left: 0;
+      height: 100vh; overflow-y: auto; z-index: 200;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    .s-brand { display: flex; align-items: center; gap: 10px; padding: 22px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+    .s-brand-icon { font-size: 20px; }
+    .s-brand-text { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 800; background: linear-gradient(125deg,#d4a017,#ffd700,#d4a017); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .s-user { padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .s-avatar { width: 42px; height: 42px; border-radius: 50%; background: #e03131; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .s-user-name  { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .s-user-badge { font-size: 11px; font-weight: 700; color: #c9a84c; letter-spacing: 0.3px; }
+
+    .s-nav { flex: 1; padding: 10px 0; overflow-y: auto; }
+    .s-nav-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 20px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.60);
+      cursor: pointer; transition: all 0.15s; border: none; background: none; width: 100%;
+      text-align: left; border-left: 3px solid transparent;
+    }
+    .s-nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .s-nav-link.active { color: #fff; background: rgba(224,49,49,0.14); border-left-color: #e03131; }
+    .s-nav-link .nav-icon { font-size: 16px; flex-shrink: 0; }
+    .s-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0; }
+
+    .s-footer { padding: 16px 20px; flex-shrink: 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .s-logout-btn {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 10px 14px; background: rgba(224,49,49,0.12); color: #e03131;
+      border: 1px solid rgba(224,49,49,0.25); border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+    }
+    .s-logout-btn:hover { background: rgba(224,49,49,0.22); }
+
+    /* ── Main content ─────────────────────────────────── */
+    .db-main { margin-left: 240px; flex: 1; padding: 32px; min-height: 100vh; }
+
+    /* Mobile top bar */
+    .db-topbar {
+      display: none; position: fixed; top: 0; left: 0; right: 0; height: 58px;
+      background: #fff; border-bottom: 1px solid #e5e7eb; z-index: 150;
+      align-items: center; justify-content: space-between; padding: 0 16px;
+    }
+    .db-topbar-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; color: #111; font-size: 16px; }
+    .db-ham { background: none; border: none; cursor: pointer; font-size: 22px; padding: 4px; }
+    .db-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 190; }
+    .db-overlay.active { display: block; }
+
+    /* ── Sections ─────────────────────────────────────── */
+    .db-section { display: none; }
+    .db-section.active { display: block; }
+
+    /* ── Greeting ─────────────────────────────────────── */
+    .db-greeting { margin-bottom: 28px; }
+    .db-greeting h1 { font-size: clamp(20px, 3vw, 26px); font-weight: 800; color: #111; }
+    .db-greeting p  { font-size: 14px; color: #6b7280; margin-top: 4px; }
+
+    /* ── Stats grid ───────────────────────────────────── */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: #fff; border-radius: 14px; padding: 20px 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #f0f0f0;
+    }
+    .stat-icon { font-size: 26px; margin-bottom: 10px; }
+    .stat-label { font-size: 12px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .stat-value { font-size: 24px; font-weight: 800; color: #111; }
+    .stat-sub   { font-size: 11px; color: #9ca3af; margin-top: 3px; }
+
+    /* ── Rewards bar ──────────────────────────────────── */
+    .rewards-card {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; color: #fff;
+      display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+    }
+    .rewards-left { flex: 1; min-width: 200px; }
+    .rewards-title { font-size: 14px; color: rgba(255,255,255,0.55); font-weight: 600; margin-bottom: 8px; }
+    .rewards-name  { font-size: 18px; font-weight: 800; color: #c9a84c; margin-bottom: 14px; }
+    .rewards-bar-wrap { position: relative; }
+    .rewards-bar-bg   { height: 8px; background: rgba(255,255,255,0.12); border-radius: 99px; }
+    .rewards-bar-fill { height: 8px; background: linear-gradient(90deg, #c9a84c, #ffd700); border-radius: 99px; transition: width 1s ease; }
+    .rewards-hint     { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 8px; }
+    .rewards-right    { text-align: center; flex-shrink: 0; }
+    .rewards-pts-big  { font-size: 36px; font-weight: 900; color: #ffd700; line-height: 1; }
+    .rewards-pts-lbl  { font-size: 11px; color: rgba(255,255,255,0.50); margin-top: 4px; }
+
+    /* ── Section header ───────────────────────────────── */
+    .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .sec-title { font-size: 16px; font-weight: 700; color: #111; }
+    .sec-link  { font-size: 13px; color: #e03131; font-weight: 600; text-decoration: none; cursor: pointer; background: none; border: none; }
+    .sec-link:hover { text-decoration: underline; }
+
+    /* ── Orders table ─────────────────────────────────── */
+    .db-table-wrap { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; }
+    .db-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .db-table th { padding: 13px 18px; text-align: left; font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; background: #f9fafb; border-bottom: 1px solid #f0f0f0; }
+    .db-table td { padding: 14px 18px; border-bottom: 1px solid #f9fafb; color: #374151; vertical-align: middle; }
+    .db-table tr:last-child td { border-bottom: none; }
+    .db-table tr:hover td { background: #fafafa; }
+    .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+    .status-badge.delivered  { background: #dcfce7; color: #16a34a; }
+    .status-badge.on-the-way { background: #fef9c3; color: #a16207; }
+    .status-badge.cancelled  { background: #fee2e2; color: #dc2626; }
+
+    /* ── Empty state ──────────────────────────────────── */
+    .empty-state { text-align: center; padding: 40px 20px; }
+    .empty-state-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.6; }
+    .empty-state h4   { font-size: 15px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+    .empty-state p    { font-size: 13px; color: #9ca3af; }
+    .empty-state a    { color: #e03131; font-weight: 600; text-decoration: none; }
+
+    /* ── Quick actions ────────────────────────────────── */
+    .quick-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .qa-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s; border: none;
+    }
+    .qa-btn.primary { background: #e03131; color: #fff; }
+    .qa-btn.primary:hover { background: #c42828; }
+    .qa-btn.outline { background: #fff; color: #374151; border: 1.5px solid #e5e7eb; }
+    .qa-btn.outline:hover { border-color: #e03131; color: #e03131; background: #fff8f8; }
+
+    /* ── Profile form ─────────────────────────────────── */
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+    .f-group { margin-bottom: 0; }
+    .f-label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+    .f-input { width: 100%; height: 44px; padding: 0 14px; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 14px; font-family: inherit; color: #111; outline: none; background: #fafafa; transition: border-color 0.2s; }
+    .f-input:focus { border-color: #e03131; background: #fff; }
+    .f-input-full { grid-column: 1 / -1; }
+
+    /* ── Wishlist grid ────────────────────────────────── */
+    .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+    .wl-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #f0f0f0; }
+    .wl-card img { width: 100%; height: 120px; object-fit: cover; }
+    .wl-card-body { padding: 12px; }
+    .wl-card-name { font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .wl-card-rest { font-size: 11px; color: #9ca3af; }
+
+    /* ── Settings ─────────────────────────────────────── */
+    .settings-card { background: #fff; border-radius: 14px; padding: 24px; margin-bottom: 16px; border: 1px solid #f0f0f0; }
+    .settings-card h4 { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 16px; }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f9fafb; }
+    .setting-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .setting-label { font-size: 14px; color: #374151; }
+    .setting-desc  { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { display: none; }
+    .toggle-slider { position: absolute; inset: 0; background: #e5e7eb; border-radius: 99px; cursor: pointer; transition: background 0.2s; }
+    .toggle-slider::after { content: ''; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: #e03131; }
+    .toggle-switch input:checked + .toggle-slider::after { transform: translateX(20px); }
+
+    /* ── Toast ────────────────────────────────────────── */
+    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 960px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .db-sidebar { transform: translateX(-100%); }
+      .db-sidebar.open { transform: translateX(0); }
+      .db-main { margin-left: 0; padding: 80px 16px 90px; }
+      .db-topbar { display: flex; }
+      .rewards-card { flex-direction: column; gap: 16px; }
+    }
+    @media (max-width: 540px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .quick-actions .qa-btn { flex: 1; justify-content: center; }
+    }
+    @media (max-width: 380px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile top bar -->
+<div class="db-topbar">
+  <button class="db-ham" id="sidebarToggle">☰</button>
+  <div class="db-topbar-brand"><span>🍔</span> My Dashboard</div>
+  <a href="restaurants.html" style="font-size:13px;color:#e03131;font-weight:700;text-decoration:none">Order Now</a>
+</div>
+<div class="db-overlay" id="dbOverlay"></div>
+
+<div class="db-wrap">
+
+  <!-- ── Sidebar ──────────────────────────────────────── -->
+  <aside class="db-sidebar" id="dbSidebar">
+    <div class="s-brand">
+      <span class="s-brand-icon">🍔</span>
+      <span class="s-brand-text">FOODIE</span>
+    </div>
+
+    <div class="s-user">
+      <div class="s-avatar" id="sidebarAvatar">?</div>
+      <div>
+        <div class="s-user-name" id="sidebarName">Loading...</div>
+        <div class="s-user-badge">⭐ Gold Member</div>
+      </div>
+    </div>
+
+    <nav class="s-nav">
+      <button class="s-nav-link active" data-sec="overview"><span class="nav-icon">🏠</span> Dashboard</button>
+      <button class="s-nav-link"        data-sec="orders"><span class="nav-icon">🛵</span> My Orders</button>
+      <button class="s-nav-link"        data-sec="reservations"><span class="nav-icon">📅</span> My Reservations</button>
+      <button class="s-nav-link"        data-sec="wishlist"><span class="nav-icon">❤️</span> Wishlist</button>
+      <div class="s-divider"></div>
+      <button class="s-nav-link"        data-sec="profile"><span class="nav-icon">👤</span> Profile</button>
+      <button class="s-nav-link"        data-sec="settings"><span class="nav-icon">⚙️</span> Settings</button>
+    </nav>
+
+    <div class="s-footer">
+      <button class="s-logout-btn" onclick="Auth.logoutUser()">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────── -->
+  <main class="db-main">
+
+    <!-- OVERVIEW -->
+    <div class="db-section active" id="sec-overview">
+      <div class="db-greeting">
+        <h1 id="greetingText">Good morning! 👋</h1>
+        <p id="dateText"></p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-label">Reward Points</div>
+          <div class="stat-value" id="statPoints">—</div>
+          <div class="stat-sub">Gold Member</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-value" id="statOrders">—</div>
+          <div class="stat-sub">Since joining</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Total Spent</div>
+          <div class="stat-value" id="statSpent">—</div>
+          <div class="stat-sub">Lifetime</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">❤️</div>
+          <div class="stat-label">Wishlist Items</div>
+          <div class="stat-value" id="statWishlist">—</div>
+          <div class="stat-sub">Saved dishes</div>
+        </div>
+      </div>
+
+      <!-- Rewards progress -->
+      <div class="rewards-card">
+        <div class="rewards-left">
+          <div class="rewards-title">Membership Tier</div>
+          <div class="rewards-name" id="tierName">⭐ Gold Member</div>
+          <div class="rewards-bar-wrap">
+            <div class="rewards-bar-bg">
+              <div class="rewards-bar-fill" id="rewardsBarFill" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="rewards-hint" id="rewardsHint">Loading...</div>
+        </div>
+        <div class="rewards-right">
+          <div class="rewards-pts-big" id="rewardsPtsBig">—</div>
+          <div class="rewards-pts-lbl">points</div>
+        </div>
+      </div>
+
+      <!-- Recent orders -->
+      <div class="sec-head">
+        <span class="sec-title">Recent Orders</span>
+        <button class="sec-link" onclick="showSection('orders')">View all →</button>
+      </div>
+      <div class="db-table-wrap" id="recentOrdersWrap"></div>
+
+      <!-- Quick actions -->
+      <div class="sec-head" style="margin-top:20px"><span class="sec-title">Quick Actions</span></div>
+      <div class="quick-actions">
+        <a href="restaurants.html" class="qa-btn primary">🍔 Order Now</a>
+        <button class="qa-btn outline" onclick="showSection('orders')">🛵 Track Order</button>
+        <button class="qa-btn outline" onclick="showSection('overview');document.querySelector('.rewards-card').scrollIntoView({behavior:'smooth'})">🏆 View Rewards</button>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="db-section" id="sec-orders">
+      <div class="db-greeting"><h1>My Orders 🛵</h1><p>Your complete order history.</p></div>
+      <div class="db-table-wrap" id="allOrdersWrap"></div>
+    </div>
+
+    <!-- RESERVATIONS -->
+    <div class="db-section" id="sec-reservations">
+      <div class="db-greeting"><h1>My Reservations 📅</h1><p>Manage your table bookings.</p></div>
+      <div class="db-table-wrap">
+        <div class="empty-state">
+          <div class="empty-state-icon">📅</div>
+          <h4>No reservations yet</h4>
+          <p>Table booking feature <strong>coming soon</strong>. Stay tuned!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WISHLIST -->
+    <div class="db-section" id="sec-wishlist">
+      <div class="db-greeting"><h1>My Wishlist ❤️</h1><p>Dishes and restaurants you've saved.</p></div>
+      <div id="wishlistContent"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="db-section" id="sec-profile">
+      <div class="db-greeting"><h1>My Profile 👤</h1><p>Update your personal details.</p></div>
+      <div style="background:#fff;border-radius:14px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid #f0f0f0">
+          <div style="width:64px;height:64px;border-radius:50%;background:#e03131;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800" id="profileAvatarCircle">?</div>
+          <div>
+            <div style="font-size:18px;font-weight:800;color:#111" id="profileNameHead">—</div>
+            <div style="font-size:13px;color:#9ca3af" id="profileEmailHead">—</div>
+            <div style="font-size:12px;color:#c9a84c;font-weight:600;margin-top:3px">⭐ Gold Member</div>
+          </div>
+        </div>
+        <div class="profile-grid">
+          <div class="f-group">
+            <label class="f-label">Full Name</label>
+            <input class="f-input" type="text" id="profileName" />
+          </div>
+          <div class="f-group">
+            <label class="f-label">Phone Number</label>
+            <input class="f-input" type="tel" id="profilePhone" />
+          </div>
+          <div class="f-group f-input-full" style="grid-column:1/-1">
+            <label class="f-label">Email Address</label>
+            <input class="f-input" type="email" id="profileEmail" />
+          </div>
+        </div>
+        <button class="qa-btn primary" onclick="saveProfile()" style="margin-top:8px">💾 Save Changes</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="db-section" id="sec-settings">
+      <div class="db-greeting"><h1>Settings ⚙️</h1><p>Manage your account preferences.</p></div>
+      <div class="settings-card">
+        <h4>Appearance</h4>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Dark Mode</div>
+            <div class="setting-desc">Switch between light and dark theme</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle" onchange="ThemeManager.toggle()" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h4>Notifications</h4>
+        <div class="setting-row">
+          <div><div class="setting-label">Order Updates</div><div class="setting-desc">Delivery and status notifications</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Offers & Deals</div><div class="setting-desc">Weekly offers and exclusive deals</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-row">
+          <div><div class="setting-label">Reward Points</div><div class="setting-desc">Points earned and milestone alerts</div></div>
+          <label class="toggle-switch"><input type="checkbox" /><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h4>Account</h4>
+        <div class="setting-row">
+          <div><div class="setting-label">Delete Account</div><div class="setting-desc">Permanently remove your data</div></div>
+          <button onclick="Toast.warning('Contact Support','Email support@foodieexpress.in to delete your account.')" style="padding:8px 16px;background:none;border:1.5px solid #fee2e2;color:#e03131;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">Delete</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="../js/cart.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    ThemeManager.init();
+    Toast.init();
+    if (!Auth.requireAuth('user')) return;
+
+    const user = Auth.getSession();
+    initDashboard(user);
+
+    // Sidebar toggle (mobile)
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('dbSidebar').classList.toggle('open');
+      document.getElementById('dbOverlay').classList.toggle('active');
+    });
+    document.getElementById('dbOverlay').addEventListener('click', () => {
+      document.getElementById('dbSidebar').classList.remove('open');
+      document.getElementById('dbOverlay').classList.remove('active');
+    });
+
+    // Nav links
+    document.querySelectorAll('.s-nav-link[data-sec]').forEach(btn => {
+      btn.addEventListener('click', () => showSection(btn.dataset.sec));
+    });
+  });
+
+  function showSection(name) {
+    document.querySelectorAll('.db-section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('sec-' + name);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.s-nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelector(`.s-nav-link[data-sec="${name}"]`)?.classList.add('active');
+    document.getElementById('dbSidebar').classList.remove('open');
+    document.getElementById('dbOverlay').classList.remove('active');
+  }
+
+  function initDashboard(user) {
+    // Sidebar
+    const initials = user.avatar || user.name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('sidebarAvatar').textContent = initials;
+    document.getElementById('sidebarName').textContent   = user.name;
+
+    // Greeting
+    const hour = new Date().getHours();
+    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('greetingText').textContent = greet + ', ' + user.name.split(' ')[0] + ' 👋';
+    document.getElementById('dateText').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    // Stats
+    const wishlist = JSON.parse(localStorage.getItem('foodie_wishlist') || '[]');
+    document.getElementById('statPoints').textContent   = (user.points || 0).toLocaleString('en-IN');
+    document.getElementById('statOrders').textContent   = user.totalOrders || 0;
+    document.getElementById('statSpent').textContent    = '₹' + (user.totalSpent || 0).toLocaleString('en-IN');
+    document.getElementById('statWishlist').textContent = wishlist.length;
+    document.getElementById('rewardsPtsBig').textContent = (user.points || 0).toLocaleString('en-IN');
+
+    // Rewards bar (Gold → Platinum at 3500)
+    const pts = user.points || 0;
+    const GOLD = 1000, PLATINUM = 3500;
+    const pct = Math.min(100, Math.round(((pts - GOLD) / (PLATINUM - GOLD)) * 100));
+    document.getElementById('rewardsBarFill').style.width = Math.max(0, pct) + '%';
+    const remaining = Math.max(0, PLATINUM - pts);
+    document.getElementById('rewardsHint').textContent = remaining > 0
+      ? remaining.toLocaleString('en-IN') + ' pts to reach Platinum'
+      : '🎉 You have reached Platinum!';
+
+    // Profile section
+    document.getElementById('profileAvatarCircle').textContent = initials;
+    document.getElementById('profileNameHead').textContent  = user.name;
+    document.getElementById('profileEmailHead').textContent = user.email;
+    document.getElementById('profileName').value  = user.name;
+    document.getElementById('profilePhone').value = user.phone || '';
+    document.getElementById('profileEmail').value = user.email;
+
+    // Orders
+    renderOrders();
+    renderWishlist();
+  }
+
+  function renderOrders(limit) {
+    const user   = Auth.getSession();
+    const orders = JSON.parse(localStorage.getItem('foodie_orders') || '[]')
+      .filter(o => o.userEmail === user.email)
+      .reverse();
+    const show = limit ? orders.slice(0, limit) : orders;
+
+    const makeTable = (rows) => {
+      if (!rows.length) return `<div class="empty-state"><div class="empty-state-icon">📦</div><h4>No orders yet</h4><p>Hungry? <a href="restaurants.html">Start ordering →</a></p></div>`;
+      return `<table class="db-table">
+        <thead><tr><th>Order ID</th><th>Items</th><th>Restaurant</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody>${rows.map(o => `<tr>
+          <td style="font-weight:700;color:#e03131">#${o.id}</td>
+          <td>${o.items}</td>
+          <td style="color:#6b7280">${o.restaurant}</td>
+          <td style="color:#6b7280">${o.date}</td>
+          <td style="font-weight:700">₹${o.amount}</td>
+          <td><span class="status-badge ${o.status === 'Delivered' ? 'delivered' : o.status === 'Cancelled' ? 'cancelled' : 'on-the-way'}">${o.status === 'Delivered' ? '✓' : o.status === 'On the Way' ? '🛵' : '✗'} ${o.status}</span></td>
+        </tr>`).join('')}</tbody>
+      </table>`;
+    };
+
+    document.getElementById('recentOrdersWrap').innerHTML = makeTable(show.slice(0, 5));
+    document.getElementById('allOrdersWrap').innerHTML    = makeTable(show);
+  }
+
+  function renderWishlist() {
+    const wishlist = JSON.parse(localStorage.getItem('foodie_wishlist') || '[]');
+    const el = document.getElementById('wishlistContent');
+    if (!wishlist.length) {
+      el.innerHTML = `<div class="db-table-wrap"><div class="empty-state"><div class="empty-state-icon">❤️</div><h4>Nothing saved yet</h4><p>Tap the heart on any dish or restaurant to save it here.</p></div></div>`;
+      return;
+    }
+    el.innerHTML = `<div class="wishlist-grid">${wishlist.slice(0,12).map(item => `
+      <div class="wl-card">
+        <img src="${item.img || '../images/photo-1504674900247-0877df9cc836.webp'}" alt="${item.name}" loading="lazy" onerror="this.src='../images/photo-1504674900247-0877df9cc836.webp'">
+        <div class="wl-card-body"><div class="wl-card-name">${item.name}</div><div class="wl-card-rest">${item.restaurantName || ''}</div></div>
+      </div>`).join('')}</div>`;
+  }
+
+  function saveProfile() {
+    const name  = document.getElementById('profileName').value.trim();
+    const email = document.getElementById('profileEmail').value.trim();
+    const phone = document.getElementById('profilePhone').value.trim();
+    if (!name || !email) { Toast.warning('Missing Fields', 'Name and email are required.'); return; }
+    Auth.updateUser({ name, email, phone });
+    document.getElementById('sidebarName').textContent   = name;
+    document.getElementById('profileNameHead').textContent  = name;
+    document.getElementById('profileEmailHead').textContent = email;
+    Toast.success('Profile Updated! 💾', 'Your changes have been saved.');
+  }
+</script>
+</body>
+</html>

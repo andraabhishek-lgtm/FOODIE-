@@ -1,249 +1,157 @@
 /* =====================================================
-   FOODIE EXPRESS - Auth Module
+   FOODIE — Auth Module v2
    ===================================================== */
 
 'use strict';
 
+const USERS_KEY   = 'foodie_users';
+const SESSION_KEY = 'foodie_session';
+
 const Auth = {
-  key: 'fe-user',
-  sessionKey: 'fe-session',
+  key: 'fe-user', // kept for backward compat with header/cart
 
-  getUser() {
+  // ── Seed demo accounts + orders ──────────────────────
+  seedUsers() {
+    if (!localStorage.getItem(USERS_KEY)) {
+      localStorage.setItem(USERS_KEY, JSON.stringify([
+        {
+          name: 'Rahul Sharma', username: 'rahul',
+          email: 'rahul@foodie.com', phone: '9876543210',
+          password: 'rahul123', role: 'user',
+          points: 1840, totalOrders: 12, totalSpent: 4280,
+          joined: '2024-01-10', avatar: 'RS',
+        },
+        {
+          name: 'Admin', username: 'admin',
+          email: 'admin@foodie.com', phone: '9000000000',
+          password: 'admin@123', role: 'admin',
+          avatar: 'AD',
+        },
+      ]));
+    }
+    if (!localStorage.getItem('foodie_orders')) {
+      localStorage.setItem('foodie_orders', JSON.stringify([
+        { id: 'FE001', userEmail: 'rahul@foodie.com', items: 'Chicken Biryani', restaurant: 'Spice Garden',     date: '2026-06-15', amount: 299, status: 'Delivered'  },
+        { id: 'FE002', userEmail: 'rahul@foodie.com', items: 'Margherita Pizza', restaurant: 'Pizza Paradise', date: '2026-06-12', amount: 349, status: 'Delivered'  },
+        { id: 'FE003', userEmail: 'rahul@foodie.com', items: 'Classic Smash Burger', restaurant: 'The Burger Lab', date: '2026-06-17', amount: 249, status: 'On the Way' },
+        { id: 'FE004', userEmail: 'rahul@foodie.com', items: 'Paneer Butter Masala + Naan', restaurant: 'Spice Garden', date: '2026-06-10', amount: 348, status: 'Delivered' },
+        { id: 'FE005', userEmail: 'rahul@foodie.com', items: 'Acai Bowl + Caesar Salad', restaurant: 'Green Bowl', date: '2026-06-07', amount: 538, status: 'Delivered'  },
+      ]));
+    }
+  },
+
+  // ── Register new user ─────────────────────────────────
+  registerUser(data) {
     try {
-      const raw = localStorage.getItem(this.key);
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
+      const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+      if (users.some(u => u.email.toLowerCase() === data.email.toLowerCase()))
+        return { ok: false, message: 'An account with this email already exists.' };
+      if (data.username && users.some(u => u.username && u.username.toLowerCase() === data.username.toLowerCase()))
+        return { ok: false, message: 'This username is already taken.' };
+      users.push({ ...data, role: 'user', points: 200, totalOrders: 0, totalSpent: 0, joined: new Date().toISOString().split('T')[0] });
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      return { ok: true, message: 'Account created successfully!' };
+    } catch { return { ok: false, message: 'An error occurred. Please try again.' }; }
   },
 
-  setUser(user) {
-    localStorage.setItem(this.key, JSON.stringify(user));
+  // ── Login ─────────────────────────────────────────────
+  loginUser(email, password) {
+    try {
+      const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+      const user  = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+      if (!user) return { ok: false, message: 'Invalid email or password.' };
+      const session = { ...user };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+      localStorage.setItem(this.key,    JSON.stringify(session)); // fe-user compat
+      return { ok: true, user: session };
+    } catch { return { ok: false, message: 'Login failed. Please try again.' }; }
   },
 
-  isLoggedIn() {
-    return !!this.getUser();
+  // ── Session ───────────────────────────────────────────
+  getSession() {
+    try { const r = localStorage.getItem(SESSION_KEY); return r ? JSON.parse(r) : null; }
+    catch { return null; }
   },
 
-  logout() {
+  // ── Logout ────────────────────────────────────────────
+  logoutUser() {
+    localStorage.removeItem(SESSION_KEY);
     localStorage.removeItem(this.key);
-    Cart.clear();
-    Toast.success('Logged Out', 'See you soon!');
+    if (typeof Cart  !== 'undefined') Cart.clear();
+    if (typeof Toast !== 'undefined') Toast.success('Logged Out', 'See you soon! 👋');
     setTimeout(() => {
-      const base = getBasePath();
-      window.location.href = base + 'index.html';
-    }, 1000);
+      window.location.href = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
+    }, 900);
   },
 
-  requireAuth(redirectTo) {
-    if (!this.isLoggedIn()) {
-      const base = getBasePath();
-      window.location.href = base + 'pages/login.html?redirect=' + encodeURIComponent(redirectTo || window.location.href);
+  // ── Require auth (call at top of protected pages) ─────
+  requireAuth(role) {
+    const user = this.getSession();
+    if (!user) {
+      window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+      return false;
+    }
+    if (role && user.role !== role) {
+      window.location.href = '../index.html';
       return false;
     }
     return true;
   },
 
-  // Login form handler
-  initLoginForm() {
-    const form = document.getElementById('loginForm');
-    if (!form) return;
-
-    // Pre-fill redirect
-    const params = new URLSearchParams(window.location.search);
-    const redirect = params.get('redirect');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = form.email.value.trim();
-      const password = form.password.value;
-      const remember = form.remember?.checked;
-
-      if (!this.validateEmail(email)) {
-        this.showFieldError('emailError', 'Please enter a valid email address');
-        return;
-      }
-
-      if (password.length < 6) {
-        this.showFieldError('passwordError', 'Password must be at least 6 characters');
-        return;
-      }
-
-      // Simulate login
-      const btnEl = form.querySelector('button[type="submit"]');
-      this.setLoading(btnEl, true);
-
-      setTimeout(() => {
-        const user = {
-          name: email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-          email,
-          phone: '+91 98765 43210',
-          avatar: null,
-          joinedAt: new Date().toISOString(),
-          remember,
-        };
-
-        this.setUser(user);
-        Toast.success('Welcome back! 👋', user.name);
-
-        setTimeout(() => {
-          if (redirect) {
-            window.location.href = decodeURIComponent(redirect);
-          } else {
-            window.location.href = getBasePath() + 'index.html';
-          }
-        }, 800);
-      }, 1200);
-    });
-
-    // Social login UI
-    document.querySelectorAll('.social-login-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        Toast.info('Social Login', 'This feature is coming soon!');
-      });
-    });
-
-    // Forgot password
-    const forgotBtn = document.getElementById('forgotPassword');
-    if (forgotBtn) {
-      forgotBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const email = form.email.value.trim();
-        if (!email || !this.validateEmail(email)) {
-          Toast.warning('Enter your email first', 'We\'ll send a reset link.');
-          return;
-        }
-        Toast.success('Reset Email Sent!', `Check ${email} for instructions.`);
-      });
-    }
+  // ── Update current user profile ───────────────────────
+  updateUser(data) {
+    try {
+      const session = this.getSession();
+      if (!session) return false;
+      const users   = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+      const idx     = users.findIndex(u => u.email === session.email);
+      const updated = { ...session, ...data };
+      if (idx !== -1) users[idx] = updated;
+      localStorage.setItem(USERS_KEY,   JSON.stringify(users));
+      localStorage.setItem(SESSION_KEY, JSON.stringify(updated));
+      localStorage.setItem(this.key,    JSON.stringify(updated));
+      return true;
+    } catch { return false; }
   },
 
-  // Signup form handler
-  initSignupForm() {
-    const form = document.getElementById('signupForm');
-    if (!form) return;
+  // ── Backward-compat aliases ───────────────────────────
+  getUser()    { return this.getSession(); },
+  setUser(u)   { localStorage.setItem(this.key, JSON.stringify(u)); localStorage.setItem(SESSION_KEY, JSON.stringify(u)); },
+  isLoggedIn() { return !!this.getSession(); },
+  logout()     { this.logoutUser(); },
 
-    // Password strength meter
-    const passInput = document.getElementById('signupPassword');
-    if (passInput) {
-      passInput.addEventListener('input', () => {
-        this.checkPasswordStrength(passInput.value);
-      });
-    }
+  // ── UI helpers (used by other pages) ─────────────────
+  validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); },
+  validatePhone(p) { return /^[+]?[\d\s\-]{10,15}$/.test(p); },
 
-    // Confirm password
-    const confirmInput = document.getElementById('confirmPassword');
-    if (confirmInput) {
-      confirmInput.addEventListener('input', () => {
-        const pass = passInput?.value || '';
-        if (confirmInput.value && confirmInput.value !== pass) {
-          this.showFieldError('confirmPasswordError', 'Passwords do not match');
-        } else {
-          this.clearFieldError('confirmPasswordError');
-        }
-      });
-    }
+  showFieldError(id, msg) {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = '⚠ ' + msg; el.style.display = 'block'; }
+  },
+  clearFieldError(id) {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = ''; el.style.display = 'none'; }
+  },
+  clearAllErrors() {
+    document.querySelectorAll('.error-msg').forEach(el => { el.textContent = ''; el.style.display = 'none'; });
+  },
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = form.fullName?.value.trim();
-      const email = form.email?.value.trim();
-      const phone = form.phone?.value.trim();
-      const password = form.password?.value;
-      const confirm = form.confirmPassword?.value;
-      const terms = form.terms?.checked;
-
-      let valid = true;
-
-      if (!name || name.length < 2) {
-        this.showFieldError('nameError', 'Please enter your full name'); valid = false;
-      }
-      if (!this.validateEmail(email)) {
-        this.showFieldError('emailError', 'Please enter a valid email'); valid = false;
-      }
-      if (phone && !this.validatePhone(phone)) {
-        this.showFieldError('phoneError', 'Please enter a valid phone number'); valid = false;
-      }
-      if (password.length < 8) {
-        this.showFieldError('passwordError', 'Password must be at least 8 characters'); valid = false;
-      }
-      if (password !== confirm) {
-        this.showFieldError('confirmPasswordError', 'Passwords do not match'); valid = false;
-      }
-      if (!terms) {
-        Toast.warning('Accept Terms', 'Please accept the Terms & Conditions to continue.'); valid = false;
-      }
-
-      if (!valid) return;
-
-      const btnEl = form.querySelector('button[type="submit"]');
-      this.setLoading(btnEl, true);
-
-      setTimeout(() => {
-        const user = { name, email, phone, avatar: null, joinedAt: new Date().toISOString() };
-        this.setUser(user);
-        Toast.success('Account Created! 🎉', 'Welcome to FoodieExpress!');
-
-        setTimeout(() => {
-          window.location.href = getBasePath() + 'index.html';
-        }, 800);
-      }, 1500);
-    });
+  setLoading(btn, loading) {
+    if (!btn) return;
+    if (loading) { btn.dataset.original = btn.innerHTML; btn.innerHTML = '⏳ Please wait...'; btn.disabled = true; }
+    else         { btn.innerHTML = btn.dataset.original || btn.innerHTML; btn.disabled = false; }
   },
 
   checkPasswordStrength(password) {
     const fill = document.getElementById('strengthFill');
     const text = document.getElementById('strengthText');
     if (!fill || !text) return;
-
-    const checks = [
-      password.length >= 8,
-      /[A-Z]/.test(password),
-      /[0-9]/.test(password),
-      /[^A-Za-z0-9]/.test(password),
-    ];
-    const score = checks.filter(Boolean).length;
-
-    const levels = ['', 'weak', 'fair', 'good', 'strong'];
-    const labels = ['', 'Weak', 'Fair', 'Good', 'Strong 💪'];
-
+    const score   = [password.length >= 8, /[A-Z]/.test(password), /[0-9]/.test(password), /[^A-Za-z0-9]/.test(password)].filter(Boolean).length;
+    const levels  = ['', 'weak', 'fair', 'good', 'strong'];
+    const labels  = ['', 'Weak', 'Fair', 'Good', 'Strong 💪'];
     fill.className = 'strength-fill ' + (levels[score] || '');
     text.className = 'strength-text ' + (levels[score] || '');
     text.textContent = score > 0 ? labels[score] : '';
-  },
-
-  validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  },
-
-  validatePhone(phone) {
-    return /^[+]?[\d\s\-]{10,15}$/.test(phone);
-  },
-
-  showFieldError(id, msg) {
-    const el = document.getElementById(id);
-    if (el) { el.textContent = '⚠ ' + msg; el.style.display = 'block'; }
-  },
-
-  clearFieldError(id) {
-    const el = document.getElementById(id);
-    if (el) { el.textContent = ''; el.style.display = 'none'; }
-  },
-
-  clearAllErrors() {
-    document.querySelectorAll('.error-msg').forEach(el => {
-      el.textContent = ''; el.style.display = 'none';
-    });
-  },
-
-  setLoading(btn, loading) {
-    if (!btn) return;
-    if (loading) {
-      btn.dataset.original = btn.innerHTML;
-      btn.innerHTML = '<span class="spinner spinner-sm" style="border-color:rgba(255,255,255,0.3);border-top-color:white;width:18px;height:18px"></span> Please wait...';
-      btn.disabled = true;
-    } else {
-      btn.innerHTML = btn.dataset.original || btn.innerHTML;
-      btn.disabled = false;
-    }
   },
 
   initPasswordToggle() {
@@ -252,53 +160,37 @@ const Auth = {
         const input = btn.previousElementSibling;
         if (!input) return;
         const isPass = input.type === 'password';
-        input.type = isPass ? 'text' : 'password';
+        input.type   = isPass ? 'text' : 'password';
         btn.textContent = isPass ? '🙈' : '👁️';
       });
     });
   },
 
-  initProfilePage() {
-    const user = this.getUser();
-    if (!user) {
-      window.location.href = getBasePath() + 'pages/login.html';
-      return;
-    }
+  // no-ops — new login/signup handle their own forms
+  initLoginForm()  {},
+  initSignupForm() {},
+  initSocialLogin() { if (typeof Toast !== 'undefined') Toast.info('Social Login', 'OAuth coming soon!'); },
 
-    // Fill profile info
+  initProfilePage() {
+    const user = this.getSession();
+    if (!user) { window.location.href = 'login.html'; return; }
     ['profileName', 'profileEmail', 'profilePhone'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) {
-        const key = id.replace('profile', '').toLowerCase();
-        el.value = user[key] || '';
-      }
+      if (el) el.value = user[id.replace('profile', '').toLowerCase()] || '';
     });
-
-    const avatarEl = document.getElementById('profileAvatar');
-    if (avatarEl) {
-      avatarEl.src = user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=FF6B35&color=fff&size=90`;
-    }
-
-    const nameDisplay = document.getElementById('profileNameDisplay');
-    if (nameDisplay) nameDisplay.textContent = user.name;
-
-    const emailDisplay = document.getElementById('profileEmailDisplay');
-    if (emailDisplay) emailDisplay.textContent = user.email;
-
-    // Profile update form
-    const profileForm = document.getElementById('profileForm');
-    if (profileForm) {
-      profileForm.addEventListener('submit', (e) => {
+    const av = document.getElementById('profileAvatar');
+    if (av) av.src = (location.pathname.includes('/pages/') ? '../' : './') + 'images/avatar-default.webp';
+    const nd = document.getElementById('profileNameDisplay');  if (nd) nd.textContent = user.name;
+    const ed = document.getElementById('profileEmailDisplay'); if (ed) ed.textContent = user.email;
+    const pf = document.getElementById('profileForm');
+    if (pf) {
+      pf.addEventListener('submit', e => {
         e.preventDefault();
-        const updated = {
-          ...user,
-          name: profileForm.profileName?.value || user.name,
-          email: profileForm.profileEmail?.value || user.email,
-          phone: profileForm.profilePhone?.value || user.phone,
-        };
-        this.setUser(updated);
-        Toast.success('Profile Updated!', 'Your changes have been saved.');
+        this.updateUser({ name: pf.profileName?.value || user.name, email: pf.profileEmail?.value || user.email, phone: pf.profilePhone?.value || user.phone });
+        if (typeof Toast !== 'undefined') Toast.success('Profile Updated!', 'Your changes have been saved.');
       });
     }
   },
 };
+
+Auth.seedUsers();

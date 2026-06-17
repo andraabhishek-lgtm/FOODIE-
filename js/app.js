@@ -1,4 +1,4 @@
-/* =====================================================
+﻿/* =====================================================
    FOODIE EXPRESS - Core App Logic
    ===================================================== */
 
@@ -34,7 +34,7 @@ const RESTAURANTS = [
     featured: true,
     discount: '40% OFF up to ₹120',
     tags: ['North Indian', 'Mughlai', 'Biryani'],
-    img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1517248135467-4c7edcad34c4.webp',
     category: 'biryani',
     priceRange: '$$',
   },
@@ -52,7 +52,7 @@ const RESTAURANTS = [
     featured: true,
     discount: '20% OFF',
     tags: ['Burgers', 'Wraps', 'Shakes'],
-    img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1555396273-367ea4eb4db5.webp',
     category: 'burger',
     priceRange: '$$',
   },
@@ -70,7 +70,7 @@ const RESTAURANTS = [
     featured: false,
     discount: 'Free Delivery',
     tags: ['Pizza', 'Pasta', 'Calzone'],
-    img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1414235077428-338989a2e8c0.webp',
     category: 'pizza',
     priceRange: '$$$',
   },
@@ -88,7 +88,7 @@ const RESTAURANTS = [
     featured: false,
     discount: '15% OFF',
     tags: ['Chinese', 'Thai', 'Dim Sum'],
-    img: 'https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1537047902294-62a40c20a6ae.webp',
     category: 'chinese',
     priceRange: '$$',
   },
@@ -106,7 +106,7 @@ const RESTAURANTS = [
     featured: true,
     discount: '10% OFF',
     tags: ['Healthy', 'Vegan', 'Salads'],
-    img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1512621776951-a57141f2eefd.webp',
     category: 'healthy',
     priceRange: '$$$',
   },
@@ -124,7 +124,7 @@ const RESTAURANTS = [
     featured: false,
     discount: '₹50 OFF on ₹300+',
     tags: ['Desserts', 'Cakes', 'Ice Cream'],
-    img: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1551024506-0bccd828d307.webp',
     category: 'desserts',
     priceRange: '$$',
   },
@@ -142,7 +142,7 @@ const RESTAURANTS = [
     featured: true,
     discount: '30% OFF up to ₹90',
     tags: ['Biryani', 'Kebabs', 'Hyderabadi'],
-    img: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1563379091339-03b21ab4a4f8.webp',
     category: 'biryani',
     priceRange: '$$',
   },
@@ -160,7 +160,7 @@ const RESTAURANTS = [
     featured: false,
     discount: null,
     tags: ['Dosa', 'Idli', 'South Indian'],
-    img: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1668236543090-82eba5ee5976.webp',
     category: 'south-indian',
     priceRange: '$',
   },
@@ -178,7 +178,7 @@ const RESTAURANTS = [
     featured: false,
     discount: 'Buy 2 Get 1 Free',
     tags: ['Mexican', 'Tacos', 'Nachos'],
-    img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1562967914-608f82629710.webp',
     category: 'fast-food',
     priceRange: '$$',
   },
@@ -196,7 +196,7 @@ const RESTAURANTS = [
     featured: false,
     discount: '2nd at 50% OFF',
     tags: ['Smoothies', 'Juices', 'Shakes'],
-    img: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1544145945-f90425340c7e.webp',
     category: 'beverages',
     priceRange: '$',
   },
@@ -214,7 +214,7 @@ const RESTAURANTS = [
     featured: false,
     discount: '25% OFF',
     tags: ['Pasta', 'Pizza', 'Risotto'],
-    img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1555396273-367ea4eb4db5.webp',
     category: 'pizza',
     priceRange: '$$$',
   },
@@ -232,58 +232,202 @@ const RESTAURANTS = [
     featured: false,
     discount: '₹30 OFF',
     tags: ['Chaat', 'Pav Bhaji', 'Bhel'],
-    img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&auto=format&fit=crop',
+    img: '../images/photo-1504674900247-0877df9cc836.webp',
     category: 'fast-food',
     priceRange: '$',
+  },
+  {
+    id: 13,
+    name: 'Mumbai Tadka',
+    cuisine: 'North Indian, Maharashtrian',
+    rating: 4.5,
+    ratingCount: 3210,
+    deliveryTime: '25-35',
+    distance: '1.4 km',
+    minOrder: 179,
+    deliveryFee: 25,
+    status: 'open',
+    featured: true,
+    discount: '20% OFF up to ₹80',
+    tags: ['Vada Pav', 'Pav Bhaji', 'North Indian'],
+    img: '../images/photo-1601050690597-df0568f70950.webp',
+    category: 'biryani',
+    priceRange: '$$',
+  },
+  {
+    id: 14,
+    name: 'Sushi Sumo',
+    cuisine: 'Japanese, Pan Asian',
+    rating: 4.7,
+    ratingCount: 1120,
+    deliveryTime: '35-50',
+    distance: '2.8 km',
+    minOrder: 399,
+    deliveryFee: 50,
+    status: 'open',
+    featured: true,
+    discount: 'Free Miso Soup',
+    tags: ['Sushi', 'Ramen', 'Tempura'],
+    img: '../images/photo-1553621042-f6e147245754.webp',
+    category: 'chinese',
+    priceRange: '$$$',
+  },
+  {
+    id: 15,
+    name: 'Andhra Spice',
+    cuisine: 'South Indian, Telugu, Andhra',
+    rating: 4.6,
+    ratingCount: 2890,
+    deliveryTime: '20-35',
+    distance: '1.1 km',
+    minOrder: 149,
+    deliveryFee: 20,
+    status: 'open',
+    featured: false,
+    discount: '15% OFF',
+    tags: ['Pesarattu', 'Gongura', 'Biryani'],
+    img: '../images/photo-1455619452474-d2be8b1e70cd.webp',
+    category: 'south-indian',
+    priceRange: '$$',
+  },
+  {
+    id: 16,
+    name: 'The Waffle Bar',
+    cuisine: 'Desserts, Belgian Waffles, Crepes',
+    rating: 4.8,
+    ratingCount: 1760,
+    deliveryTime: '15-25',
+    distance: '0.7 km',
+    minOrder: 149,
+    deliveryFee: 20,
+    status: 'open',
+    featured: false,
+    discount: '₹40 OFF on ₹250+',
+    tags: ['Waffles', 'Crepes', 'Gelato'],
+    img: '../images/photo-1562376552-0d160a2f238d.webp',
+    category: 'desserts',
+    priceRange: '$$',
+  },
+  {
+    id: 17,
+    name: 'Wok & Roll',
+    cuisine: 'Chinese, Noodles, Stir Fry',
+    rating: 4.4,
+    ratingCount: 980,
+    deliveryTime: '30-40',
+    distance: '1.9 km',
+    minOrder: 199,
+    deliveryFee: 30,
+    status: 'open',
+    featured: false,
+    discount: 'Buy 1 Get 1 Noodles',
+    tags: ['Noodles', 'Stir Fry', 'Momos'],
+    img: '../images/photo-1562802378-063ec186a863.webp',
+    category: 'chinese',
+    priceRange: '$$',
+  },
+  {
+    id: 18,
+    name: 'Protein Kitchen',
+    cuisine: 'Healthy, High-Protein, Keto',
+    rating: 4.7,
+    ratingCount: 670,
+    deliveryTime: '20-30',
+    distance: '1.3 km',
+    minOrder: 299,
+    deliveryFee: 35,
+    status: 'open',
+    featured: false,
+    discount: '10% OFF',
+    tags: ['Keto', 'High Protein', 'Bowls'],
+    img: '../images/photo-1490645935967-10de6ba17061.webp',
+    category: 'healthy',
+    priceRange: '$$$',
+  },
+  {
+    id: 19,
+    name: 'Wrap Republic',
+    cuisine: 'Fast Food, Rolls, Kathi Wraps',
+    rating: 4.2,
+    ratingCount: 1540,
+    deliveryTime: '15-25',
+    distance: '0.6 km',
+    minOrder: 99,
+    deliveryFee: 15,
+    status: 'open',
+    featured: false,
+    discount: '3 Wraps at ₹249',
+    tags: ['Wraps', 'Kathi Rolls', 'Fries'],
+    img: '../images/photo-1534938665420-4193effeacc4.webp',
+    category: 'fast-food',
+    priceRange: '$',
+  },
+  {
+    id: 20,
+    name: 'Boba & Brews',
+    cuisine: 'Beverages, Bubble Tea, Cold Coffee',
+    rating: 4.6,
+    ratingCount: 890,
+    deliveryTime: '15-20',
+    distance: '0.5 km',
+    minOrder: 99,
+    deliveryFee: 15,
+    status: 'open',
+    featured: false,
+    discount: '2nd Drink 50% OFF',
+    tags: ['Bubble Tea', 'Cold Coffee', 'Frappes'],
+    img: '../images/photo-1558618666-fcd25c85cd64.webp',
+    category: 'beverages',
+    priceRange: '$$',
   },
 ];
 
 const MENU_ITEMS = [
   // Spice Garden (id: 1)
-  { id: 101, restaurantId: 1, name: 'Chicken Biryani', category: 'Biryani', price: 299, originalPrice: 349, rating: 4.8, isVeg: false, isSpicy: true, description: 'Aromatic basmati rice cooked with tender chicken, saffron and whole spices.', img: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 102, restaurantId: 1, name: 'Paneer Butter Masala', category: 'Curries', price: 249, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Creamy tomato-based curry with soft paneer cubes, rich in flavour.', img: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 103, restaurantId: 1, name: 'Dal Makhani', category: 'Curries', price: 199, originalPrice: null, rating: 4.5, isVeg: true, isSpicy: false, description: 'Slow-cooked black lentils in a rich buttery tomato cream sauce.', img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 104, restaurantId: 1, name: 'Mutton Rogan Josh', category: 'Curries', price: 389, originalPrice: 420, rating: 4.7, isVeg: false, isSpicy: true, description: 'Slow-braised mutton in Kashmiri spices with aromatic gravy.', img: 'https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 105, restaurantId: 1, name: 'Garlic Naan', category: 'Breads', price: 49, originalPrice: null, rating: 4.4, isVeg: true, isSpicy: false, description: 'Soft fluffy naan topped with garlic butter and cilantro.', img: 'https://images.unsplash.com/photo-1590502593747-42a996133562?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 106, restaurantId: 1, name: 'Mango Lassi', category: 'Beverages', price: 89, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Thick creamy yogurt blended with fresh Alphonso mangoes.', img: 'https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=400&q=80&auto=format&fit=crop', popular: false },
+  { id: 101, restaurantId: 1, name: 'Chicken Biryani', category: 'Biryani', price: 299, originalPrice: 349, rating: 4.8, isVeg: false, isSpicy: true, description: 'Aromatic basmati rice cooked with tender chicken, saffron and whole spices.', img: '../images/photo-1563379091339-03b21ab4a4f8.webp', popular: true },
+  { id: 102, restaurantId: 1, name: 'Paneer Butter Masala', category: 'Curries', price: 249, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Creamy tomato-based curry with soft paneer cubes, rich in flavour.', img: '../images/photo-1585937421612-70a008356fbe.webp', popular: true },
+  { id: 103, restaurantId: 1, name: 'Dal Makhani', category: 'Curries', price: 199, originalPrice: null, rating: 4.5, isVeg: true, isSpicy: false, description: 'Slow-cooked black lentils in a rich buttery tomato cream sauce.', img: '../images/photo-1546833999-b9f581a1996d.webp', popular: false },
+  { id: 104, restaurantId: 1, name: 'Mutton Rogan Josh', category: 'Curries', price: 389, originalPrice: 420, rating: 4.7, isVeg: false, isSpicy: true, description: 'Slow-braised mutton in Kashmiri spices with aromatic gravy.', img: '../images/photo-1574484284002-952d92456975.webp', popular: false },
+  { id: 105, restaurantId: 1, name: 'Garlic Naan', category: 'Breads', price: 49, originalPrice: null, rating: 4.4, isVeg: true, isSpicy: false, description: 'Soft fluffy naan topped with garlic butter and cilantro.', img: '../images/photo-1590502593747-42a996133562.webp', popular: true },
+  { id: 106, restaurantId: 1, name: 'Mango Lassi', category: 'Beverages', price: 89, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Thick creamy yogurt blended with fresh Alphonso mangoes.', img: '../images/photo-1602343168117-bb8ffe3e2e9f.webp', popular: false },
 
   // The Burger Lab (id: 2)
-  { id: 201, restaurantId: 2, name: 'Classic Smash Burger', category: 'Burgers', price: 249, originalPrice: 299, rating: 4.8, isVeg: false, isSpicy: false, description: 'Double smash patty with American cheese, special sauce on brioche.', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 202, restaurantId: 2, name: 'Veggie Delight Burger', category: 'Burgers', price: 199, originalPrice: null, rating: 4.5, isVeg: true, isSpicy: false, description: 'Crispy veggie patty with fresh lettuce, tomato and mayo.', img: 'https://images.unsplash.com/photo-1520072959219-c595dc870360?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 203, restaurantId: 2, name: 'Loaded Fries', category: 'Sides', price: 149, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Crispy fries loaded with cheese sauce, jalapeños and sour cream.', img: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 204, restaurantId: 2, name: 'BBQ Chicken Burger', category: 'Burgers', price: 279, originalPrice: 320, rating: 4.7, isVeg: false, isSpicy: false, description: 'Grilled chicken with smoky BBQ sauce, crunchy slaw and pickles.', img: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 205, restaurantId: 2, name: 'Chocolate Milkshake', category: 'Shakes', price: 169, originalPrice: null, rating: 4.8, isVeg: true, isSpicy: false, description: 'Thick rich chocolate milkshake with whipped cream and brownie chunks.', img: 'https://images.unsplash.com/photo-1572490122747-3a3f68cf9e7b?w=400&q=80&auto=format&fit=crop', popular: false },
+  { id: 201, restaurantId: 2, name: 'Classic Smash Burger', category: 'Burgers', price: 249, originalPrice: 299, rating: 4.8, isVeg: false, isSpicy: false, description: 'Double smash patty with American cheese, special sauce on brioche.', img: '../images/photo-1568901346375-23c9450c58cd.webp', popular: true },
+  { id: 202, restaurantId: 2, name: 'Veggie Delight Burger', category: 'Burgers', price: 199, originalPrice: null, rating: 4.5, isVeg: true, isSpicy: false, description: 'Crispy veggie patty with fresh lettuce, tomato and mayo.', img: '../images/photo-1520072959219-c595dc870360.webp', popular: true },
+  { id: 203, restaurantId: 2, name: 'Loaded Fries', category: 'Sides', price: 149, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Crispy fries loaded with cheese sauce, jalapeños and sour cream.', img: '../images/photo-1630384060421-cb20d0e0649d.webp', popular: true },
+  { id: 204, restaurantId: 2, name: 'BBQ Chicken Burger', category: 'Burgers', price: 279, originalPrice: 320, rating: 4.7, isVeg: false, isSpicy: false, description: 'Grilled chicken with smoky BBQ sauce, crunchy slaw and pickles.', img: '../images/photo-1553979459-d2229ba7433b.webp', popular: false },
+  { id: 205, restaurantId: 2, name: 'Chocolate Milkshake', category: 'Shakes', price: 169, originalPrice: null, rating: 4.8, isVeg: true, isSpicy: false, description: 'Thick rich chocolate milkshake with whipped cream and brownie chunks.', img: '../images/photo-1576092768241-dec231879fc3.webp', popular: false },
 
   // Pizza Paradise (id: 3)
-  { id: 301, restaurantId: 3, name: 'Margherita Pizza', category: 'Pizzas', price: 299, originalPrice: null, rating: 4.7, isVeg: true, isSpicy: false, description: 'Classic Neapolitan pizza with San Marzano tomatoes and mozzarella.', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 302, restaurantId: 3, name: 'Pepperoni Pizza', category: 'Pizzas', price: 399, originalPrice: 449, rating: 4.9, isVeg: false, isSpicy: false, description: 'Loaded with premium pepperoni on rich tomato sauce and mozzarella.', img: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 303, restaurantId: 3, name: 'BBQ Chicken Pizza', category: 'Pizzas', price: 449, originalPrice: 499, rating: 4.8, isVeg: false, isSpicy: false, description: 'Smoky BBQ base with grilled chicken, red onions and bell peppers.', img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 304, restaurantId: 3, name: 'Pasta Arrabbiata', category: 'Pasta', price: 279, originalPrice: null, rating: 4.5, isVeg: true, isSpicy: true, description: 'Penne pasta in spicy tomato sauce with garlic and fresh basil.', img: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 305, restaurantId: 3, name: 'Tiramisu', category: 'Desserts', price: 199, originalPrice: null, rating: 4.9, isVeg: true, isSpicy: false, description: 'Classic Italian dessert with espresso-soaked ladyfingers and mascarpone.', img: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80&auto=format&fit=crop', popular: true },
+  { id: 301, restaurantId: 3, name: 'Margherita Pizza', category: 'Pizzas', price: 299, originalPrice: null, rating: 4.7, isVeg: true, isSpicy: false, description: 'Classic Neapolitan pizza with San Marzano tomatoes and mozzarella.', img: '../images/photo-1513104890138-7c749659a591.webp', popular: true },
+  { id: 302, restaurantId: 3, name: 'Pepperoni Pizza', category: 'Pizzas', price: 399, originalPrice: 449, rating: 4.9, isVeg: false, isSpicy: false, description: 'Loaded with premium pepperoni on rich tomato sauce and mozzarella.', img: '../images/photo-1628840042765-356cda07504e.webp', popular: true },
+  { id: 303, restaurantId: 3, name: 'BBQ Chicken Pizza', category: 'Pizzas', price: 449, originalPrice: 499, rating: 4.8, isVeg: false, isSpicy: false, description: 'Smoky BBQ base with grilled chicken, red onions and bell peppers.', img: '../images/photo-1565299624946-b28f40a0ae38.webp', popular: false },
+  { id: 304, restaurantId: 3, name: 'Pasta Arrabbiata', category: 'Pasta', price: 279, originalPrice: null, rating: 4.5, isVeg: true, isSpicy: true, description: 'Penne pasta in spicy tomato sauce with garlic and fresh basil.', img: '../images/photo-1621996346565-e3dbc646d9a9.webp', popular: false },
+  { id: 305, restaurantId: 3, name: 'Tiramisu', category: 'Desserts', price: 199, originalPrice: null, rating: 4.9, isVeg: true, isSpicy: false, description: 'Classic Italian dessert with espresso-soaked ladyfingers and mascarpone.', img: '../images/photo-1551024506-0bccd828d307.webp', popular: true },
 
   // Dragon Palace (id: 4)
-  { id: 401, restaurantId: 4, name: 'Chicken Fried Rice', category: 'Rice', price: 199, originalPrice: null, rating: 4.4, isVeg: false, isSpicy: false, description: 'Wok-tossed egg fried rice with juicy chicken and seasonal vegetables.', img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 402, restaurantId: 4, name: 'Dim Sum Platter', category: 'Starters', price: 299, originalPrice: 349, rating: 4.6, isVeg: false, isSpicy: false, description: 'Assorted steamed and fried dim sums with ginger soy dipping sauce.', img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 403, restaurantId: 4, name: 'Hot & Sour Soup', category: 'Soups', price: 149, originalPrice: null, rating: 4.3, isVeg: false, isSpicy: true, description: 'Classic tangy spicy soup with mushrooms, tofu and bamboo shoots.', img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 404, restaurantId: 4, name: 'Kung Pao Chicken', category: 'Main Course', price: 279, originalPrice: null, rating: 4.5, isVeg: false, isSpicy: true, description: 'Stir-fried chicken with peanuts, dried chillies and Sichuan pepper.', img: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?w=400&q=80&auto=format&fit=crop', popular: false },
+  { id: 401, restaurantId: 4, name: 'Chicken Fried Rice', category: 'Rice', price: 199, originalPrice: null, rating: 4.4, isVeg: false, isSpicy: false, description: 'Wok-tossed egg fried rice with juicy chicken and seasonal vegetables.', img: '../images/photo-1603133872878-684f208fb84b.webp', popular: true },
+  { id: 402, restaurantId: 4, name: 'Dim Sum Platter', category: 'Starters', price: 299, originalPrice: 349, rating: 4.6, isVeg: false, isSpicy: false, description: 'Assorted steamed and fried dim sums with ginger soy dipping sauce.', img: '../images/photo-1563245372-f21724e3856d.webp', popular: true },
+  { id: 403, restaurantId: 4, name: 'Hot & Sour Soup', category: 'Soups', price: 149, originalPrice: null, rating: 4.3, isVeg: false, isSpicy: true, description: 'Classic tangy spicy soup with mushrooms, tofu and bamboo shoots.', img: '../images/photo-1547592180-85f173990554.webp', popular: false },
+  { id: 404, restaurantId: 4, name: 'Kung Pao Chicken', category: 'Main Course', price: 279, originalPrice: null, rating: 4.5, isVeg: false, isSpicy: true, description: 'Stir-fried chicken with peanuts, dried chillies and Sichuan pepper.', img: '../images/photo-1525755662778-989d0524087e.webp', popular: false },
 
   // Green Bowl (id: 5)
-  { id: 501, restaurantId: 5, name: 'Acai Bowl', category: 'Bowls', price: 289, originalPrice: null, rating: 4.9, isVeg: true, isSpicy: false, description: 'Frozen acai blended with banana, topped with granola, fruits and honey.', img: 'https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 502, restaurantId: 5, name: 'Caesar Salad', category: 'Salads', price: 249, originalPrice: null, rating: 4.7, isVeg: true, isSpicy: false, description: 'Crisp romaine with parmesan, croutons and classic Caesar dressing.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 503, restaurantId: 5, name: 'Green Detox Smoothie', category: 'Smoothies', price: 199, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Spinach, cucumber, apple, lemon and ginger blended fresh.', img: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 504, restaurantId: 5, name: 'Quinoa Buddha Bowl', category: 'Bowls', price: 329, originalPrice: 369, rating: 4.8, isVeg: true, isSpicy: false, description: 'Quinoa with roasted veggies, avocado, chickpeas and tahini dressing.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80&auto=format&fit=crop', popular: false },
+  { id: 501, restaurantId: 5, name: 'Acai Bowl', category: 'Bowls', price: 289, originalPrice: null, rating: 4.9, isVeg: true, isSpicy: false, description: 'Frozen acai blended with banana, topped with granola, fruits and honey.', img: '../images/photo-1534353436294-0dbd4bdac845.webp', popular: true },
+  { id: 502, restaurantId: 5, name: 'Caesar Salad', category: 'Salads', price: 249, originalPrice: null, rating: 4.7, isVeg: true, isSpicy: false, description: 'Crisp romaine with parmesan, croutons and classic Caesar dressing.', img: '../images/photo-1512621776951-a57141f2eefd.webp', popular: true },
+  { id: 503, restaurantId: 5, name: 'Green Detox Smoothie', category: 'Smoothies', price: 199, originalPrice: null, rating: 4.6, isVeg: true, isSpicy: false, description: 'Spinach, cucumber, apple, lemon and ginger blended fresh.', img: '../images/photo-1610970881699-44a5587cabec.webp', popular: false },
+  { id: 504, restaurantId: 5, name: 'Quinoa Buddha Bowl', category: 'Bowls', price: 329, originalPrice: 369, rating: 4.8, isVeg: true, isSpicy: false, description: 'Quinoa with roasted veggies, avocado, chickpeas and tahini dressing.', img: '../images/photo-1512621776951-a57141f2eefd.webp', popular: false },
 
   // Sweet Tooth (id: 6)
-  { id: 601, restaurantId: 6, name: 'Chocolate Lava Cake', category: 'Cakes', price: 189, originalPrice: null, rating: 4.9, isVeg: true, isSpicy: false, description: 'Warm chocolate cake with gooey molten centre, served with vanilla ice cream.', img: 'https://images.unsplash.com/photo-1606890658317-7d14490b76fd?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 602, restaurantId: 6, name: 'Belgian Waffle', category: 'Waffles', price: 179, originalPrice: 199, rating: 4.8, isVeg: true, isSpicy: false, description: 'Crispy fluffy waffle with maple syrup, fresh berries and whipped cream.', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400&q=80&auto=format&fit=crop', popular: true },
-  { id: 603, restaurantId: 6, name: 'Mango Cheesecake', category: 'Cakes', price: 229, originalPrice: null, rating: 4.7, isVeg: true, isSpicy: false, description: 'Silky smooth cheesecake with Alphonso mango coulis on buttery crust.', img: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400&q=80&auto=format&fit=crop', popular: false },
-  { id: 604, restaurantId: 6, name: 'Kulfi Falooda', category: 'Ice Cream', price: 149, originalPrice: null, rating: 4.8, isVeg: true, isSpicy: false, description: 'Traditional Indian ice cream with basil seeds, rose syrup and vermicelli.', img: 'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=400&q=80&auto=format&fit=crop', popular: true },
+  { id: 601, restaurantId: 6, name: 'Chocolate Lava Cake', category: 'Cakes', price: 189, originalPrice: null, rating: 4.9, isVeg: true, isSpicy: false, description: 'Warm chocolate cake with gooey molten centre, served with vanilla ice cream.', img: '../images/photo-1606890658317-7d14490b76fd.webp', popular: true },
+  { id: 602, restaurantId: 6, name: 'Belgian Waffle', category: 'Waffles', price: 179, originalPrice: 199, rating: 4.8, isVeg: true, isSpicy: false, description: 'Crispy fluffy waffle with maple syrup, fresh berries and whipped cream.', img: '../images/photo-1562376552-0d160a2f238d.webp', popular: true },
+  { id: 603, restaurantId: 6, name: 'Mango Cheesecake', category: 'Cakes', price: 229, originalPrice: null, rating: 4.7, isVeg: true, isSpicy: false, description: 'Silky smooth cheesecake with Alphonso mango coulis on buttery crust.', img: '../images/photo-1621303837174-89787a7d4729.webp', popular: false },
+  { id: 604, restaurantId: 6, name: 'Kulfi Falooda', category: 'Ice Cream', price: 149, originalPrice: null, rating: 4.8, isVeg: true, isSpicy: false, description: 'Traditional Indian ice cream with basil seeds, rose syrup and vermicelli.', img: '../images/photo-1568909344668-6f14a07b56a0.webp', popular: true },
 ];
 
 const TESTIMONIALS = [
-  { id: 1, name: 'Priya Sharma', role: 'Food Blogger', rating: 5, text: 'FoodieExpress has completely changed how I order food. The delivery is always on time and the food arrives hot and fresh. Highly recommend!', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80&auto=format&fit=crop&crop=faces' },
-  { id: 2, name: 'Rahul Mehta', role: 'Software Engineer', rating: 5, text: 'Best food delivery app I\'ve used. The variety of restaurants is amazing and the tracking feature is super accurate. 10/10 experience!', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80&auto=format&fit=crop&crop=faces' },
-  { id: 3, name: 'Ananya Patel', role: 'College Student', rating: 4, text: 'Love the offers and deals on this app! The UI is clean and ordering is super easy. The customer support is also very responsive.', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80&auto=format&fit=crop&crop=faces' },
+  { id: 1, name: 'Priya Sharma', role: 'Food Blogger', rating: 5, text: 'FoodieExpress has completely changed how I order food. The delivery is always on time and the food arrives hot and fresh. Highly recommend!', avatar: '../images/photo-1494790108377-be9c29b29330.webp' },
+  { id: 2, name: 'Rahul Mehta', role: 'Software Engineer', rating: 5, text: 'Best food delivery app I\'ve used. The variety of restaurants is amazing and the tracking feature is super accurate. 10/10 experience!', avatar: '../images/photo-1507003211169-0a1dd7228f2d.webp' },
+  { id: 3, name: 'Ananya Patel', role: 'College Student', rating: 4, text: 'Love the offers and deals on this app! The UI is clean and ordering is super easy. The customer support is also very responsive.', avatar: '../images/photo-1438761681033-6461ffad8d80.webp' },
 ];
 
 const OFFERS = [
@@ -469,7 +613,9 @@ const Nav = {
 
   onScroll() {
     if (!this.navbar) return;
-    this.navbar.classList.toggle('scrolled', window.scrollY > 20);
+    const scrolled = window.scrollY > 60;
+    this.navbar.classList.toggle('scrolled', scrolled);
+    this.navbar.classList.toggle('nav-scrolled', scrolled);
   }
 };
 
@@ -484,8 +630,7 @@ function buildHeader(base) {
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="${base}index.html" class="nav-logo">
-        <div class="logo-icon">🍔</div>
-        <span>Foodie<span>Express</span></span>
+        <img src="${base}images/stackly_logo_gold.webp" alt="Stackly" style="height:42px;width:auto;display:block">
       </a>
 
       <div class="nav-search" id="navSearchWrap">
@@ -515,7 +660,7 @@ function buildHeader(base) {
         ${user ? `
         <div class="user-menu">
           <button id="userMenuBtn" class="nav-btn" style="width:auto;padding:0 4px">
-            <img class="nav-avatar" src="${user.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&background=FF6B35&color=fff'}" alt="${user.name}" />
+            <img class="nav-avatar" src="${user.avatar && user.avatar.includes('/') ? user.avatar : (getBasePath() + 'images/avatar-default.webp')}" alt="${user.name}" />
           </button>
           <div class="user-dropdown" id="userDropdown">
             <div class="user-dropdown-header">
@@ -574,73 +719,82 @@ function buildHeader(base) {
 }
 
 function buildFooter(base) {
+  if (!document.querySelector('link[href*="font-awesome"]')) {
+    const fa = document.createElement('link');
+    fa.rel = 'stylesheet';
+    fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css';
+    document.head.appendChild(fa);
+  }
   return `
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <div class="footer-logo">
-            <div class="logo-icon">🍔</div>
-            FoodieExpress
-          </div>
-          <p class="footer-desc">Delivering happiness to your doorstep since 2020. Fresh, fast, and always delicious.</p>
-          <div class="social-links">
-            <a class="social-btn" href="#" aria-label="Facebook">f</a>
-            <a class="social-btn" href="#" aria-label="Twitter">𝕏</a>
-            <a class="social-btn" href="#" aria-label="Instagram">📸</a>
-            <a class="social-btn" href="#" aria-label="YouTube">▶</a>
-          </div>
-        </div>
+  <footer class="ft-footer">
+    <div class="ft-grid">
 
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <div class="footer-links">
-            <a href="${base}index.html" class="footer-link">Home</a>
-            <a href="${base}pages/restaurants.html" class="footer-link">Restaurants</a>
-            <a href="${base}pages/about.html" class="footer-link">About Us</a>
-            <a href="${base}pages/contact.html" class="footer-link">Contact</a>
-            <a href="${base}pages/faq.html" class="footer-link">FAQ</a>
-          </div>
+      <div class="ft-brand">
+        <div class="ft-logo">
+          <a href="${base}index.html"><img src="${base}images/stackly_logo_gold.webp" alt="Stackly" style="height:48px;width:auto;display:block"></a>
         </div>
+        <p class="ft-tagline">Delicious food, delivered fast.</p>
+        <a href="${base}pages/restaurants.html" class="ft-cta">ORDER NOW</a>
+      </div>
 
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <div class="footer-links">
-            <a href="#" class="footer-link">Privacy Policy</a>
-            <a href="#" class="footer-link">Terms of Service</a>
-            <a href="#" class="footer-link">Cookie Policy</a>
-            <a href="#" class="footer-link">Refund Policy</a>
-          </div>
+      <div class="ft-col">
+        <h4 class="ft-heading">Explore</h4>
+        <nav class="ft-nav">
+          <a href="${base}index.html" class="ft-link">Home</a>
+          <a href="${base}pages/menu.html" class="ft-link">Menu</a>
+          <a href="${base}index.html#offers" class="ft-link">Featured Offers</a>
+          <a href="${base}pages/restaurants.html" class="ft-link">Top Restaurants</a>
+          <a href="${base}pages/restaurants.html" class="ft-link">Cuisines</a>
+        </nav>
+      </div>
+
+      <div class="ft-col">
+        <h4 class="ft-heading">Company</h4>
+        <nav class="ft-nav">
+          <a href="${base}pages/about.html" class="ft-link">About Us</a>
+          <a href="${base}pages/contact.html" class="ft-link">Contact Us</a>
+          <a href="#" class="ft-link">Careers</a>
+          <a href="#" class="ft-link">Partner With Us</a>
+        </nav>
+      </div>
+
+      <div class="ft-col">
+        <h4 class="ft-heading">Support</h4>
+        <nav class="ft-nav">
+          <a href="${base}pages/faq.html" class="ft-link">FAQ</a>
+          <a href="${base}pages/orders.html" class="ft-link">Track Order</a>
+          <a href="#" class="ft-link">Refund Policy</a>
+          <a href="${base}pages/contact.html" class="ft-link">Help Center</a>
+        </nav>
+      </div>
+
+      <div class="ft-col">
+        <h4 class="ft-heading">Latest Deals</h4>
+        <div class="ft-deals">
+          <a href="${base}pages/restaurants.html" class="ft-deal">Flat 40% off on your first order</a>
+          <a href="${base}pages/restaurants.html" class="ft-deal">Free delivery on orders above ₹299</a>
+          <a href="${base}pages/restaurants.html" class="ft-deal">Buy 2 get 1 free every Friday</a>
         </div>
-
-        <div class="footer-col">
-          <h4>Contact Us</h4>
-          <div class="footer-contact">
-            <div class="footer-contact-item">
-              <span class="icon">📍</span>
-              <span>123 Food Street, Bangalore, Karnataka 560001</span>
-            </div>
-            <div class="footer-contact-item">
-              <span class="icon">📞</span>
-              <span>+91 98765 43210</span>
-            </div>
-            <div class="footer-contact-item">
-              <span class="icon">✉️</span>
-              <span>support@foodieexpress.in</span>
-            </div>
-          </div>
+        <div class="ft-socials">
+          <a href="#" class="ft-social-btn" aria-label="Facebook" onclick="event.preventDefault(); Toast.info('Facebook 📘', 'Follow us on Facebook — launching soon!')"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="ft-social-btn" aria-label="Instagram" onclick="event.preventDefault(); Toast.info('Instagram 📸', 'Follow @FoodieExpress for daily food inspo — coming soon!')"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="ft-social-btn" aria-label="YouTube" onclick="event.preventDefault(); Toast.info('YouTube ▶️', 'Subscribe for behind-the-scenes & food reviews — coming soon!')"><i class="fa-brands fa-youtube"></i></a>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>© 2025 FoodieExpress. All rights reserved. Made with ❤️ in India.</p>
-        <div class="footer-bottom-links">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">Cookies</a>
-        </div>
+    </div>
+
+    <hr class="ft-divider" />
+
+    <div class="ft-bottom">
+      <p class="ft-copy">© 2026 Foodie. All rights reserved.</p>
+      <div class="ft-legal">
+        <a href="#" class="ft-legal-link">Privacy Policy</a>
+        <span class="ft-sep">|</span>
+        <a href="#" class="ft-legal-link">Terms of Service</a>
       </div>
     </div>
+
   </footer>
   `;
 }
@@ -695,7 +849,7 @@ const CartSidebar = {
 
     body.innerHTML = items.map(item => `
       <div class="cart-item">
-        <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/64x64?text=🍔'">
+        <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src=(location.pathname.includes('/pages/')?'../':'./') + 'images/food-placeholder.webp'">
         <div class="cart-item-info">
           <div class="cart-item-name">${item.name}</div>
           <div class="cart-item-price">${formatCurrency(item.price * item.qty)}</div>
@@ -739,6 +893,31 @@ function initScrollAnimations() {
   }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
   document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+  // fade-up sections + stagger-children grids
+  if ('IntersectionObserver' in window) {
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible', 'in-view');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    let staggerIdx = 0;
+    document.querySelectorAll('.fade-up').forEach(el => {
+      el.style.transitionDelay = (staggerIdx * 70) + 'ms';
+      fadeObserver.observe(el);
+      staggerIdx++;
+    });
+
+    document.querySelectorAll('.stagger-children').forEach(el => fadeObserver.observe(el));
+  } else {
+    document.querySelectorAll('.fade-up, .stagger-children').forEach(el => {
+      el.classList.add('visible', 'in-view');
+    });
+  }
 }
 
 function initBackToTop() {

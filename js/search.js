@@ -1,4 +1,4 @@
-/* =====================================================
+﻿/* =====================================================
    FOODIE EXPRESS - Search & Filter Module
    ===================================================== */
 
@@ -244,30 +244,34 @@ function buildRestaurantCard(r) {
   return `
   <div class="restaurant-card animate-on-scroll" onclick="window.location.href='${base}pages/menu.html?id=${r.id}'">
     <div class="restaurant-img-wrap">
-      <img src="${r.img}" alt="${r.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=🍽️'">
+      <img src="${r.img}" alt="${r.name}" loading="lazy" onerror="this.src='../images/photo-1517248135467-4c7edcad34c4.webp'">
       <div class="restaurant-img-overlay"></div>
-      <span class="restaurant-status ${r.status}">${r.status === 'open' ? '🟢 Open' : '🔴 Closed'}</span>
-      ${r.featured ? '<span class="restaurant-featured">⭐ Featured</span>' : ''}
+      <div class="rc-top-row">
+        <span class="restaurant-status ${r.status}">${r.status === 'open' ? 'Open' : 'Closed'}</span>
+        ${r.featured ? '<span class="rc-featured">★ Featured</span>' : ''}
+      </div>
       <button class="restaurant-wishlist ${isWishlisted ? 'active' : ''}"
         onclick="event.stopPropagation(); Wishlist.toggle(${r.id},'restaurant'); this.classList.toggle('active'); this.style.color=Wishlist.has(${r.id},'restaurant')?'var(--error)':''"
         style="${isWishlisted ? 'color:var(--error)' : ''}">
         ❤️
       </button>
+      ${r.discount ? `<div class="rc-discount-bar"><span class="rc-offer-tag">🏷️ ${r.discount}</span></div>` : ''}
     </div>
     <div class="restaurant-info">
-      <h3 class="restaurant-name">${r.name}</h3>
+      <div class="rc-name-row">
+        <h3 class="restaurant-name">${r.name}</h3>
+        <span class="rc-rating-pill ${r.rating >= 4.5 ? 'rc-rating-high' : ''}">★ ${r.rating}</span>
+      </div>
       <p class="restaurant-cuisine">${r.cuisine}</p>
       <div class="restaurant-meta">
-        <span class="rating">⭐ ${r.rating} <span style="font-weight:400;color:var(--text-muted)">(${r.ratingCount.toLocaleString()})</span></span>
-        <span class="dot"></span>
         <span>🕐 ${r.deliveryTime} min</span>
         <span class="dot"></span>
         <span>📍 ${r.distance}</span>
+        ${r.minOrder ? `<span class="dot"></span><span>Min ₹${r.minOrder}</span>` : ''}
       </div>
       <div class="restaurant-tags">
-        ${r.tags.map(t => `<span class="restaurant-tag">${t}</span>`).join('')}
+        ${r.tags.slice(0, 3).map(t => `<span class="restaurant-tag">${t}</span>`).join('')}
       </div>
-      ${r.discount ? `<div class="restaurant-discount">🏷️ ${r.discount}</div>` : ''}
     </div>
   </div>`;
 }
@@ -279,7 +283,7 @@ function buildMenuItemCard(item) {
   return `
   <div class="menu-item" id="menu-item-${item.id}">
     <div class="menu-item-main">
-      <img class="menu-item-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/90x90?text=🍔'">
+      <img class="menu-item-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src=(location.pathname.includes('/pages/')?'../':'./') + 'images/food-placeholder.webp'">
       <div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
           <div class="dish-type-indicator ${item.isVeg ? 'veg' : 'non-veg'}"></div>
@@ -359,20 +363,23 @@ function updateMenuItemQty(itemId, newQty) {
 function buildDishCard(item) {
   const base = getBasePath ? getBasePath() : './';
   const restaurant = RESTAURANTS.find(r => r.id === item.restaurantId);
+  const discount = item.originalPrice ? Math.round((1 - item.price / item.originalPrice) * 100) : 0;
 
   return `
   <div class="dish-card animate-on-scroll">
     <div class="dish-img-wrap">
       <div class="dish-type-indicator ${item.isVeg ? 'veg' : 'non-veg'}"></div>
+      ${item.popular ? '<span class="dish-popular-badge">🔥 Popular</span>' : ''}
+      ${discount > 10 ? `<span class="dish-discount-badge">${discount}% off</span>` : ''}
       <button class="dish-wishlist" onclick="event.stopPropagation(); Wishlist.toggle(${item.id},'food'); this.classList.toggle('active')" title="Add to wishlist">❤️</button>
-      <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200?text=🍔'" style="width:100%;height:100%;object-fit:cover">
+      <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='../images/photo-1504674900247-0877df9cc836.webp'" style="width:100%;height:100%;object-fit:cover">
     </div>
     <div class="dish-info">
       <div class="dish-name">${item.name}</div>
       <div class="dish-restaurant">${restaurant?.name || ''}</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">${item.description}</div>
+      <div class="dish-desc">${item.description}</div>
       <div class="dish-footer">
-        <div>
+        <div class="dish-price-group">
           <span class="dish-price">${formatCurrency(item.price)}</span>
           ${item.originalPrice ? `<span class="original">${formatCurrency(item.originalPrice)}</span>` : ''}
         </div>

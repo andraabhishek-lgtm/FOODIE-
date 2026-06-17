@@ -1,0 +1,186 @@
+/* =====================================================
+   FOODIEEXPRESS — Utility Classes
+   Flex · Spacing · Text · Visibility · Misc
+   ===================================================== */
+
+/* ── Flex ──────────────────────────────────────────── */
+.flex         { display: flex; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-end     { display: flex; align-items: center; justify-content: flex-end; }
+.flex-col     { display: flex; flex-direction: column; }
+.flex-wrap    { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start  { align-items: flex-start; }
+.flex-1       { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+/* ── Grid ──────────────────────────────────────────── */
+.grid         { display: grid; }
+.place-center { place-items: center; }
+
+/* ── Gap ───────────────────────────────────────────── */
+.gap-1  { gap: var(--space-1); }
+.gap-2  { gap: var(--space-2); }
+.gap-3  { gap: var(--space-3); }
+.gap-4  { gap: var(--space-4); }
+.gap-5  { gap: var(--space-5); }
+.gap-6  { gap: var(--space-6); }
+.gap-8  { gap: var(--space-8); }
+.gap-10 { gap: var(--space-10); }
+
+/* ── Margin / Padding ──────────────────────────────── */
+.mt-2  { margin-top: var(--space-2); }
+.mt-3  { margin-top: var(--space-3); }
+.mt-4  { margin-top: var(--space-4); }
+.mt-6  { margin-top: var(--space-6); }
+.mt-8  { margin-top: var(--space-8); }
+.mt-10 { margin-top: var(--space-10); }
+
+.mb-2  { margin-bottom: var(--space-2); }
+.mb-3  { margin-bottom: var(--space-3); }
+.mb-4  { margin-bottom: var(--space-4); }
+.mb-6  { margin-bottom: var(--space-6); }
+.mb-8  { margin-bottom: var(--space-8); }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.p-4  { padding: var(--space-4); }
+.p-6  { padding: var(--space-6); }
+.p-8  { padding: var(--space-8); }
+.px-4 { padding-left: var(--space-4); padding-right: var(--space-4); }
+.px-6 { padding-left: var(--space-6); padding-right: var(--space-6); }
+.py-4 { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+.py-6 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
+
+/* ── Width ─────────────────────────────────────────── */
+.w-full   { width: 100%; }
+.max-w-sm { max-width: 480px; }
+.max-w-md { max-width: 640px; }
+.max-w-lg { max-width: 800px; }
+.max-w-xl { max-width: 960px; }
+
+/* ── Text alignment ────────────────────────────────── */
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+/* ── Text colors ───────────────────────────────────── */
+.text-primary   { color: var(--brand-primary) !important; }
+.text-secondary { color: var(--brand-secondary) !important; }
+.text-muted     { color: var(--gray-500) !important; }
+.text-white     { color: #fff !important; }
+.text-dark      { color: var(--gray-900) !important; }
+.text-success   { color: var(--success) !important; }
+.text-error     { color: var(--error) !important; }
+
+/* ── Font weights ──────────────────────────────────── */
+.font-normal   { font-weight: var(--fw-regular) !important; }
+.font-medium   { font-weight: var(--fw-medium) !important; }
+.font-semibold { font-weight: var(--fw-semibold) !important; }
+.font-bold     { font-weight: var(--fw-bold) !important; }
+
+/* ── Truncation ────────────────────────────────────── */
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* ── Background utilities ──────────────────────────── */
+.bg-primary  { background: var(--brand-primary) !important; color: #fff !important; }
+.bg-surface  { background: var(--surface-page) !important; }
+.bg-muted    { background: var(--gray-100) !important; }
+.bg-dark     { background: var(--gray-900) !important; color: #fff !important; }
+
+/* ── Border radius ─────────────────────────────────── */
+.rounded-sm   { border-radius: var(--radius-sm); }
+.rounded-md   { border-radius: var(--radius-md); }
+.rounded-lg   { border-radius: var(--radius-lg); }
+.rounded-xl   { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-pill); }
+
+/* ── Shadow ────────────────────────────────────────── */
+.shadow-sm    { box-shadow: var(--shadow-sm); }
+.shadow-md    { box-shadow: var(--shadow-md); }
+.shadow-lg    { box-shadow: var(--shadow-lg); }
+.shadow-brand { box-shadow: var(--shadow-brand); }
+
+/* ── Position ──────────────────────────────────────── */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0  { inset: 0; }
+.sticky-top { position: sticky; top: 0; }
+
+/* ── Overflow ──────────────────────────────────────── */
+.overflow-hidden { overflow: hidden; }
+.overflow-auto   { overflow: auto; }
+
+/* ── Display ───────────────────────────────────────── */
+.block        { display: block; }
+.inline-block { display: inline-block; }
+.inline-flex  { display: inline-flex; }
+.hidden       { display: none; }
+
+/* ── Responsive visibility ─────────────────────────── */
+@media (max-width: 768px) {
+  .hide-mobile  { display: none !important; }
+}
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}
+@media (max-width: 1024px) {
+  .hide-tablet  { display: none !important; }
+}
+
+/* ── Accessibility ─────────────────────────────────── */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Cursor ────────────────────────────────────────── */
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+.select-none    { user-select: none; }
+
+/* ── Object fit ────────────────────────────────────── */
+.object-cover   { object-fit: cover; }
+.object-contain { object-fit: contain; }
+.object-center  { object-position: center; }
+
+/* ── Divider ───────────────────────────────────────── */
+.divider-h {
+  border: none;
+  border-top: 1px solid var(--gray-200);
+  margin: var(--space-6) 0;
+}
+.divider-v {
+  width: 1px;
+  background: var(--gray-200);
+  align-self: stretch;
+}
+
+/* ── Aspect ratios ─────────────────────────────────── */
+.aspect-video    { aspect-ratio: 16 / 9; }
+.aspect-square   { aspect-ratio: 1; }
+.aspect-card     { aspect-ratio: 4 / 3; }

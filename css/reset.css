@@ -1,0 +1,91 @@
+/* =====================================================
+   FOODIEEXPRESS — Modern CSS Reset (Supplementary)
+   Layers on top of existing style.css base
+   ===================================================== */
+
+/* Box-sizing already handled by style.css — reinforce */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Font smoothing upgrade */
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Heading font stack */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Image defaults */
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Button reset additions */
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Input font inheritance */
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Smooth anchor transitions */
+a {
+  transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* Modern focus style */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-primary);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Text selection */
+::selection {
+  background: rgba(226, 55, 68, 0.18);
+  color: var(--brand-primary);
+}

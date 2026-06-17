@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
@@ -7,11 +7,23 @@
   <meta name="keywords" content="food delivery, order food online, restaurants, pizza, burger, biryani" />
   <meta property="og:title" content="FoodieExpress - Delicious Food Delivered Fast" />
   <meta property="og:description" content="Order from 500+ restaurants with blazing fast delivery." />
-  <title>FoodieExpress - Delicious Food Delivered Fast 🍔</title>
+  <title>FoodieExpress - Delicious Food Delivered Fast ??</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/dark-theme.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layouts.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="styles/pages/home.css" />
 </head>
 <body>
 
@@ -19,14 +31,14 @@
   <div id="header"></div>
 
   <!-- ===================== HERO ===================== -->
-  <section class="hero" id="hero">
+  <section class="hero hero-enhanced" id="hero">
     <div class="container">
       <div class="hero-content">
         <!-- Text -->
         <div class="hero-text">
           <div class="hero-tag">
             <span class="dot"></span>
-            🚀 Fastest Delivery in Town
+            ?? Fastest Delivery in Town
           </div>
           <h1 class="hero-title">
             Craving Something<br>
@@ -38,11 +50,22 @@
           </p>
 
           <div class="hero-search">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon">??</span>
             <input type="text" id="heroSearch" placeholder="Search food, restaurants, cuisines..." autocomplete="off" />
             <button class="btn btn-primary" onclick="window.location.href='pages/restaurants.html?q='+encodeURIComponent(document.getElementById('heroSearch').value)">
               Search
             </button>
+          </div>
+
+          <div class="hero-popular-row">
+            <span class="hero-popular-label">Popular:</span>
+            <div class="hero-popular-chips">
+              <a href="pages/restaurants.html?q=Pizza" class="hero-popular-chip">?? Pizza</a>
+              <a href="pages/restaurants.html?q=Biryani" class="hero-popular-chip">?? Biryani</a>
+              <a href="pages/restaurants.html?q=Burger" class="hero-popular-chip">?? Burger</a>
+              <a href="pages/restaurants.html?q=Sushi" class="hero-popular-chip">?? Sushi</a>
+              <a href="pages/restaurants.html?q=Chinese" class="hero-popular-chip">?? Chinese</a>
+            </div>
           </div>
 
           <div class="hero-stats">
@@ -66,14 +89,15 @@
         <!-- Visual -->
         <div class="hero-visual">
           <div class="hero-img-wrapper">
+            <div class="hero-img-ring"></div>
             <img
               class="hero-main-img"
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=85&auto=format&fit=crop"
+              src="images/photo-1504674900247-0877df9cc836.webp"
               alt="Delicious food spread"
             />
 
             <div class="hero-float-card" style="bottom:15%;left:-10%">
-              <div class="float-icon orange">🏍️</div>
+              <div class="float-icon orange">???</div>
               <div>
                 <h4>Fast Delivery</h4>
                 <p>30 min avg time</p>
@@ -81,7 +105,7 @@
             </div>
 
             <div class="hero-float-card" style="top:18%;right:-8%">
-              <div class="float-icon green">⭐</div>
+              <div class="float-icon green">?</div>
               <div>
                 <h4>4.8 Rating</h4>
                 <p>50K+ reviews</p>
@@ -89,7 +113,7 @@
             </div>
 
             <div class="hero-float-card" style="top:5%;left:8%">
-              <div class="float-icon blue">🎟️</div>
+              <div class="float-icon blue">???</div>
               <div>
                 <h4>Best Deals</h4>
                 <p>Up to 40% OFF</p>
@@ -102,92 +126,539 @@
   </section>
 
   <!-- ===================== CATEGORIES ===================== -->
-  <section class="section" style="background:var(--bg-primary);padding:48px 0">
+  <section class="section fade-up" style="background:var(--bg-primary);padding:48px 0">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">🍽️ Explore Menu</div>
-        <h2 class="section-title">What Are You <span>Craving?</span></h2>
-        <p class="section-subtitle">Browse through our wide variety of food categories</p>
+        <div class="section-header-content">
+          <div class="section-tag">??? Explore Menu</div>
+          <h2 class="section-title">What Are You <span>Craving?</span></h2>
+          <p class="section-subtitle">Browse through our wide variety of food categories</p>
+        </div>
+        <a href="pages/restaurants.html" class="view-all-link">All Categories ?</a>
       </div>
-      <div class="categories-grid" id="categoriesGrid"></div>
+      <div class="categories-grid stagger-children" id="categoriesGrid"></div>
     </div>
   </section>
 
   <!-- ===================== POPULAR RESTAURANTS ===================== -->
-  <section class="section" style="background:var(--bg-secondary)">
+  <section class="section fade-up rc-editorial-section">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">🏆 Top Picks</div>
-        <h2 class="section-title">Popular <span>Restaurants</span></h2>
-        <p class="section-subtitle">Handpicked restaurants loved by thousands of food lovers like you</p>
+      <div class="section-header rc-editorial-header">
+        <div class="section-header-content">
+          <div class="section-tag rc-editorial-pill">?? Top Picks</div>
+          <h2 class="section-title rc-editorial-title">Popular <span>Restaurants</span></h2>
+          <p class="section-subtitle rc-editorial-sub">Handpicked restaurants loved by thousands of food lovers like you</p>
+        </div>
+        <a href="pages/restaurants.html" class="view-all-link rc-editorial-view-all">View All ?</a>
       </div>
-      <div class="restaurants-grid" id="popularRestaurantsGrid"></div>
-      <div style="text-align:center;margin-top:40px">
-        <a href="pages/restaurants.html" class="btn btn-secondary btn-lg">View All Restaurants →</a>
+
+      <div class="swiper swiper-restaurants" id="restaurantsSwiper">
+        <div class="swiper-wrapper">
+
+          <!-- Spice Garden -->
+          <div class="swiper-slide">
+            <div class="rc-ed-card" onclick="window.location.href='pages/menu.html?id=1'">
+              <div class="rc-ed-img">
+                <img src="images/photo-1517248135467-4c7edcad34c4.webp" alt="Spice Garden" loading="lazy">
+                <div class="rc-ed-overlay"></div>
+                <span class="rc-ed-status open">? Open</span>
+                <span class="rc-ed-badge">40% OFF</span>
+              </div>
+              <div class="rc-ed-body">
+                <div class="rc-ed-rating">? 4.7 <span class="rc-ed-dot">�</span> <span>2340 reviews</span></div>
+                <h3 class="rc-ed-name">Spice Garden</h3>
+                <p class="rc-ed-cuisine">North Indian � Mughlai � Biryani</p>
+                <div class="rc-ed-meta">
+                  <span>?? 25�35 min</span>
+                  <span>?? 1.2 km</span>
+                  <span>Min ?199</span>
+                </div>
+                <div class="rc-ed-tags">
+                  <span class="rc-ed-tag">Biryani</span>
+                  <span class="rc-ed-tag">Mughlai</span>
+                  <span class="rc-ed-tag">North Indian</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- The Burger Lab -->
+          <div class="swiper-slide">
+            <div class="rc-ed-card" onclick="window.location.href='pages/menu.html?id=2'">
+              <div class="rc-ed-img">
+                <img src="images/photo-1555396273-367ea4eb4db5.webp" alt="The Burger Lab" loading="lazy">
+                <div class="rc-ed-overlay"></div>
+                <span class="rc-ed-status open">? Open</span>
+                <span class="rc-ed-badge">20% OFF</span>
+              </div>
+              <div class="rc-ed-body">
+                <div class="rc-ed-rating rc-ed-rating-high">? 4.5 <span class="rc-ed-dot">�</span> <span>1890 reviews</span></div>
+                <h3 class="rc-ed-name">The Burger Lab</h3>
+                <p class="rc-ed-cuisine">American � Fast Food � Burgers</p>
+                <div class="rc-ed-meta">
+                  <span>?? 20�30 min</span>
+                  <span>?? 0.8 km</span>
+                  <span>Min ?149</span>
+                </div>
+                <div class="rc-ed-tags">
+                  <span class="rc-ed-tag">Burgers</span>
+                  <span class="rc-ed-tag">Wraps</span>
+                  <span class="rc-ed-tag">Shakes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pizza Paradise -->
+          <div class="swiper-slide">
+            <div class="rc-ed-card" onclick="window.location.href='pages/menu.html?id=3'">
+              <div class="rc-ed-img">
+                <img src="images/photo-1414235077428-338989a2e8c0.webp" alt="Pizza Paradise" loading="lazy">
+                <div class="rc-ed-overlay"></div>
+                <span class="rc-ed-status open">? Open</span>
+                <span class="rc-ed-badge">Free Del</span>
+              </div>
+              <div class="rc-ed-body">
+                <div class="rc-ed-rating">? 4.6 <span class="rc-ed-dot">�</span> <span>3120 reviews</span></div>
+                <h3 class="rc-ed-name">Pizza Paradise</h3>
+                <p class="rc-ed-cuisine">Italian � Continental � Pizza</p>
+                <div class="rc-ed-meta">
+                  <span>?? 30�40 min</span>
+                  <span>?? 1.5 km</span>
+                  <span>Min ?249</span>
+                </div>
+                <div class="rc-ed-tags">
+                  <span class="rc-ed-tag">Pizza</span>
+                  <span class="rc-ed-tag">Pasta</span>
+                  <span class="rc-ed-tag">Calzone</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dragon Palace -->
+          <div class="swiper-slide">
+            <div class="rc-ed-card" onclick="window.location.href='pages/menu.html?id=4'">
+              <div class="rc-ed-img">
+                <img src="images/photo-1537047902294-62a40c20a6ae.webp" alt="Dragon Palace" loading="lazy">
+                <div class="rc-ed-overlay"></div>
+                <span class="rc-ed-status open">? Open</span>
+                <span class="rc-ed-badge">15% OFF</span>
+              </div>
+              <div class="rc-ed-body">
+                <div class="rc-ed-rating">? 4.3 <span class="rc-ed-dot">�</span> <span>1450 reviews</span></div>
+                <h3 class="rc-ed-name">Dragon Palace</h3>
+                <p class="rc-ed-cuisine">Chinese � Pan Asian � Thai</p>
+                <div class="rc-ed-meta">
+                  <span>?? 35�45 min</span>
+                  <span>?? 2.1 km</span>
+                  <span>Min ?199</span>
+                </div>
+                <div class="rc-ed-tags">
+                  <span class="rc-ed-tag">Chinese</span>
+                  <span class="rc-ed-tag">Thai</span>
+                  <span class="rc-ed-tag">Dim Sum</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Green Bowl -->
+          <div class="swiper-slide">
+            <div class="rc-ed-card" onclick="window.location.href='pages/menu.html?id=5'">
+              <div class="rc-ed-img">
+                <img src="images/photo-1498837167922-ddd27525d352.webp" alt="Green Bowl" loading="lazy">
+                <div class="rc-ed-overlay"></div>
+                <span class="rc-ed-status open">? Open</span>
+                <span class="rc-ed-badge rc-ed-badge-green">?? Top Rated</span>
+              </div>
+              <div class="rc-ed-body">
+                <div class="rc-ed-rating rc-ed-rating-high">? 4.8 <span class="rc-ed-dot">�</span> <span>987 reviews</span></div>
+                <h3 class="rc-ed-name">Green Bowl</h3>
+                <p class="rc-ed-cuisine">Healthy � Salads � Vegan</p>
+                <div class="rc-ed-meta">
+                  <span>?? 20�30 min</span>
+                  <span>?? 0.5 km</span>
+                  <span>Min ?179</span>
+                </div>
+                <div class="rc-ed-tags">
+                  <span class="rc-ed-tag">Healthy</span>
+                  <span class="rc-ed-tag">Vegan</span>
+                  <span class="rc-ed-tag">Salads</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sweet Tooth -->
+          <div class="swiper-slide">
+            <div class="rc-ed-card" onclick="window.location.href='pages/menu.html?id=6'">
+              <div class="rc-ed-img">
+                <img src="images/photo-1551024506-0bccd828d307.webp" alt="Sweet Tooth" loading="lazy">
+                <div class="rc-ed-overlay"></div>
+                <span class="rc-ed-status open">? Open</span>
+                <span class="rc-ed-badge rc-ed-badge-gold">? 4.9</span>
+              </div>
+              <div class="rc-ed-body">
+                <div class="rc-ed-rating rc-ed-rating-high">? 4.9 <span class="rc-ed-dot">�</span> <span>2100 reviews</span></div>
+                <h3 class="rc-ed-name">Sweet Tooth</h3>
+                <p class="rc-ed-cuisine">Desserts � Bakery � Ice Cream</p>
+                <div class="rc-ed-meta">
+                  <span>?? 15�25 min</span>
+                  <span>?? 0.3 km</span>
+                  <span>Min ?99</span>
+                </div>
+                <div class="rc-ed-tags">
+                  <span class="rc-ed-tag">Cakes</span>
+                  <span class="rc-ed-tag">Ice Cream</span>
+                  <span class="rc-ed-tag">Waffles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-restaurants-pagination"></div>
+        <div class="swiper-restaurants-prev"></div>
+        <div class="swiper-restaurants-next"></div>
       </div>
     </div>
   </section>
 
   <!-- ===================== TRENDING DISHES ===================== -->
-  <section class="section" style="background:var(--bg-primary)">
+  <section class="section fade-up" style="background:var(--bg-primary)">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">🔥 Trending Now</div>
-        <h2 class="section-title">Most <span>Loved Dishes</span></h2>
-        <p class="section-subtitle">These are the dishes everyone's ordering right now</p>
+        <div class="section-header-content">
+          <div class="section-tag">?? Trending Now</div>
+          <h2 class="section-title">Most <span>Loved Dishes</span></h2>
+          <p class="section-subtitle">These are the dishes everyone's ordering right now</p>
+        </div>
+        <a href="pages/restaurants.html" class="view-all-link">Browse All ?</a>
       </div>
-      <div class="dishes-grid" id="trendingDishesGrid"></div>
+      <div class="swiper swiper-dishes" id="dishesSwiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1585937421612-70a008356fbe.webp" alt="Paneer Butter Masala" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Paneer Butter Masala</div>
+                <div class="dish-restaurant">Spice Garden</div>
+                <div class="dish-desc">Creamy tomato-based curry with soft paneer cubes, rich in flavour.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?249</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:102,name:'Paneer Butter Masala',price:249,img:'images/photo-1585937421612-70a008356fbe.webp',restaurantId:1,restaurantName:'Spice Garden'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator non-veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <span class="dish-discount-badge">17% off</span>
+                <img src="images/photo-1568901346375-23c9450c58cd.webp" alt="Classic Smash Burger" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Classic Smash Burger</div>
+                <div class="dish-restaurant">The Burger Lab</div>
+                <div class="dish-desc">Double smash patty with American cheese, special sauce on brioche.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?249</span><span class="original">?299</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:201,name:'Classic Smash Burger',price:249,img:'images/photo-1568901346375-23c9450c58cd.webp',restaurantId:2,restaurantName:'The Burger Lab'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1513104890138-7c749659a591.webp" alt="Margherita Pizza" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Margherita Pizza</div>
+                <div class="dish-restaurant">Pizza Paradise</div>
+                <div class="dish-desc">Classic Neapolitan pizza with San Marzano tomatoes and mozzarella.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?299</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:301,name:'Margherita Pizza',price:299,img:'images/photo-1513104890138-7c749659a591.webp',restaurantId:3,restaurantName:'Pizza Paradise'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1520072959219-c595dc870360.webp" alt="Veggie Delight Burger" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Veggie Delight Burger</div>
+                <div class="dish-restaurant">The Burger Lab</div>
+                <div class="dish-desc">Crispy veggie patty with fresh lettuce, tomato and mayo.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?199</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:202,name:'Veggie Delight Burger',price:199,img:'images/photo-1520072959219-c595dc870360.webp',restaurantId:2,restaurantName:'The Burger Lab'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1534353436294-0dbd4bdac845.webp" alt="Acai Bowl" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Acai Bowl</div>
+                <div class="dish-restaurant">Green Bowl</div>
+                <div class="dish-desc">Frozen acai blended with banana, topped with granola, fruits and honey.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?289</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:501,name:'Acai Bowl',price:289,img:'images/photo-1534353436294-0dbd4bdac845.webp',restaurantId:5,restaurantName:'Green Bowl'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1512621776951-a57141f2eefd.webp" alt="Caesar Salad" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Caesar Salad</div>
+                <div class="dish-restaurant">Green Bowl</div>
+                <div class="dish-desc">Crisp romaine with parmesan, croutons and classic Caesar dressing.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?249</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:502,name:'Caesar Salad',price:249,img:'images/photo-1512621776951-a57141f2eefd.webp',restaurantId:5,restaurantName:'Green Bowl'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1630384060421-cb20d0e0649d.webp" alt="Loaded Fries" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Loaded Fries</div>
+                <div class="dish-restaurant">The Burger Lab</div>
+                <div class="dish-desc">Crispy fries loaded with cheese sauce, jalape�os and sour cream.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?149</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:203,name:'Loaded Fries',price:149,img:'images/photo-1630384060421-cb20d0e0649d.webp',restaurantId:2,restaurantName:'The Burger Lab'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="dish-card">
+              <div class="dish-img-wrap">
+                <div class="dish-type-indicator veg"></div>
+                <span class="dish-popular-badge">?? Popular</span>
+                <img src="images/photo-1590502593747-42a996133562.webp" alt="Garlic Naan" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              </div>
+              <div class="dish-info">
+                <div class="dish-name">Garlic Naan</div>
+                <div class="dish-restaurant">Spice Garden</div>
+                <div class="dish-desc">Soft fluffy naan topped with garlic butter and fresh cilantro leaves.</div>
+                <div class="dish-footer">
+                  <div class="dish-price-group"><span class="dish-price">?49</span></div>
+                  <button class="dish-add-btn" onclick="Cart.add({id:105,name:'Garlic Naan',price:49,img:'images/photo-1590502593747-42a996133562.webp',restaurantId:1,restaurantName:'Spice Garden'})" title="Add to cart">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-dishes-pagination"></div>
+        <div class="swiper-dishes-prev"></div>
+        <div class="swiper-dishes-next"></div>
+      </div>
     </div>
   </section>
 
   <!-- ===================== FEATURED OFFERS ===================== -->
-  <section class="section" style="background:var(--bg-secondary)">
-    <div class="container">
+  <section class="section fade-up fo-section" style="background:var(--bg-secondary)">
+    <div class="fo-container">
       <div class="section-header">
-        <div class="section-tag">💰 Hot Deals</div>
-        <h2 class="section-title">Featured <span>Offers</span></h2>
-        <p class="section-subtitle">Don't miss out on these amazing limited-time deals!</p>
+        <div class="section-header-content">
+          <div class="section-tag">?? Hot Deals</div>
+          <h2 class="fo-heading"><span class="fo-heading-dark">Featured</span> <span class="fo-heading-red">Offers</span></h2>
+          <p class="fo-subheading">Don't miss out on these amazing limited-time deals!</p>
+        </div>
       </div>
-      <div class="offers-grid" id="offersGrid"></div>
-    </div>
+
+      <div class="fo-grid">
+
+        <!-- Card 1: Margherita Pizza -->
+        <div class="fo-card">
+          <img
+            class="fo-card-img"
+            src="images/photo-1565299624946-b28f40a0ae38.webp"
+            alt="Margherita Pizza"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="160"
+          />
+          <span class="fo-badge">40% OFF</span>
+          <div class="fo-body">
+            <div class="fo-name">Margherita Pizza</div>
+            <div class="fo-desc">Classic tomato base with fresh mozzarella and aromatic basil</div>
+            <div class="fo-price-row">
+              <div class="fo-price-group">
+                <span class="fo-price">?199</span>
+                <span class="fo-original">?329</span>
+              </div>
+              <button class="fo-order-btn" onclick="Cart.add({id:9001,name:'Margherita Pizza',price:199,img:'images/photo-1565299624946-b28f40a0ae38.webp',restaurantId:3,restaurantName:'Pizza Paradise'}); Toast.success('Added to Cart!','Margherita Pizza added ??')">Order Now</button>
+            </div>
+            <div class="fo-timer">?? Ends in 2h 14m</div>
+          </div>
+        </div>
+
+        <!-- Card 2: Smash Burger -->
+        <div class="fo-card">
+          <img
+            class="fo-card-img"
+            src="images/photo-1568901346375-23c9450c58cd.webp"
+            alt="Smash Burger"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="160"
+          />
+          <span class="fo-badge">BESTSELLER</span>
+          <div class="fo-body">
+            <div class="fo-name">Smash Burger</div>
+            <div class="fo-desc">Double smashed patty with cheddar, pickles and house special sauce</div>
+            <div class="fo-price-row">
+              <div class="fo-price-group">
+                <span class="fo-price">?249</span>
+                <span class="fo-original">?389</span>
+              </div>
+              <button class="fo-order-btn" onclick="Cart.add({id:9002,name:'Smash Burger',price:249,img:'images/photo-1568901346375-23c9450c58cd.webp',restaurantId:2,restaurantName:'The Burger Lab'}); Toast.success('Added to Cart!','Smash Burger added ??')">Order Now</button>
+            </div>
+            <div class="fo-timer">?? Ends in 4h 50m</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Greek Salad Bowl -->
+        <div class="fo-card">
+          <img
+            class="fo-card-img"
+            src="images/photo-1512621776951-a57141f2eefd.webp"
+            alt="Greek Salad Bowl"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="160"
+          />
+          <span class="fo-badge">NEW</span>
+          <div class="fo-body">
+            <div class="fo-name">Greek Salad Bowl</div>
+            <div class="fo-desc">Fresh veggies, feta cheese, olives with lemon herb dressing</div>
+            <div class="fo-price-row">
+              <div class="fo-price-group">
+                <span class="fo-price">?149</span>
+                <span class="fo-original">?249</span>
+              </div>
+              <button class="fo-order-btn" onclick="Cart.add({id:9003,name:'Greek Salad Bowl',price:149,img:'images/photo-1512621776951-a57141f2eefd.webp',restaurantId:5,restaurantName:'Green Bowl'}); Toast.success('Added to Cart!','Greek Salad Bowl added ??')">Order Now</button>
+            </div>
+            <div class="fo-timer">?? Ends in 6h 30m</div>
+          </div>
+        </div>
+
+        <!-- Card 4: Ramen Bowl -->
+        <div class="fo-card">
+          <img
+            class="fo-card-img"
+            src="images/photo-1569718212165-3a8278d5f624.webp"
+            alt="Ramen Bowl"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="160"
+          />
+          <span class="fo-badge">30% OFF</span>
+          <div class="fo-body">
+            <div class="fo-name">Ramen Bowl</div>
+            <div class="fo-desc">Rich tonkotsu broth with chashu pork, soft egg and wheat noodles</div>
+            <div class="fo-price-row">
+              <div class="fo-price-group">
+                <span class="fo-price">?219</span>
+                <span class="fo-original">?319</span>
+              </div>
+              <button class="fo-order-btn" onclick="Cart.add({id:9004,name:'Ramen Bowl',price:219,img:'images/photo-1569718212165-3a8278d5f624.webp',restaurantId:4,restaurantName:'Dragon Palace'}); Toast.success('Added to Cart!','Ramen Bowl added ??')">Order Now</button>
+            </div>
+            <div class="fo-timer">?? Ends in 1h 45m</div>
+          </div>
+        </div>
+
+      </div><!-- /fo-grid -->
+    </div><!-- /fo-container -->
   </section>
 
   <!-- ===================== WHY CHOOSE US ===================== -->
-  <section class="section" style="background:var(--bg-primary)">
+  <section class="section fade-up" style="background:var(--bg-primary)">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">💡 Why Us</div>
-        <h2 class="section-title">Why Choose <span>FoodieExpress?</span></h2>
-        <p class="section-subtitle">We're more than just food delivery – we're your dining experience partner</p>
+        <div class="section-header-content">
+          <div class="section-tag">?? Why Us</div>
+          <h2 class="section-title">Why Choose <span>FoodieExpress?</span></h2>
+          <p class="section-subtitle">We're more than just food delivery � we're your dining experience partner</p>
+        </div>
       </div>
-      <div class="features-grid">
+      <div class="features-grid stagger-children">
         <div class="feature-card animate-on-scroll">
-          <div class="feature-icon">⚡</div>
+          <div class="feature-icon icon-wiggle">?</div>
           <h3>Lightning Fast Delivery</h3>
           <p>Our optimised delivery network ensures your food arrives hot and fresh within 30 minutes.</p>
         </div>
         <div class="feature-card animate-on-scroll delay-1">
-          <div class="feature-icon">🍽️</div>
+          <div class="feature-icon icon-wiggle">???</div>
           <h3>500+ Restaurant Partners</h3>
           <p>Choose from hundreds of curated restaurants across multiple cuisines in your city.</p>
         </div>
         <div class="feature-card animate-on-scroll delay-2">
-          <div class="feature-icon">🔒</div>
+          <div class="feature-icon icon-wiggle">??</div>
           <h3>100% Safe & Hygienic</h3>
           <p>All our partner restaurants follow strict hygiene protocols and food safety standards.</p>
         </div>
         <div class="feature-card animate-on-scroll delay-3">
-          <div class="feature-icon">💰</div>
+          <div class="feature-icon icon-wiggle">??</div>
           <h3>Best Price Guarantee</h3>
           <p>Get the best prices with exclusive deals, coupons and cashback offers every day.</p>
         </div>
         <div class="feature-card animate-on-scroll delay-4">
-          <div class="feature-icon">🎯</div>
+          <div class="feature-icon icon-wiggle">??</div>
           <h3>Live Order Tracking</h3>
           <p>Track your order in real-time from restaurant to your doorstep on the map.</p>
         </div>
         <div class="feature-card animate-on-scroll delay-5">
-          <div class="feature-icon">🌟</div>
+          <div class="feature-icon icon-wiggle">??</div>
           <h3>24/7 Support</h3>
           <p>Our dedicated customer support team is always ready to help you, day or night.</p>
         </div>
@@ -196,35 +667,37 @@
   </section>
 
   <!-- ===================== HOW IT WORKS ===================== -->
-  <section class="section" style="background:var(--bg-secondary)">
+  <section class="section fade-up" style="background:var(--bg-secondary)">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">📱 Process</div>
-        <h2 class="section-title">How It <span>Works</span></h2>
-        <p class="section-subtitle">Getting your favourite food delivered is just 4 easy steps away</p>
+        <div class="section-header-content">
+          <div class="section-tag">?? Process</div>
+          <h2 class="section-title">How It <span>Works</span></h2>
+          <p class="section-subtitle">Getting your favourite food delivered is just 4 easy steps away</p>
+        </div>
       </div>
-      <div class="steps-grid">
+      <div class="steps-grid stagger-children">
         <div class="step-card animate-on-scroll">
           <div class="step-number">1</div>
-          <div class="step-icon">📍</div>
+          <div class="step-icon">??</div>
           <h3>Set Your Location</h3>
           <p>Enter your delivery address to discover restaurants near you.</p>
         </div>
         <div class="step-card animate-on-scroll delay-1">
           <div class="step-number">2</div>
-          <div class="step-icon">🍕</div>
+          <div class="step-icon">??</div>
           <h3>Choose Your Food</h3>
           <p>Browse menus, add your favourite items to cart with one click.</p>
         </div>
         <div class="step-card animate-on-scroll delay-2">
           <div class="step-number">3</div>
-          <div class="step-icon">💳</div>
+          <div class="step-icon">??</div>
           <h3>Place Your Order</h3>
           <p>Checkout securely using your preferred payment method.</p>
         </div>
         <div class="step-card animate-on-scroll delay-3">
           <div class="step-number">4</div>
-          <div class="step-icon">🚀</div>
+          <div class="step-icon">??</div>
           <h3>Fast Delivery</h3>
           <p>Sit back and track your order as it comes to your door!</p>
         </div>
@@ -232,36 +705,117 @@
     </div>
   </section>
 
-  <!-- ===================== TESTIMONIALS ===================== -->
-  <section class="section" style="background:var(--bg-primary)">
+  <!-- ===================== TESTIMONIALS � Swiper ===================== -->
+  <div class="testimonials-swiper-wrap fade-up">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">💬 Reviews</div>
-        <h2 class="section-title">What Our <span>Customers Say</span></h2>
-        <p class="section-subtitle">Join thousands of satisfied customers who love FoodieExpress</p>
+        <div class="section-header-content">
+          <div class="section-tag">?? Reviews</div>
+          <h2 class="section-title">What Our <span>Customers Say</span></h2>
+          <p class="section-subtitle">Join thousands of satisfied customers who love FoodieExpress</p>
+        </div>
       </div>
-      <div class="testimonials-grid" id="testimonialsGrid"></div>
     </div>
-  </section>
+    <div class="container">
+      <div class="swiper swiper-testimonial" id="testimonialSwiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="t-card">
+              <div class="t-stars">?????</div>
+              <p class="t-text">"Ordered biryani from Paradise at midnight and it arrived piping hot in 28 minutes! The packing was perfect and the food was absolutely divine. FoodieExpress never disappoints me."</p>
+              <div class="t-author">
+                <div class="t-avatar-initial" style="background:linear-gradient(135deg,#FF6B35,#E55824)">P</div>
+                <div>
+                  <div class="t-name">Priya Sharma</div>
+                  <div class="t-meta">?? Koramangala, Bangalore � Regular Customer</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="t-card">
+              <div class="t-stars">?????</div>
+              <p class="t-text">"Used FIRST40 coupon on my first order � got 40% off on a big pizza order for a house party. The entire gang was impressed. Delivery guy was super polite too. 10/10 experience!"</p>
+              <div class="t-author">
+                <div class="t-avatar-initial" style="background:linear-gradient(135deg,#4CAF50,#388E3C)">R</div>
+                <div>
+                  <div class="t-name">Rahul Gupta</div>
+                  <div class="t-meta">?? Andheri, Mumbai � Food Enthusiast</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="t-card">
+              <div class="t-stars">?????</div>
+              <p class="t-text">"As a working mom, FoodieExpress is a lifesaver. The app is super smooth, tracking is accurate, and I have never had a wrong order. The dark mode is gorgeous too � my late-night orders just got comfier!"</p>
+              <div class="t-author">
+                <div class="t-avatar-initial" style="background:linear-gradient(135deg,#9C27B0,#7B1FA2)">A</div>
+                <div>
+                  <div class="t-name">Ananya Krishnan</div>
+                  <div class="t-meta">?? Adyar, Chennai � Working Professional</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="t-card">
+              <div class="t-stars">?????</div>
+              <p class="t-text">"The FREEDEL coupon saved my day when I was on a tight budget. Delivery was surprisingly fast � 24 minutes from order to doorstep! The app design is clean and intuitive. Highly recommended."</p>
+              <div class="t-author">
+                <div class="t-avatar-initial" style="background:linear-gradient(135deg,#2196F3,#1565C0)">S</div>
+                <div>
+                  <div class="t-name">Siddharth Rao</div>
+                  <div class="t-meta">?? Banjara Hills, Hyderabad � College Student</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="t-card">
+              <div class="t-stars">?????</div>
+              <p class="t-text">"Ordered a healthy salad bowl using the HEALTH100 coupon � fresh ingredients, great presentation. FoodieExpress feels premium without the premium price. My go-to for office lunch orders!"</p>
+              <div class="t-author">
+                <div class="t-avatar-initial" style="background:linear-gradient(135deg,#FF9800,#E65100)">N</div>
+                <div>
+                  <div class="t-name">Neha Patel</div>
+                  <div class="t-meta">?? Satellite, Ahmedabad � Fitness Blogger</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- ===================== APP DOWNLOAD ===================== -->
-  <section class="section" style="background:var(--bg-secondary)">
+  <section class="section fade-up" style="background:var(--bg-secondary)">
     <div class="container">
       <div class="app-download animate-on-scroll">
         <div class="app-download-text">
-          <div class="section-tag" style="margin-bottom:16px">📱 Mobile App</div>
+          <div class="section-tag" style="margin-bottom:16px">?? Mobile App</div>
           <h2>Get the <span>FoodieExpress</span><br>App & Save More!</h2>
           <p>Download our app and enjoy exclusive app-only deals, faster checkout, live tracking, and much more. Available on iOS and Android.</p>
           <div class="app-buttons">
-            <a href="#" class="app-btn">
-              <span class="app-btn-icon">🍎</span>
+            <a href="#" class="app-btn" onclick="event.preventDefault(); Toast.info('Coming Soon! ??', 'Our iOS app will be available very soon. Stay tuned!')">
+              <span class="app-btn-icon">??</span>
               <div class="app-btn-text">
                 <h4>Download on the</h4>
                 <span>App Store</span>
               </div>
             </a>
-            <a href="#" class="app-btn">
-              <span class="app-btn-icon">🤖</span>
+            <a href="#" class="app-btn" onclick="event.preventDefault(); Toast.info('Coming Soon! ??', 'Our Android app will be available very soon. Stay tuned!')">
+              <span class="app-btn-icon">??</span>
               <div class="app-btn-text">
                 <h4>Get it on</h4>
                 <span>Google Play</span>
@@ -270,35 +824,110 @@
           </div>
         </div>
         <div class="app-mockup">
-          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&q=80&auto=format&fit=crop" alt="App mockup" style="border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4)" />
+          <img src="images/photo-1512941937669-90a1b58e7e9c.webp" alt="App mockup" style="border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4)" />
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== NEWSLETTER ===================== -->
-  <section class="section" style="background:var(--bg-primary)">
+  <section class="section fade-up" style="background:var(--bg-primary)">
     <div class="container">
       <div class="newsletter animate-on-scroll">
-        <div class="section-tag" style="margin-bottom:14px">📧 Newsletter</div>
+        <div class="section-tag" style="margin-bottom:14px">?? Newsletter</div>
         <h2>Stay in the Loop!</h2>
         <p>Subscribe to get exclusive deals, new restaurant alerts, and foodie tips delivered to your inbox.</p>
         <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
           <input type="email" placeholder="Enter your email address..." required />
-          <button class="btn btn-primary" type="submit">Subscribe 🎉</button>
+          <button class="btn btn-primary" type="submit">Subscribe ??</button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER (injected by JS) -->
-  <div id="footer"></div>
+  <!-- FOOTER � Static premium footer -->
+  <footer class="ft-footer">
+    <div class="ft-grid">
+
+      <!-- Column 1: Brand -->
+      <div class="ft-brand">
+        <div class="ft-logo">
+          <a href="index.html"><img src="images/stackly_logo_gold.webp" alt="Stackly" style="height:48px;width:auto;display:block"></a>
+        </div>
+        <p class="ft-tagline">Delicious food, delivered fast.</p>
+        <a href="pages/restaurants.html" class="ft-cta">ORDER NOW</a>
+      </div>
+
+      <!-- Column 2: Explore -->
+      <div class="ft-col">
+        <h4 class="ft-heading">Explore</h4>
+        <nav class="ft-nav">
+          <a href="index.html" class="ft-link">Home</a>
+          <a href="pages/menu.html" class="ft-link">Menu</a>
+          <a href="index.html#offers" class="ft-link">Featured Offers</a>
+          <a href="pages/restaurants.html" class="ft-link">Top Restaurants</a>
+          <a href="pages/restaurants.html" class="ft-link">Cuisines</a>
+        </nav>
+      </div>
+
+      <!-- Column 3: Company -->
+      <div class="ft-col">
+        <h4 class="ft-heading">Company</h4>
+        <nav class="ft-nav">
+          <a href="pages/about.html" class="ft-link">About Us</a>
+          <a href="pages/contact.html" class="ft-link">Contact Us</a>
+          <a href="#" class="ft-link">Careers</a>
+          <a href="#" class="ft-link">Partner With Us</a>
+        </nav>
+      </div>
+
+      <!-- Column 4: Support -->
+      <div class="ft-col">
+        <h4 class="ft-heading">Support</h4>
+        <nav class="ft-nav">
+          <a href="pages/faq.html" class="ft-link">FAQ</a>
+          <a href="pages/orders.html" class="ft-link">Track Order</a>
+          <a href="#" class="ft-link">Refund Policy</a>
+          <a href="pages/contact.html" class="ft-link">Help Center</a>
+        </nav>
+      </div>
+
+      <!-- Column 5: Latest Deals + Socials -->
+      <div class="ft-col">
+        <h4 class="ft-heading">Latest Deals</h4>
+        <div class="ft-deals">
+          <a href="pages/restaurants.html" class="ft-deal">Flat 40% off on your first order</a>
+          <a href="pages/restaurants.html" class="ft-deal">Free delivery on orders above ?299</a>
+          <a href="pages/restaurants.html" class="ft-deal">Buy 2 get 1 free every Friday</a>
+        </div>
+        <div class="ft-socials">
+          <a href="#" class="ft-social-btn" aria-label="Facebook" onclick="event.preventDefault(); Toast.info('Facebook ??', 'Follow us on Facebook � launching soon!')"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="ft-social-btn" aria-label="Instagram" onclick="event.preventDefault(); Toast.info('Instagram ??', 'Follow @FoodieExpress for daily food inspo � coming soon!')"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="ft-social-btn" aria-label="YouTube" onclick="event.preventDefault(); Toast.info('YouTube ??', 'Subscribe for behind-the-scenes & food reviews � coming soon!')"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+
+    </div><!-- /ft-grid -->
+
+    <hr class="ft-divider" />
+
+    <div class="ft-bottom">
+      <p class="ft-copy">� 2026 Foodie. All rights reserved.</p>
+      <div class="ft-legal">
+        <a href="#" class="ft-legal-link">Privacy Policy</a>
+        <span class="ft-sep">|</span>
+        <a href="#" class="ft-legal-link">Terms of Service</a>
+      </div>
+    </div>
+
+  </footer>
 
   <!-- Scripts -->
   <script src="js/cart.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/search.js"></script>
   <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <script>
     // ---- HOME PAGE INIT ----
     document.addEventListener('DOMContentLoaded', () => {
@@ -306,7 +935,6 @@
       renderPopularRestaurants();
       renderTrendingDishes();
       renderOffers();
-      renderTestimonials();
 
       // Hero search
       const heroSearchInput = document.getElementById('heroSearch');
@@ -317,6 +945,54 @@
           }
         });
       }
+
+      // ---- Swiper Popular Restaurants ----
+      new Swiper('#restaurantsSwiper', {
+        slidesPerView: 1.15,
+        spaceBetween: 16,
+        loop: true,
+        autoplay: { delay: 3200, disableOnInteraction: false, pauseOnMouseEnter: true },
+        pagination: { el: '.swiper-restaurants-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-restaurants-next', prevEl: '.swiper-restaurants-prev' },
+        breakpoints: {
+          540:  { slidesPerView: 2,    spaceBetween: 16 },
+          900:  { slidesPerView: 2.5,  spaceBetween: 20 },
+          1200: { slidesPerView: 3,    spaceBetween: 24 }
+        }
+      });
+
+      // ---- Swiper Trending Dishes ----
+      new Swiper('#dishesSwiper', {
+        slidesPerView: 1.15,
+        spaceBetween: 16,
+        loop: true,
+        autoplay: { delay: 2800, disableOnInteraction: false, pauseOnMouseEnter: true },
+        pagination: { el: '.swiper-dishes-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-dishes-next', prevEl: '.swiper-dishes-prev' },
+        breakpoints: {
+          480:  { slidesPerView: 2,   spaceBetween: 16 },
+          768:  { slidesPerView: 2.5, spaceBetween: 20 },
+          1024: { slidesPerView: 3.5, spaceBetween: 22 },
+          1280: { slidesPerView: 4,   spaceBetween: 24 }
+        }
+      });
+
+      // ---- Swiper Testimonials ----
+      new Swiper('#testimonialSwiper', {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        loop: true,
+        autoplay: { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        breakpoints: {
+          640:  { slidesPerView: 1.15, spaceBetween: 20 },
+          900:  { slidesPerView: 2,    spaceBetween: 24 },
+          1100: { slidesPerView: 3,    spaceBetween: 28 }
+        }
+      });
+
+      // Nav glass effect and fade-up scroll animations are handled globally by app.js
     });
 
     function renderCategories() {
@@ -354,26 +1030,8 @@
           <h3>${o.title}</h3>
           <p>${o.desc}</p>
           <div class="offer-code">
-            🏷️ ${o.code}
+            ??? ${o.code}
             <span style="font-size:11px;opacity:0.8">Click to copy</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderTestimonials() {
-      const grid = document.getElementById('testimonialsGrid');
-      if (!grid) return;
-      grid.innerHTML = TESTIMONIALS.map(t => `
-        <div class="testimonial-card animate-on-scroll">
-          <div class="testimonial-rating">${'⭐'.repeat(t.rating)}</div>
-          <p class="testimonial-text">${t.text}</p>
-          <div class="testimonial-author">
-            <img class="testimonial-avatar" src="${t.avatar}" alt="${t.name}" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=FF6B35&color=fff'">
-            <div>
-              <h4>${t.name}</h4>
-              <p>${t.role}</p>
-            </div>
           </div>
         </div>
       `).join('');
@@ -381,7 +1039,7 @@
 
     function copyCode(code) {
       navigator.clipboard.writeText(code).then(() => {
-        Toast.success('Coupon Copied! 🎉', `Code "${code}" copied to clipboard`);
+        Toast.success('Coupon Copied! ??', `Code "${code}" copied to clipboard`);
       }).catch(() => {
         Toast.info('Coupon Code', code);
       });
@@ -390,7 +1048,7 @@
     function handleNewsletterSubmit(e) {
       e.preventDefault();
       const email = e.target.querySelector('input').value;
-      Toast.success('Subscribed! 🎉', `We'll send great deals to ${email}`);
+      Toast.success('Subscribed! ??', `We'll send great deals to ${email}`);
       e.target.reset();
     }
   </script>

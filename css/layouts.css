@@ -1,0 +1,148 @@
+/* =====================================================
+   FOODIEEXPRESS — Layout System
+   Container · Section · Grid Templates
+   ===================================================== */
+
+/* ── Container ─────────────────────────────────────── */
+.container {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+.container--narrow { max-width: 960px; }
+.container--wide   { max-width: 1440px; }
+
+/* ── Section Variants ──────────────────────────────── */
+.section    { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+.section--sm { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+.section--lg { padding-top: var(--space-24); padding-bottom: var(--space-24); }
+
+/* ── Grid Systems ──────────────────────────────────── */
+
+/* Auto-fill card grid (restaurants, dishes) */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Category pills grid */
+.grid-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Fixed column grids */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+.grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-4); }
+
+/* ── Steps grid override ───────────────────────────── */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+/* ── Filter / sort bar ─────────────────────────────── */
+.filters-bar {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: var(--z-dropdown);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gray-200);
+  padding: var(--space-3) 0;
+  box-shadow: var(--shadow-xs);
+}
+
+[data-theme="dark"] .filters-bar {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(255,255,255,0.08);
+}
+
+.filters-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 0;
+}
+.filters-inner::-webkit-scrollbar { display: none; }
+
+/* ── Profile / Checkout Grids ──────────────────────── */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-8);
+  padding: var(--space-10) var(--space-6) var(--space-20);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-6) var(--space-20);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── RESPONSIVE BREAKPOINTS ────────────────────────── */
+
+@media (max-width: 1280px) {
+  .container { padding-left: var(--space-5); padding-right: var(--space-5); }
+}
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-6 { grid-template-columns: repeat(4, 1fr); }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .checkout-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .container { padding-left: var(--space-4); padding-right: var(--space-4); }
+  .section    { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  .section--lg { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .grid-6 { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .profile-grid { grid-template-columns: 1fr; gap: var(--space-5); }
+  .checkout-grid { grid-template-columns: 1fr; }
+
+  .hero-enhanced {
+    border-radius: 0 0 28px 28px !important;
+    min-height: 100svh;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-cards { grid-template-columns: 1fr; }
+  .grid-categories { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .steps-grid { grid-template-columns: 1fr; }
+
+  .hero-enhanced {
+    border-radius: 0 0 20px 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header { flex-direction: column; align-items: flex-start; }
+  .container { padding-left: var(--space-3); padding-right: var(--space-3); }
+}
