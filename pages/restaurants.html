@@ -18,20 +18,156 @@
   <link rel="stylesheet" href="../css/layouts.css" />
   <link rel="stylesheet" href="../css/animations.css" />
   <link rel="stylesheet" href="../css/utilities.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    /* ── Restaurant Page Hero Swiper ─────────────────────── */
+    .rph-swiper-wrap {
+      position: relative;
+      width: 100%;
+      height: clamp(220px, 38vw, 420px);
+      overflow: hidden;
+    }
+    .rph-swiper { width: 100%; height: 100%; }
+    .rph-slide {
+      position: relative;
+      width: 100%; height: 100%;
+    }
+    .rph-slide-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.06);
+      transition: transform 6s ease;
+    }
+    .swiper-slide-active .rph-slide-img { transform: scale(1); }
+
+    /* Layered overlay: bottom dark gradient + subtle global tint */
+    .rph-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to top,  rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.15) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.30) 0%, transparent 60%);
+    }
+
+    /* Content on top */
+    .rph-content {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+      padding: clamp(18px, 3vw, 36px) clamp(18px, 5vw, 60px);
+    }
+    .rph-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(201,168,76,0.18); border: 1px solid rgba(201,168,76,0.35);
+      color: #ffd700; border-radius: 99px;
+      padding: 4px 14px; font-size: 12px; font-weight: 700;
+      letter-spacing: .5px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .rph-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(22px, 4vw, 44px);
+      font-weight: 800; color: #fff; line-height: 1.15;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.60);
+      margin-bottom: 8px;
+    }
+    .rph-breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: rgba(255,255,255,0.55);
+    }
+    .rph-breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color .2s; }
+    .rph-breadcrumb a:hover { color: #ffd700; }
+    .rph-breadcrumb .sep { color: rgba(255,255,255,0.25); }
+    .rph-breadcrumb .cur { color: rgba(255,255,255,0.80); font-weight: 600; }
+
+    /* Slide caption badge (top-right) */
+    .rph-caption {
+      position: absolute; top: 18px; right: 20px; z-index: 2;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+      padding: 8px 14px; text-align: right;
+    }
+    .rph-caption-name { font-size: 13px; font-weight: 700; color: #fff; }
+    .rph-caption-sub  { font-size: 11px; color: rgba(255,255,255,0.50); }
+
+    /* Swiper pagination bullets */
+    .rph-swiper .swiper-pagination { bottom: 14px !important; right: 20px !important; left: auto !important; width: auto !important; }
+    .rph-swiper .swiper-pagination-bullet { background: rgba(255,255,255,0.45); opacity: 1; width: 7px; height: 7px; transition: all .3s; }
+    .rph-swiper .swiper-pagination-bullet-active { background: #ffd700; width: 22px; border-radius: 99px; }
+
+    /* Stats strip below hero */
+    .rph-stats {
+      display: flex; align-items: center; gap: 0;
+      background: var(--bg-secondary, #1a1a1a);
+      border-bottom: 1px solid var(--border, rgba(255,255,255,0.08));
+      overflow-x: auto;
+    }
+    .rph-stat {
+      flex: 1; min-width: 120px; padding: 12px 20px;
+      text-align: center; border-right: 1px solid var(--border, rgba(255,255,255,0.08));
+    }
+    .rph-stat:last-child { border-right: none; }
+    .rph-stat-val { font-size: 17px; font-weight: 800; color: var(--brand-primary, #E23744); }
+    .rph-stat-lbl { font-size: 11px; color: var(--text-muted, rgba(255,255,255,0.45)); font-weight: 500; margin-top: 1px; }
+  </style>
 </head>
 <body>
 
   <div id="header"></div>
 
-  <!-- Page Header -->
-  <div class="page-header fade-up">
-    <div class="container page-header-content">
-      <h1 class="page-title">🍽️ Restaurants Near You</h1>
-      <div class="breadcrumb">
-        <a href="../index.html">Home</a>
-        <span class="sep">›</span>
-        <span class="current">Restaurants</span>
+  <!-- ── Restaurant Hero Swiper ──────────────────────── -->
+  <div class="rph-swiper-wrap">
+    <div class="swiper rph-swiper" id="rphSwiper">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide rph-slide">
+          <img class="rph-slide-img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&h=500&fit=crop&fm=webp&q=80" alt="Spice Garden" />
+          <div class="rph-overlay"></div>
+          <div class="rph-caption"><div class="rph-caption-name">Spice Garden</div><div class="rph-caption-sub">North Indian · ⭐ 4.6</div></div>
+        </div>
+
+        <div class="swiper-slide rph-slide">
+          <img class="rph-slide-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&h=500&fit=crop&fm=webp&q=80" alt="Pizza Paradise" />
+          <div class="rph-overlay"></div>
+          <div class="rph-caption"><div class="rph-caption-name">Pizza Paradise</div><div class="rph-caption-sub">Italian · ⭐ 4.4</div></div>
+        </div>
+
+        <div class="swiper-slide rph-slide">
+          <img class="rph-slide-img" src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1400&h=500&fit=crop&fm=webp&q=80" alt="The Burger Lab" />
+          <div class="rph-overlay"></div>
+          <div class="rph-caption"><div class="rph-caption-name">The Burger Lab</div><div class="rph-caption-sub">American · ⭐ 4.5</div></div>
+        </div>
+
+        <div class="swiper-slide rph-slide">
+          <img class="rph-slide-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=1400&h=500&fit=crop&fm=webp&q=80" alt="Sushi Zen" />
+          <div class="rph-overlay"></div>
+          <div class="rph-caption"><div class="rph-caption-name">Sushi Zen</div><div class="rph-caption-sub">Japanese · ⭐ 4.8</div></div>
+        </div>
+
+        <div class="swiper-slide rph-slide">
+          <img class="rph-slide-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1400&h=500&fit=crop&fm=webp&q=80" alt="Green Bowl" />
+          <div class="rph-overlay"></div>
+          <div class="rph-caption"><div class="rph-caption-name">Green Bowl</div><div class="rph-caption-sub">Healthy · ⭐ 4.7</div></div>
+        </div>
+
       </div>
+      <div class="swiper-pagination"></div>
+
+      <!-- Title overlay (static, over all slides) -->
+      <div class="rph-content">
+        <div class="rph-tag">🍽️ 500+ Restaurants</div>
+        <h1 class="rph-title">Restaurants Near You</h1>
+        <div class="rph-breadcrumb">
+          <a href="../index.html">Home</a>
+          <span class="sep">›</span>
+          <span class="cur">Restaurants</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="rph-stats">
+      <div class="rph-stat"><div class="rph-stat-val">500+</div><div class="rph-stat-lbl">Restaurants</div></div>
+      <div class="rph-stat"><div class="rph-stat-val">25+</div><div class="rph-stat-lbl">Cuisines</div></div>
+      <div class="rph-stat"><div class="rph-stat-val">30 min</div><div class="rph-stat-lbl">Avg Delivery</div></div>
+      <div class="rph-stat"><div class="rph-stat-val">4.6 ⭐</div><div class="rph-stat-lbl">Avg Rating</div></div>
     </div>
   </div>
 
@@ -98,7 +234,13 @@
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
         <p id="restaurantCount" style="font-size:15px;color:var(--text-secondary);font-weight:500">Loading restaurants...</p>
         <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)">
-          <span>📍 Bangalore, Karnataka</span>
+          <button id="locationBtn" onclick="detectLocation()"
+            style="display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);border-radius:99px;padding:5px 12px;font-size:13px;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:border-color 0.2s,color 0.2s"
+            onmouseover="this.style.borderColor='var(--brand-primary)';this.style.color='var(--brand-primary)'"
+            onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
+            <span id="locationIcon">📍</span>
+            <span id="locationText">Detect my location</span>
+          </button>
         </div>
       </div>
 
@@ -118,12 +260,30 @@
 
   <div id="footer"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="../js/cart.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/search.js"></script>
   <script src="../js/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+      // Hero Swiper
+      new Swiper('#rphSwiper', {
+        loop: true,
+        autoplay: { delay: 4000, disableOnInteraction: false },
+        speed: 900,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        on: {
+          slideChange() {
+            // Reset scale so the new slide's image re-animates
+            this.slides.forEach(s => s.querySelector('.rph-slide-img')?.style.removeProperty('transform'));
+          }
+        }
+      });
+
       // Check URL params
       const params = new URLSearchParams(window.location.search);
       const catParam = params.get('cat');
@@ -151,7 +311,66 @@
       if (catParam || qParam) {
         Search.applyRestaurantFilters();
       }
+
+      // Restore saved location on load
+      const saved = localStorage.getItem('fe_location');
+      if (saved) {
+        document.getElementById('locationText').textContent = saved;
+        document.getElementById('locationIcon').textContent = '📍';
+      }
     });
+
+    function detectLocation() {
+      const btn  = document.getElementById('locationBtn');
+      const icon = document.getElementById('locationIcon');
+      const txt  = document.getElementById('locationText');
+
+      if (!navigator.geolocation) {
+        Toast.warning('Not Supported', 'Your browser does not support location detection.');
+        return;
+      }
+
+      icon.textContent = '⏳';
+      txt.textContent  = 'Detecting...';
+      btn.disabled     = true;
+
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const { latitude: lat, longitude: lon } = pos.coords;
+          try {
+            const res  = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+            const data = await res.json();
+            const addr = data.address || {};
+            const area = addr.suburb || addr.neighbourhood || addr.village || addr.town || addr.city_district || '';
+            const city = addr.city || addr.town || addr.county || 'Your City';
+            const state = (addr.state || '').replace(' State', '');
+            const label = [area, city, state].filter(Boolean).join(', ');
+            localStorage.setItem('fe_location', label);
+            icon.textContent = '📍';
+            txt.textContent  = label;
+            btn.disabled     = false;
+            Toast.success('Location Detected 📍', label);
+          } catch {
+            icon.textContent = '📍';
+            txt.textContent  = `${lat.toFixed(3)}°N, ${lon.toFixed(3)}°E`;
+            btn.disabled     = false;
+            Toast.success('Location Detected 📍', 'Coordinates acquired.');
+          }
+        },
+        (err) => {
+          icon.textContent = '📍';
+          txt.textContent  = 'Detect my location';
+          btn.disabled     = false;
+          const msgs = {
+            1: 'Permission denied. Please allow location access in your browser.',
+            2: 'Location unavailable. Try again.',
+            3: 'Location request timed out. Try again.',
+          };
+          Toast.warning('Location Error', msgs[err.code] || 'Could not detect location.');
+        },
+        { timeout: 10000, maximumAge: 60000 }
+      );
+    }
   </script>
 </body>
 </html>

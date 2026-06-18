@@ -83,10 +83,10 @@
           <div style="margin-top:32px">
             <h4 style="font-size:16px;font-weight:600;margin-bottom:14px">Follow Us</h4>
             <div style="display:flex;gap:12px">
-              <a href="#" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">f</a>
-              <a href="#" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">𝕏</a>
-              <a href="#" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">📸</a>
-              <a href="#" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">▶</a>
+              <a href="404.html" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">f</a>
+              <a href="404.html" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">𝕏</a>
+              <a href="404.html" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">📸</a>
+              <a href="404.html" class="social-btn" style="color:var(--text-primary);background:var(--bg-secondary);width:42px;height:42px;border-radius:var(--radius-sm);font-size:18px">▶</a>
             </div>
           </div>
         </div>
@@ -100,7 +100,8 @@
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
                 <div class="form-group">
                   <label class="form-label">Your Name *</label>
-                  <input type="text" class="form-control" placeholder="John Doe" required />
+                  <input type="text" id="contactName" class="form-control" placeholder="John Doe" required maxlength="16" autocomplete="name" />
+                  <span id="contactNameErr" style="display:none;color:var(--error,#e03131);font-size:12px;margin-top:4px;display:none"></span>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Email Address *</label>
@@ -110,7 +111,8 @@
 
               <div class="form-group">
                 <label class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" placeholder="+91 98765 43210" />
+                <input type="tel" id="contactPhone" class="form-control" placeholder="+91 98765 43210" maxlength="10" inputmode="numeric" />
+                <span id="contactPhoneErr" style="display:none;color:var(--error,#e03131);font-size:12px;margin-top:4px;display:none"></span>
               </div>
 
               <div class="form-group">
@@ -169,8 +171,101 @@
   <script src="../js/search.js"></script>
   <script src="../js/app.js"></script>
   <script>
+    // ── Name validation ──────────────────────────────────────────────
+    const contactName = document.getElementById('contactName');
+    const contactNameErr = document.getElementById('contactNameErr');
+    const VALID_NAME = /^[a-zA-Z ]*$/;
+
+    function showNameErr(msg) {
+      contactNameErr.textContent = msg;
+      contactNameErr.style.display = 'block';
+    }
+    function hideNameErr() { contactNameErr.style.display = 'none'; }
+
+    // Block invalid keystrokes (numbers + special chars)
+    contactName.addEventListener('keydown', (e) => {
+      const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+      if (allowed.includes(e.key)) return;
+      if (!/^[a-zA-Z ]$/.test(e.key)) {
+        e.preventDefault();
+        showNameErr('Only letters are allowed. Maximum 16 characters.');
+      }
+    });
+
+    // Strip anything invalid on paste or autofill
+    contactName.addEventListener('input', () => {
+      const clean = contactName.value.replace(/[^a-zA-Z ]/g, '').slice(0, 16);
+      if (contactName.value !== clean) contactName.value = clean;
+      if (clean.length === 0 || clean.trim().length >= 2) {
+        hideNameErr();
+      } else {
+        showNameErr('Only letters are allowed. Maximum 16 characters.');
+      }
+    });
+
+    contactName.addEventListener('blur', () => {
+      const val = contactName.value.trim();
+      if (val.length > 0 && val.length < 2) {
+        showNameErr('Only letters are allowed. Maximum 16 characters.');
+      } else {
+        hideNameErr();
+      }
+    });
+
+    // ── Phone validation ─────────────────────────────────────────────
+    const contactPhone = document.getElementById('contactPhone');
+    const contactPhoneErr = document.getElementById('contactPhoneErr');
+
+    function showPhoneErr() {
+      contactPhoneErr.textContent = 'Please enter a valid 10-digit phone number.';
+      contactPhoneErr.style.display = 'block';
+    }
+    function hidePhoneErr() { contactPhoneErr.style.display = 'none'; }
+
+    // Block non-digits
+    contactPhone.addEventListener('keydown', (e) => {
+      const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+      if (allowed.includes(e.key)) return;
+      if (!/^\d$/.test(e.key)) e.preventDefault();
+    });
+
+    // Strip non-digits on paste / autofill, enforce 10-char max
+    contactPhone.addEventListener('input', () => {
+      const clean = contactPhone.value.replace(/\D/g, '').slice(0, 10);
+      if (contactPhone.value !== clean) contactPhone.value = clean;
+      if (clean.length === 0 || clean.length === 10) {
+        hidePhoneErr();
+      } else {
+        showPhoneErr();
+      }
+    });
+
+    contactPhone.addEventListener('blur', () => {
+      const val = contactPhone.value;
+      if (val.length > 0 && val.length !== 10) showPhoneErr();
+      else hidePhoneErr();
+    });
+
+    // ── Submit ───────────────────────────────────────────────────────
     function handleContactSubmit(e) {
       e.preventDefault();
+
+      // Validate name
+      const nameVal = contactName.value.trim();
+      if (nameVal.length < 2 || !VALID_NAME.test(nameVal)) {
+        showNameErr('Only letters are allowed. Maximum 16 characters.');
+        contactName.focus();
+        return;
+      }
+
+      // Validate phone (required if any digit entered)
+      const phoneVal = contactPhone.value;
+      if (phoneVal.length > 0 && phoneVal.length !== 10) {
+        showPhoneErr();
+        contactPhone.focus();
+        return;
+      }
+
       const btn = e.target.querySelector('button[type="submit"]');
       btn.textContent = '⏳ Sending...';
       btn.disabled = true;
@@ -178,6 +273,8 @@
       setTimeout(() => {
         Toast.success('Message Sent! 🎉', 'We\'ll get back to you within 2 hours.');
         e.target.reset();
+        hideNameErr();
+        hidePhoneErr();
         btn.textContent = 'Send Message 📨';
         btn.disabled = false;
       }, 1500);

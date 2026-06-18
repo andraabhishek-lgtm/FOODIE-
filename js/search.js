@@ -175,9 +175,19 @@ const Search = {
           e.preventDefault();
           catNav.querySelectorAll('.menu-cat-link').forEach(l => l.classList.remove('active'));
           link.classList.add('active');
+          const cat = link.dataset.cat;
+          const vegOnly = document.getElementById('vegOnlyToggle')?.checked || false;
+          const query = document.getElementById('menuSearch')?.value || '';
+          const filtered = this.filterMenuItems(items, { category: cat, vegOnly, query });
+          this.renderMenuItems(filtered, restaurantId);
         });
       });
     }
+
+    const getActiveCategory = () => {
+      const active = catNav ? catNav.querySelector('.menu-cat-link.active') : null;
+      return active ? active.dataset.cat : 'all';
+    };
 
     this.renderMenuItems(items, restaurantId);
 
@@ -185,7 +195,11 @@ const Search = {
     const vegToggle = document.getElementById('vegOnlyToggle');
     if (vegToggle) {
       vegToggle.addEventListener('change', () => {
-        const filtered = this.filterMenuItems(items, { vegOnly: vegToggle.checked });
+        const filtered = this.filterMenuItems(items, {
+          category: getActiveCategory(),
+          vegOnly: vegToggle.checked,
+          query: document.getElementById('menuSearch')?.value || ''
+        });
         this.renderMenuItems(filtered, restaurantId);
       });
     }
@@ -195,6 +209,7 @@ const Search = {
     if (menuSearch) {
       menuSearch.addEventListener('input', debounce(() => {
         const filtered = this.filterMenuItems(items, {
+          category: getActiveCategory(),
           query: menuSearch.value,
           vegOnly: vegToggle?.checked || false
         });

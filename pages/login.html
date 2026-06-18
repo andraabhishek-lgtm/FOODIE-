@@ -82,16 +82,26 @@
       background: #fafafa;
     }
     .f-input:focus { border-color: #e03131; box-shadow: 0 0 0 3px rgba(224,49,49,0.10); background: #fff; }
+
+    /* Icon-prefixed inputs */
+    .f-icon-wrap { position: relative; }
+    .f-field-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; color: #9ca3af; pointer-events: none; z-index: 1;
+      display: flex; align-items: center;
+    }
+    .f-icon-wrap .f-input { padding-left: 42px; }
+
     .f-pass-wrap { position: relative; }
-    .f-pass-wrap .f-input { padding-right: 46px; }
+    .f-pass-wrap .f-input { padding-right: 46px; padding-left: 42px; }
     .f-eye { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 16px; padding: 4px; }
     .f-error { display: block; font-size: 12px; color: #e03131; margin-top: 5px; min-height: 16px; }
 
     .f-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
     .f-check-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #374151; cursor: pointer; }
     .f-check-label input { accent-color: #e03131; width: 15px; height: 15px; }
-    .f-forgot { background: none; border: none; color: #e03131; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .f-forgot:hover { text-decoration: underline; }
+    .f-forgot { background: none; border: none; color: #c9a84c; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .f-forgot:hover { color: #d4a017; text-decoration: underline; }
 
     .btn-foodie {
       display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -119,29 +129,21 @@
     .av2-switch a { color: #e03131; font-weight: 600; text-decoration: none; }
     .av2-switch a:hover { text-decoration: underline; }
 
-    /* ── Demo credentials box ───────────────────────── */
-    .demo-box {
-      margin-top: 24px;
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-radius: 12px;
-      padding: 18px 20px;
+
+    /* ── Role selector ─────────────────────────────── */
+    .role-selector { display: flex; gap: 10px; margin-bottom: 24px; }
+    .role-pill {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      gap: 3px; padding: 14px 10px; border: 2px solid #e5e7eb;
+      border-radius: 12px; background: #fafafa; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s; text-align: center;
     }
-    .demo-box h4 { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 12px; }
-    .demo-row {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; padding: 8px 0;
-    }
-    .demo-row + .demo-row { border-top: 1px solid #fde68a; }
-    .demo-row-info { font-size: 12px; color: #78350f; line-height: 1.5; }
-    .demo-row-info strong { display: inline-block; background: #fef3c7; border-radius: 4px; padding: 1px 6px; margin-bottom: 2px; font-size: 11px; }
-    .demo-row-info code { font-family: 'Courier New', monospace; background: rgba(0,0,0,0.06); padding: 1px 4px; border-radius: 3px; }
-    .demo-use-btn {
-      flex-shrink: 0; padding: 6px 14px; background: #e03131; color: #fff;
-      border: none; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer;
-      transition: background 0.2s;
-    }
-    .demo-use-btn:hover { background: #c42828; }
+    .role-pill:hover { border-color: #e03131; background: #fff8f8; }
+    .role-pill.active { border-color: #e03131; background: #fff1f1; }
+    .role-pill .rp-icon  { font-size: 22px; }
+    .role-pill .rp-label { font-size: 13px; font-weight: 700; color: #374151; }
+    .role-pill .rp-desc  { font-size: 11px; color: #9ca3af; }
+    .role-pill.active .rp-label { color: #e03131; }
 
     /* ── Shake animation ────────────────────────────── */
     @keyframes av2-shake {
@@ -195,18 +197,36 @@
       <a href="../index.html" class="av2-back">← Back to Home</a>
 
       <h2 class="av2-form-title">Sign In</h2>
-      <p class="av2-form-sub">Welcome back! Please enter your credentials.</p>
+      <p class="av2-form-sub">Welcome back! Select your role and sign in.</p>
+
+      <!-- Role selector -->
+      <div class="role-selector">
+        <button type="button" class="role-pill active" data-role="customer">
+          <span class="rp-icon">🍽️</span>
+          <span class="rp-label">Customer</span>
+          <span class="rp-desc">Order food</span>
+        </button>
+        <button type="button" class="role-pill" data-role="owner">
+          <span class="rp-icon">🏪</span>
+          <span class="rp-label">Restaurant Owner</span>
+          <span class="rp-desc">Manage orders</span>
+        </button>
+      </div>
 
       <form id="loginForm" novalidate>
         <div class="f-group">
           <label class="f-label" for="loginEmail">Email Address</label>
-          <input class="f-input" type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
+          <div class="f-icon-wrap">
+            <span class="f-field-icon">✉</span>
+            <input class="f-input" type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
+          </div>
           <span class="f-error" id="emailErr"></span>
         </div>
 
         <div class="f-group">
           <label class="f-label" for="loginPassword">Password</label>
           <div class="f-pass-wrap">
+            <span class="f-field-icon">🔒</span>
             <input class="f-input" type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" />
             <button type="button" class="f-eye" id="eyeToggle">👁️</button>
           </div>
@@ -218,40 +238,21 @@
             <input type="checkbox" id="rememberMe" />
             Remember me
           </label>
-          <button type="button" class="f-forgot" id="forgotBtn">Forgot password?</button>
+          <a href="404.html" class="f-forgot" style="text-decoration:none">Forgot password?</a>
         </div>
+        <span class="f-error" id="rememberErr"></span>
 
         <button type="submit" class="btn-foodie" id="loginBtn">Sign In →</button>
 
         <div class="av2-divider">or</div>
 
-        <button type="button" class="btn-google" onclick="Toast.info('Google OAuth', 'Social login coming soon! Use email sign-in for now.')">
+        <button type="button" class="btn-google" onclick="window.location.href='404.html'">
           <span class="google-g">G</span> Continue with Google
         </button>
       </form>
 
       <p class="av2-switch">Don't have an account? <a href="signup.html">Create one free →</a></p>
 
-      <!-- Demo credentials -->
-      <div class="demo-box">
-        <h4>🔑 Demo Credentials</h4>
-        <div class="demo-row">
-          <div class="demo-row-info">
-            <strong>User</strong><br>
-            Email: <code>rahul@foodie.com</code><br>
-            Pass: <code>rahul123</code>
-          </div>
-          <button class="demo-use-btn" onclick="useCreds('rahul@foodie.com','rahul123')">Use</button>
-        </div>
-        <div class="demo-row">
-          <div class="demo-row-info">
-            <strong>Admin</strong><br>
-            Email: <code>admin@foodie.com</code><br>
-            Pass: <code>admin@123</code>
-          </div>
-          <button class="demo-use-btn" onclick="useCreds('admin@foodie.com','admin@123')">Use</button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -267,12 +268,22 @@
     ThemeManager.init();
     Toast.init();
 
-    // Already logged in? redirect
-    const user = Auth.getSession();
-    if (user) {
-      window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+    // Already logged in? redirect to correct dashboard
+    const existing = Auth.getSession();
+    if (existing) {
+      window.location.href = existing.role === 'admin' ? 'admin.html' : 'dashboard.html';
       return;
     }
+
+    // Role selection
+    let selectedRole = 'customer';
+    document.querySelectorAll('.role-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        selectedRole = pill.dataset.role;
+      });
+    });
 
     // Password toggle
     document.getElementById('eyeToggle').addEventListener('click', function () {
@@ -282,35 +293,41 @@
       this.textContent = isPass ? '🙈' : '👁️';
     });
 
-    // Forgot password
-    document.getElementById('forgotBtn').addEventListener('click', () => {
-      const email = document.getElementById('loginEmail').value.trim();
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        Toast.warning('Enter your email first', 'Type your email in the field above.');
-        return;
-      }
-      Toast.success('Reset Link Sent 📧', 'Check ' + email + ' for reset instructions.');
-    });
-
     // Login form submit
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const email    = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
-      let valid = true;
+      const remember = document.getElementById('rememberMe').checked;
 
-      document.getElementById('emailErr').textContent = '';
-      document.getElementById('passErr').textContent  = '';
+      document.getElementById('emailErr').textContent   = '';
+      document.getElementById('passErr').textContent    = '';
+      document.getElementById('rememberErr').textContent = '';
 
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        document.getElementById('emailErr').textContent = '⚠ Enter a valid email address';
-        valid = false;
+      if (!email && !password) {
+        document.getElementById('emailErr').textContent = '⚠ Please fill in all fields.';
+        this.classList.add('av2-shake');
+        setTimeout(() => this.classList.remove('av2-shake'), 500);
+        return;
       }
-      if (!password) {
-        document.getElementById('passErr').textContent = '⚠ Password is required';
-        valid = false;
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailErr').textContent = '⚠ Please enter a valid email address.';
+        this.classList.add('av2-shake');
+        setTimeout(() => this.classList.remove('av2-shake'), 500);
+        return;
       }
-      if (!valid) {
+
+      if (password.length < 6) {
+        document.getElementById('passErr').textContent = '⚠ Password must be at least 6 characters.';
+        this.classList.add('av2-shake');
+        setTimeout(() => this.classList.remove('av2-shake'), 500);
+        return;
+      }
+
+      if (!remember) {
+        document.getElementById('rememberErr').textContent = '⚠ Please check "Remember me" to continue.';
+        document.getElementById('rememberMe').focus();
         this.classList.add('av2-shake');
         setTimeout(() => this.classList.remove('av2-shake'), 500);
         return;
@@ -321,28 +338,39 @@
       btn.textContent = '⏳ Signing in...';
 
       setTimeout(() => {
-        const result = Auth.loginUser(email, password);
-        if (!result.ok) {
-          btn.disabled = false;
-          btn.textContent = 'Sign In →';
-          document.getElementById('passErr').textContent = '⚠ ' + result.message;
-          document.getElementById('loginForm').classList.add('av2-shake');
-          setTimeout(() => document.getElementById('loginForm').classList.remove('av2-shake'), 500);
-          return;
+        const role = selectedRole === 'owner' ? 'admin' : 'user';
+
+        // Look up existing user in DB so points/stats are preserved.
+        // If new email, create a record with 200 welcome points.
+        const usersDb = JSON.parse(localStorage.getItem('foodie_users') || '[]');
+        let dbUser = usersDb.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (!dbUser) {
+          dbUser = {
+            email, name: email.split('@')[0], role,
+            points: 200, totalOrders: 0, totalSpent: 0,
+            joined: new Date().toISOString().split('T')[0],
+          };
+          usersDb.push(dbUser);
+          localStorage.setItem('foodie_users', JSON.stringify(usersDb));
         }
-        Toast.success('Welcome back! 👋', result.user.name);
+        const userData = { ...dbUser, role, isLoggedIn: true };
+
+        // Always persist to localStorage so Auth.getSession() works across pages
+        localStorage.setItem('foodie_session', JSON.stringify(userData));
+        localStorage.setItem('fe-user',        JSON.stringify(userData));
+        if (remember) {
+          localStorage.setItem('foodie_user', JSON.stringify(userData));
+        } else {
+          sessionStorage.setItem('foodie_user', JSON.stringify(userData));
+        }
+
+        Toast.success('Welcome! 👋', userData.name);
         setTimeout(() => {
-          window.location.href = result.user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+          window.location.href = role === 'admin' ? 'admin.html' : 'dashboard.html';
         }, 800);
       }, 700);
     });
   });
-
-  function useCreds(email, password) {
-    document.getElementById('loginEmail').value    = email;
-    document.getElementById('loginPassword').value = password;
-    document.getElementById('loginEmail').dispatchEvent(new Event('input'));
-  }
 </script>
 </body>
 </html>
