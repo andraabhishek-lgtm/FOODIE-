@@ -208,7 +208,7 @@
       <div class="step-pane" id="pane2">
         <div class="f-group">
           <label class="f-label">Username *</label>
-          <input class="f-input" type="text" id="sUsername" placeholder="rahul_sharma" autocomplete="username" />
+          <input class="f-input" type="text" id="sUsername" placeholder="rahul_sharma" autocomplete="username" maxlength="16" oninput="this.value=this.value.replace(/[^a-zA-Z0-9_.]/g,'').slice(0,16)" />
           <span class="f-error" id="errUsername"></span>
         </div>
         <div class="f-group">
