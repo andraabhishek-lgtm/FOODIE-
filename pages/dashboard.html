@@ -471,7 +471,7 @@
             </div>
             <div class="f-group">
               <label class="f-label">Phone Number</label>
-              <input class="f-input" type="tel" id="profilePhone" />
+              <input class="f-input" type="tel" id="profilePhone" maxlength="10" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)" />
             </div>
             <div class="f-group f-input-full" style="grid-column:1/-1">
               <label class="f-label">Email Address</label>
