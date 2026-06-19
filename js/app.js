@@ -647,13 +647,10 @@ const Nav = {
       }
     });
 
-    // Close mobile on link click and explicitly navigate
+    // Close mobile on link click — no preventDefault so browser href navigates naturally
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        e.preventDefault();
-        this.closeMobile();
-        if (href && href !== '#') window.location.href = href;
+      link.addEventListener('click', () => {
+        try { this.closeMobile(); } catch(err) {}
       });
     });
 
