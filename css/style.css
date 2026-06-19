@@ -2532,6 +2532,20 @@ input, textarea, select {
   top: var(--nav-height);
   z-index: 100;
   box-shadow: var(--shadow-xs);
+  overflow: clip;
+}
+
+/* Fade gradient on the right to signal horizontal scrollability */
+.filters-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, var(--bg-primary));
+  pointer-events: none;
+  z-index: 1;
 }
 
 .filters-inner {
@@ -2541,6 +2555,8 @@ input, textarea, select {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  /* Right padding so the last chip never gets sliced at the scroll boundary */
+  padding-right: 48px;
 }
 
 .filters-inner::-webkit-scrollbar {
