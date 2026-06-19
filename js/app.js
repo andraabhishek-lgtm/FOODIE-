@@ -638,16 +638,34 @@ const Nav = {
   isOpen: false,
 
   init() {
-    this.navbar = document.getElementById('navbar');
+    this.navbar   = document.getElementById('navbar');
+    this.hamburger = document.getElementById('hamburger');
+    this.mobileMenu = document.getElementById('mobileMenu');
+    this.overlay   = document.getElementById('mobileOverlay');
 
-    // Checkbox drives open/close via CSS :checked — JS only locks body scroll
-    const toggle = document.getElementById('hamburgerToggle');
-    if (toggle) {
-      toggle.addEventListener('change', () => {
-        this.isOpen = toggle.checked;
-        document.body.style.overflow = this.isOpen ? 'hidden' : '';
-      });
+    const openMenu = () => {
+      this.isOpen = true;
+      this.mobileMenu && this.mobileMenu.classList.add('open');
+      this.overlay    && this.overlay.classList.add('open');
+      this.hamburger  && this.hamburger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      this.isOpen = false;
+      this.mobileMenu && this.mobileMenu.classList.remove('open');
+      this.overlay    && this.overlay.classList.remove('open');
+      this.hamburger  && this.hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    if (this.hamburger) {
+      this.hamburger.addEventListener('click', () =>
+        this.isOpen ? closeMenu() : openMenu()
+      );
     }
+    const closeBtn = document.getElementById('mobileMenuClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (this.overlay) this.overlay.addEventListener('click', closeMenu);
 
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
@@ -676,16 +694,18 @@ const Nav = {
   },
 
   toggleMobile() {
-    const toggle = document.getElementById('hamburgerToggle');
-    if (toggle) toggle.checked = !toggle.checked;
-    this.isOpen = toggle ? toggle.checked : false;
+    this.isOpen = !this.isOpen;
+    if (this.mobileMenu) this.mobileMenu.classList.toggle('open', this.isOpen);
+    if (this.overlay)    this.overlay.classList.toggle('open', this.isOpen);
+    if (this.hamburger)  this.hamburger.classList.toggle('open', this.isOpen);
     document.body.style.overflow = this.isOpen ? 'hidden' : '';
   },
 
   closeMobile() {
     this.isOpen = false;
-    const toggle = document.getElementById('hamburgerToggle');
-    if (toggle) toggle.checked = false;
+    if (this.mobileMenu) this.mobileMenu.classList.remove('open');
+    if (this.overlay)    this.overlay.classList.remove('open');
+    if (this.hamburger)  this.hamburger.classList.remove('open');
     document.body.style.overflow = '';
   },
 
@@ -705,13 +725,12 @@ function buildHeader(base) {
   const wishlistCount = parseInt(localStorage.getItem('fe-wishlist-count') || 0);
 
   return `
-  <input type="checkbox" id="hamburgerToggle" class="hamburger-toggle" aria-hidden="true">
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
 
-      <label for="hamburgerToggle" class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
-      </label>
+      </button>
 
       <a href="${base}index.html" class="nav-logo">
         <img src="${base}images/stackly_logo_gold.webp" alt="Stackly" style="height:42px;width:auto;display:block">
@@ -768,7 +787,7 @@ function buildHeader(base) {
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <span class="mobile-menu-title">Menu</span>
-      <label for="hamburgerToggle" class="mobile-menu-close" aria-label="Close menu">✕</label>
+      <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">✕</button>
     </div>
     <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html" class="mobile-nav-link">🏠 Home</a>
     <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link">🍽️ Restaurants</a>
@@ -783,7 +802,7 @@ function buildHeader(base) {
     <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login">Login / Signup</a>
     `}
   </div>
-  <label for="hamburgerToggle" class="mobile-overlay" aria-hidden="true"></label>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
 
   <!-- Cart Sidebar -->
   <div class="cart-overlay" id="cartOverlay" onclick="CartSidebar.close()"></div>

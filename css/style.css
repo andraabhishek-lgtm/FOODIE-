@@ -670,16 +670,6 @@ input, textarea, select {
   background: var(--error-light);
 }
 
-/* Hidden checkbox — toggled by the label (hamburger icon) */
-.hamburger-toggle {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  width: 0;
-  height: 0;
-  margin: 0;
-}
-
 .hamburger {
   display: none;
   flex-direction: column;
@@ -701,33 +691,10 @@ input, textarea, select {
   transition: var(--transition);
 }
 
-/* CSS-only: animate hamburger → X via :checked sibling selector */
-.hamburger-toggle:checked ~ .navbar .hamburger span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.hamburger-toggle:checked ~ .navbar .hamburger span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger-toggle:checked ~ .navbar .hamburger span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* CSS-only: open menu via :checked */
-.hamburger-toggle:checked ~ .mobile-menu {
-  transform: translateX(0) !important;
-  pointer-events: auto !important;
-}
-
-/* Keep .open class as fallback for JS closeMobile() calls */
-.hamburger.open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger.open span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+/* Hamburger → X when menu open */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* Left-side drawer */
 .mobile-menu {
@@ -749,8 +716,6 @@ input, textarea, select {
   box-shadow: 4px 0 24px rgba(0,0,0,0.18);
 }
 
-/* Open via CSS :checked — also keep .open for JS closeMobile() */
-.hamburger-toggle:checked ~ .mobile-menu,
 .mobile-menu.open {
   transform: translateX(0);
   pointer-events: auto;
@@ -761,14 +726,14 @@ input, textarea, select {
   display: none;
   position: fixed;
   top: 0;
-  left: 280px;   /* starts after the drawer — never covers drawer links */
+  left: 280px;
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.45);
   z-index: 1199;
   cursor: pointer;
 }
-.hamburger-toggle:checked ~ .mobile-overlay {
+.mobile-overlay.open {
   display: block;
 }
 
