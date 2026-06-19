@@ -729,45 +729,102 @@ input, textarea, select {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Left-side drawer */
 .mobile-menu {
   display: none;
   position: fixed;
-  top: var(--nav-height);
+  top: 0;
   left: 0;
-  right: 0;
   bottom: 0;
+  width: 280px;
   background: var(--bg-primary);
-  z-index: 1150;
+  z-index: 1200;
   flex-direction: column;
-  padding: 24px;
-  gap: 0;
+  padding: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   transform: translateX(-100%);
-  transition: var(--transition);
+  transition: transform 0.3s ease;
   pointer-events: none;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.18);
 }
 
+/* Open via CSS :checked — also keep .open for JS closeMobile() */
+.hamburger-toggle:checked ~ .mobile-menu,
 .mobile-menu.open {
   transform: translateX(0);
   pointer-events: auto;
 }
 
-/* Every item in the mobile menu must be a full-width block tap target */
-.mobile-menu .mobile-nav-link,
-.mobile-menu .nav-link {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
+/* Dim overlay behind the drawer */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1199;
   cursor: pointer;
-  text-decoration: none;
+}
+.hamburger-toggle:checked ~ .mobile-overlay {
+  display: block;
 }
 
-/* FIX 4: Guarantee links in the mobile menu are always clickable */
-.mobile-menu a {
+/* Drawer header row */
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-menu-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.mobile-menu-close {
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  transition: var(--transition);
+}
+.mobile-menu-close:hover { color: var(--text-primary); }
+
+/* Nav links inside drawer */
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
   pointer-events: auto !important;
   position: relative;
   z-index: 1;
+  transition: background 0.15s;
+}
+.mobile-nav-link:hover,
+.mobile-nav-link:active { background: var(--bg-secondary); }
+.mobile-nav-link.active { color: var(--primary); font-weight: 600; }
+
+.mobile-nav-logout { color: var(--error); }
+.mobile-nav-login {
+  margin: 20px;
+  width: calc(100% - 40px);
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: #fff;
+  border: none;
 }
 
 /* =====================================================

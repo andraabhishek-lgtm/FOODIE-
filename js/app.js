@@ -640,6 +640,15 @@ const Nav = {
   init() {
     this.navbar = document.getElementById('navbar');
 
+    // Checkbox drives open/close via CSS :checked — JS only locks body scroll
+    const toggle = document.getElementById('hamburgerToggle');
+    if (toggle) {
+      toggle.addEventListener('change', () => {
+        this.isOpen = toggle.checked;
+        document.body.style.overflow = this.isOpen ? 'hidden' : '';
+      });
+    }
+
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
     // Active link — nav
@@ -696,8 +705,14 @@ function buildHeader(base) {
   const wishlistCount = parseInt(localStorage.getItem('fe-wishlist-count') || 0);
 
   return `
+  <input type="checkbox" id="hamburgerToggle" class="hamburger-toggle" aria-hidden="true">
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
+
+      <label for="hamburgerToggle" class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </label>
+
       <a href="${base}index.html" class="nav-logo">
         <img src="${base}images/stackly_logo_gold.webp" alt="Stackly" style="height:42px;width:auto;display:block">
       </a>
@@ -749,6 +764,26 @@ function buildHeader(base) {
       </div>
     </div>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <span class="mobile-menu-title">Menu</span>
+      <label for="hamburgerToggle" class="mobile-menu-close" aria-label="Close menu">✕</label>
+    </div>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html" class="mobile-nav-link">🏠 Home</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link">🍽️ Restaurants</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html" class="mobile-nav-link">ℹ️ About Us</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html" class="mobile-nav-link">📞 Contact</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html" class="mobile-nav-link">❓ FAQ</a>
+    ${user ? `
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link">👤 Profile</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html" class="mobile-nav-link">📦 My Orders</a>
+    <div class="mobile-nav-link mobile-nav-logout" onclick="Auth.logout()">🚪 Logout</div>
+    ` : `
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login">Login / Signup</a>
+    `}
+  </div>
+  <label for="hamburgerToggle" class="mobile-overlay" aria-hidden="true"></label>
 
   <!-- Cart Sidebar -->
   <div class="cart-overlay" id="cartOverlay" onclick="CartSidebar.close()"></div>
