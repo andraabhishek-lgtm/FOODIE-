@@ -638,37 +638,87 @@ const Nav = {
   isOpen: false,
 
   init() {
-    // Exact pattern as specified — querySelector, named functions, reads actual DOM class
-    const hamburger = document.querySelector('#hamburger');
-    const mobileMenu = document.querySelector('#mobileMenu');
-    const closeBtn   = document.querySelector('#mobileMenuClose');
-    const overlay    = document.querySelector('#mobileOverlay');
+    // ── HAMBURGER IIFE ─────────────────────────────────────────────────────
+    // Guard: runs once per page load — never stacks duplicate listeners
+    (function() {
+      if (window._mobileMenuReady) return;
+      window._mobileMenuReady = true;
 
-    if (!hamburger || !mobileMenu) return;
+      const hamburgerBtn = document.querySelector(
+        '.hamburger-btn, .menu-toggle, .nav-toggle, ' +
+        '[data-menu-toggle], .hamburger, .mobile-menu-btn'
+      );
+      const mobileMenu = document.querySelector(
+        '.mobile-menu, .mobile-nav, .nav-drawer, ' +
+        '.side-nav, .nav-sidebar, .mobile-sidebar'
+      );
+      const overlay = document.querySelector(
+        '.menu-overlay, .nav-overlay, .mobile-overlay, .backdrop'
+      );
+      const closeBtn = document.querySelector('#mobileMenuClose');
 
-    function openMenu() {
-      mobileMenu.classList.add('open');
-      if (overlay)   overlay.classList.add('open');
-      hamburger.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
+      if (!hamburgerBtn || !mobileMenu) {
+        console.warn('FoodieExpress: hamburger elements not found');
+        return;
+      }
 
-    function closeMenu() {
-      mobileMenu.classList.remove('open');
-      if (overlay)   overlay.classList.remove('open');
-      hamburger.classList.remove('open');
-      document.body.style.overflow = '';
-    }
+      function openMenu() {
+        mobileMenu.classList.add('open');
+        hamburgerBtn.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
 
-    hamburger.addEventListener('click', function() {
-      mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
-    });
-    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-    if (overlay)  overlay.addEventListener('click', closeMenu);
+      function closeMenu() {
+        mobileMenu.classList.remove('open');
+        hamburgerBtn.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
 
-    // Keep closeMobile() working for external callers (e.g. CartSidebar)
-    this.closeMobile = closeMenu;
+      // Hamburger toggles; stopPropagation prevents document listener from firing
+      hamburgerBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
+      });
 
+      // Overlay click closes
+      if (overlay) overlay.addEventListener('click', closeMenu);
+
+      // ✕ close button
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+
+      // ESC key closes
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeMenu();
+      });
+
+      // Clone every nav link to wipe ALL old listeners, then add one clean handler
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        var fresh = link.cloneNode(true);
+        link.parentNode.replaceChild(fresh, link);
+        fresh.addEventListener('click', function() {
+          closeMenu();
+          // href navigates automatically — do NOT preventDefault
+        });
+      });
+
+      // Active link highlight based on current URL
+      var currentURL = window.location.href;
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        var href = link.getAttribute('href') || '';
+        var page = href.split('/').pop().split('?')[0];
+        if (page && currentURL.endsWith(page)) {
+          link.classList.add('active');
+        }
+      });
+
+      // Expose closeMenu so closeMobile() can call it
+      Nav._closeMenu = closeMenu;
+    })();
+    // ── END HAMBURGER IIFE ─────────────────────────────────────────────────
+
+    // Navbar scroll effect
     this.navbar = document.querySelector('#navbar');
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
@@ -696,19 +746,14 @@ const Nav = {
   },
 
   toggleMobile() {
-    this.isOpen = !this.isOpen;
-    if (this.mobileMenu) this.mobileMenu.classList.toggle('open', this.isOpen);
-    if (this.overlay)    this.overlay.classList.toggle('open', this.isOpen);
-    if (this.hamburger)  this.hamburger.classList.toggle('open', this.isOpen);
-    document.body.style.overflow = this.isOpen ? 'hidden' : '';
+    const mobileMenu = document.querySelector('.mobile-menu');
+    mobileMenu && mobileMenu.classList.contains('open')
+      ? Nav._closeMenu && Nav._closeMenu()
+      : Nav._openMenu  && Nav._openMenu();
   },
 
   closeMobile() {
-    this.isOpen = false;
-    if (this.mobileMenu) this.mobileMenu.classList.remove('open');
-    if (this.overlay)    this.overlay.classList.remove('open');
-    if (this.hamburger)  this.hamburger.classList.remove('open');
-    document.body.style.overflow = '';
+    if (Nav._closeMenu) Nav._closeMenu();
   },
 
   onScroll() {
@@ -791,17 +836,17 @@ function buildHeader(base) {
       <span class="mobile-menu-title">Menu</span>
       <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">✕</button>
     </div>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html"              class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/index.html'">🏠 Home</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html'">🍽️ Restaurants</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html"        class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html'">ℹ️ About Us</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html"      class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html'">📞 Contact</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html"          class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html'">❓ FAQ</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html"              class="mobile-nav-link">🏠 Home</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link">🍽️ Restaurants</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html"        class="mobile-nav-link">ℹ️ About Us</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html"      class="mobile-nav-link">📞 Contact</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html"          class="mobile-nav-link">❓ FAQ</a>
     ${user ? `
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html'">👤 Profile</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html"  class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html'">📦 My Orders</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link">👤 Profile</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html"  class="mobile-nav-link">📦 My Orders</a>
     <div class="mobile-nav-link mobile-nav-logout" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html'">Login / Signup</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login mobile-login-btn">Login / Signup</a>
     `}
   </div>
   <div class="mobile-overlay" id="mobileOverlay"></div>

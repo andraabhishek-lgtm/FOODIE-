@@ -691,50 +691,52 @@ input, textarea, select {
   transition: var(--transition);
 }
 
-/* Hamburger → X when menu open */
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* Hamburger → X when menu open (.active = IIFE pattern, .open = legacy fallback) */
+.hamburger.active span:nth-child(1),
+.hamburger.open   span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2),
+.hamburger.open   span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3),
+.hamburger.open   span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Left-side drawer */
+/* Left-side drawer — uses left: -100% / left: 0 (not transform) */
 .mobile-menu {
   display: none;
   position: fixed;
   top: 0;
-  left: 0;
-  bottom: 0;
-  width: 280px;
+  left: -100%;
+  height: 100vh;
+  width: min(320px, 85vw);
   background: var(--bg-primary);
   z-index: 1200;
   flex-direction: column;
   padding: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  pointer-events: none;
-  box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 24px rgba(0,0,0,0.12);
 }
 
 .mobile-menu.open {
-  transform: translateX(0);
-  pointer-events: auto;
+  left: 0;
 }
 
-/* Dim overlay behind the drawer */
+/* Dim overlay — opacity/visibility approach so transitions work cleanly */
 .mobile-overlay {
-  display: none;
   position: fixed;
-  top: 0;
-  left: 280px;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.45);
+  inset: 0;
+  background: rgba(0,0,0,0.5);
   z-index: 1199;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
   cursor: pointer;
 }
-.mobile-overlay.open {
-  display: block;
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* Drawer header row */
