@@ -638,91 +638,69 @@ const Nav = {
   isOpen: false,
 
   init() {
-    // ── HAMBURGER IIFE ─────────────────────────────────────────────────────
-    // Guard: runs once per page load — never stacks duplicate listeners
-    (function() {
-      if (window._mobileMenuReady) return;
-      window._mobileMenuReady = true;
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay    = document.getElementById('mobileOverlay');
+    const closeBtn   = document.getElementById('mobileMenuClose');
 
-      const hamburgerBtn = document.querySelector(
-        '.hamburger-btn, .menu-toggle, .nav-toggle, ' +
-        '[data-menu-toggle], .hamburger, .mobile-menu-btn'
-      );
-      const mobileMenu = document.querySelector(
-        '.mobile-menu, .mobile-nav, .nav-drawer, ' +
-        '.side-nav, .nav-sidebar, .mobile-sidebar'
-      );
-      const overlay = document.querySelector(
-        '.menu-overlay, .nav-overlay, .mobile-overlay, .backdrop'
-      );
-      const closeBtn = document.querySelector('#mobileMenuClose');
+    if (!hamburger || !mobileMenu) return;
 
-      if (!hamburgerBtn || !mobileMenu) {
-        console.warn('FoodieExpress: hamburger elements not found');
-        return;
-      }
+    // Guard — attach listeners once only
+    if (hamburger._initDone) return;
+    hamburger._initDone = true;
 
-      function openMenu() {
-        mobileMenu.classList.add('open');
-        hamburgerBtn.classList.add('active');
-        if (overlay) overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      hamburger.classList.add('open');
+      if (overlay) overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
-      function closeMenu() {
-        mobileMenu.classList.remove('open');
-        hamburgerBtn.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
-        document.body.style.overflow = '';
-      }
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
 
-      // Hamburger toggles; stopPropagation prevents document listener from firing
-      hamburgerBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
+    hamburger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay)  overlay.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    // Clone each link → wipe stale listeners → navigate explicitly via window.location.href
+    mobileMenu.querySelectorAll('a[href]').forEach(function(link) {
+      var dest = link.getAttribute('href');
+      var fresh = link.cloneNode(true);
+      link.parentNode.replaceChild(fresh, link);
+      fresh.addEventListener('click', function(e) {
+        e.preventDefault();
+        closeMenu();
+        window.location.href = dest;
       });
+    });
 
-      // Overlay click closes
-      if (overlay) overlay.addEventListener('click', closeMenu);
+    // Highlight the current page link
+    var currentURL = window.location.href;
+    mobileMenu.querySelectorAll('a[href]').forEach(function(link) {
+      var page = (link.getAttribute('href') || '').split('/').pop().split('?')[0];
+      if (page && currentURL.endsWith(page)) link.classList.add('active');
+    });
 
-      // ✕ close button
-      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    Nav._closeMenu = closeMenu;
 
-      // ESC key closes
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeMenu();
-      });
-
-      // Clone every nav link to wipe ALL old listeners, then add one clean handler
-      mobileMenu.querySelectorAll('a').forEach(function(link) {
-        var fresh = link.cloneNode(true);
-        link.parentNode.replaceChild(fresh, link);
-        fresh.addEventListener('click', function() {
-          closeMenu();
-          // href navigates automatically — do NOT preventDefault
-        });
-      });
-
-      // Active link highlight based on current URL
-      var currentURL = window.location.href;
-      mobileMenu.querySelectorAll('a').forEach(function(link) {
-        var href = link.getAttribute('href') || '';
-        var page = href.split('/').pop().split('?')[0];
-        if (page && currentURL.endsWith(page)) {
-          link.classList.add('active');
-        }
-      });
-
-      // Expose closeMenu so closeMobile() can call it
-      Nav._closeMenu = closeMenu;
-    })();
-    // ── END HAMBURGER IIFE ─────────────────────────────────────────────────
-
-    // Navbar scroll effect
+    // Navbar scroll
     this.navbar = document.querySelector('#navbar');
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
-    // Active link — desktop nav
+    // Desktop active link highlight
     const page = getPageName();
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-links .nav-link').forEach(link => {
@@ -746,10 +724,11 @@ const Nav = {
   },
 
   toggleMobile() {
-    const mobileMenu = document.querySelector('.mobile-menu');
-    mobileMenu && mobileMenu.classList.contains('open')
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!mobileMenu) return;
+    mobileMenu.classList.contains('open')
       ? Nav._closeMenu && Nav._closeMenu()
-      : Nav._openMenu  && Nav._openMenu();
+      : Nav._closeMenu; // open path handled by hamburger click
   },
 
   closeMobile() {

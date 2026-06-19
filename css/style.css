@@ -721,10 +721,13 @@ input, textarea, select {
   left: 0;
 }
 
-/* Dim overlay — opacity/visibility approach so transitions work cleanly */
+/* Dim overlay — starts to the RIGHT of the drawer so it can never block menu links */
 .mobile-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: min(320px, 85vw);
+  right: 0;
+  bottom: 0;
   background: rgba(0,0,0,0.5);
   z-index: 1199;
   opacity: 0;
