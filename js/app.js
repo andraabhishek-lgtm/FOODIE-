@@ -659,16 +659,21 @@ const Nav = {
       link.classList.toggle('active', isActive);
     });
 
-    // Belt-and-suspenders: also wire click via addEventListener (mobileNavigate handles primary nav)
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', function() {
+    // Single event-delegation listener on the container — catches any tap on an <a href> inside the menu
+    if (this.mobileMenu) {
+      this.mobileMenu.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+        e.preventDefault();
+        var url = link.getAttribute('href');
         var menu = document.getElementById('mobileMenu');
         var hamburger = document.getElementById('hamburger');
         if (menu) menu.classList.remove('open');
         if (hamburger) hamburger.classList.remove('open');
         document.body.style.overflow = '';
+        window.location.href = url;
       });
-    });
+    }
 
     // User dropdown
     const userMenuBtn = document.getElementById('userMenuBtn');
@@ -771,17 +776,17 @@ function buildHeader(base) {
   </nav>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="${base}index.html" onclick="mobileNavigate('${base}index.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🏠 Home</a>
-    <a href="${base}pages/restaurants.html" onclick="mobileNavigate('${base}pages/restaurants.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🍽️ Restaurants</a>
-    <a href="${base}pages/about.html" onclick="mobileNavigate('${base}pages/about.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">ℹ️ About Us</a>
-    <a href="${base}pages/contact.html" onclick="mobileNavigate('${base}pages/contact.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📞 Contact</a>
-    <a href="${base}pages/faq.html" onclick="mobileNavigate('${base}pages/faq.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">❓ FAQ</a>
+    <a href="${base}index.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🏠 Home</a>
+    <a href="${base}pages/restaurants.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🍽️ Restaurants</a>
+    <a href="${base}pages/about.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">ℹ️ About Us</a>
+    <a href="${base}pages/contact.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📞 Contact</a>
+    <a href="${base}pages/faq.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">❓ FAQ</a>
     ${user ? `
-    <a href="${base}pages/profile.html" onclick="mobileNavigate('${base}pages/profile.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">👤 Profile</a>
-    <a href="${base}pages/orders.html" onclick="mobileNavigate('${base}pages/orders.html')" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
+    <a href="${base}pages/profile.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">👤 Profile</a>
+    <a href="${base}pages/orders.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
     <div class="nav-link" style="font-size:16px;padding:14px 0;color:var(--error);cursor:pointer" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="${base}pages/login.html" onclick="mobileNavigate('${base}pages/login.html')" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
+    <a href="${base}pages/login.html" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
     `}
   </div>
 

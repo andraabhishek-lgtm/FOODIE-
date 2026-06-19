@@ -712,12 +712,15 @@ input, textarea, select {
   padding: 24px;
   gap: 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   transform: translateX(-100%);
   transition: var(--transition);
+  pointer-events: none;
 }
 
 .mobile-menu.open {
   transform: translateX(0);
+  pointer-events: auto;
 }
 
 /* Every item in the mobile menu must be a full-width block tap target */
