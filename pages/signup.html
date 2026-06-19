@@ -208,7 +208,7 @@
       <div class="step-pane" id="pane2">
         <div class="f-group">
           <label class="f-label">Username *</label>
-          <input class="f-input" type="text" id="sUsername" placeholder="rahul_sharma" autocomplete="username" maxlength="16" oninput="this.value=this.value.replace(/[^a-zA-Z0-9_.]/g,'').slice(0,16)" />
+          <input class="f-input" type="text" id="sUsername" placeholder="rahulsharma" autocomplete="username" maxlength="16" oninput="this.value=this.value.replace(/[^A-Za-z]/g,'').slice(0,16)" />
           <span class="f-error" id="errUsername"></span>
         </div>
         <div class="f-group">
@@ -328,6 +328,7 @@
       const cpw  = document.getElementById('sConfirm').value;
       let ok = true;
       if (!un || un.length < 3) { document.getElementById('errUsername').textContent = '⚠ Username must be at least 3 characters'; ok = false; }
+      else if (!/^[A-Za-z]+$/.test(un)) { document.getElementById('errUsername').textContent = '⚠ Username must contain letters only (no numbers or symbols)'; ok = false; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { document.getElementById('errEmail').textContent = '⚠ Enter a valid email address'; ok = false; }
       if (pw.length < 8) { document.getElementById('errPassword').textContent = '⚠ Password must be at least 8 characters'; ok = false; }
       if (pw !== cpw)    { document.getElementById('errConfirm').textContent  = '⚠ Passwords do not match'; ok = false; }
