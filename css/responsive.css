@@ -30,11 +30,12 @@
 
   .section { padding: 60px 0; }
 
-  /* Nav */
+  /* Nav — no hamburger; show links compactly */
   .nav-search { display: none; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .mobile-menu { display: flex; }
+  .nav-links { display: flex; gap: 4px; overflow-x: auto; min-width: 0; flex-shrink: 1; }
+  .nav-links li a { font-size: 13px; padding: 4px 8px; white-space: nowrap; }
+  .hamburger { display: none !important; }
+  .mobile-menu { display: none !important; }
 
   /* Hero */
   .hero-content {
