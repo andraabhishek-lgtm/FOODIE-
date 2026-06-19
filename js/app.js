@@ -506,6 +506,16 @@ const OFFERS = [
 
 // ---- UTILITIES ----
 
+/* Close mobile menu and navigate — called from inline onclick on every mobile nav link */
+function mobileNavigate(url) {
+  var menu = document.getElementById('mobileMenu');
+  var hamburger = document.getElementById('hamburger');
+  if (menu) menu.classList.remove('open');
+  if (hamburger) hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+  window.location.href = url;
+}
+
 function getBasePath() {
   const path = window.location.pathname;
   return path.includes('/pages/') ? '../' : './';
@@ -640,17 +650,23 @@ const Nav = {
 
     // Active link
     const page = getPageName();
+    const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-link').forEach(link => {
       const href = link.getAttribute('href') || '';
-      if (href.includes(page) || (page === 'index' && href === '#')) {
-        link.classList.add('active');
-      }
+      const cleanHref = href.replace('../', '').replace('./', '');
+      const isActive = (cleanHref && currentPath.includes(cleanHref)) ||
+                       (page === 'index' && (href.includes('index') || href === '#'));
+      link.classList.toggle('active', isActive);
     });
 
-    // Close mobile on link click — no preventDefault so browser href navigates naturally
+    // Belt-and-suspenders: also wire click via addEventListener (mobileNavigate handles primary nav)
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        try { this.closeMobile(); } catch(err) {}
+      link.addEventListener('click', function() {
+        var menu = document.getElementById('mobileMenu');
+        var hamburger = document.getElementById('hamburger');
+        if (menu) menu.classList.remove('open');
+        if (hamburger) hamburger.classList.remove('open');
+        document.body.style.overflow = '';
       });
     });
 
@@ -755,17 +771,17 @@ function buildHeader(base) {
   </nav>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="${base}index.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🏠 Home</a>
-    <a href="${base}pages/restaurants.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🍽️ Restaurants</a>
-    <a href="${base}pages/about.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">ℹ️ About Us</a>
-    <a href="${base}pages/contact.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📞 Contact</a>
-    <a href="${base}pages/faq.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">❓ FAQ</a>
+    <a href="${base}index.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🏠 Home</a>
+    <a href="${base}pages/restaurants.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🍽️ Restaurants</a>
+    <a href="${base}pages/about.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">ℹ️ About Us</a>
+    <a href="${base}pages/contact.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📞 Contact</a>
+    <a href="${base}pages/faq.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">❓ FAQ</a>
     ${user ? `
-    <a href="${base}pages/profile.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">👤 Profile</a>
-    <a href="${base}pages/orders.html" onclick="Nav.closeMobile()" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
+    <a href="${base}pages/profile.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">👤 Profile</a>
+    <a href="${base}pages/orders.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
     <div class="nav-link" style="font-size:16px;padding:14px 0;color:var(--error);cursor:pointer" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="${base}pages/login.html" onclick="Nav.closeMobile()" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
+    <a href="${base}pages/login.html" onclick="mobileNavigate(this.href);return false;" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
     `}
   </div>
 
