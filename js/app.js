@@ -642,8 +642,13 @@ const Nav = {
     this.hamburger = document.getElementById('hamburger');
     this.mobileMenu = document.getElementById('mobileMenu');
 
-    if (this.hamburger) {
-      this.hamburger.addEventListener('click', () => this.toggleMobile());
+    // Checkbox drives open/close via CSS :checked — JS only manages body scroll lock
+    const toggle = document.getElementById('hamburgerToggle');
+    if (toggle) {
+      toggle.addEventListener('change', () => {
+        this.isOpen = toggle.checked;
+        document.body.style.overflow = this.isOpen ? 'hidden' : '';
+      });
     }
 
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
@@ -659,22 +664,6 @@ const Nav = {
       link.classList.toggle('active', isActive);
     });
 
-    // Single event-delegation listener on the container — catches any tap on an <a href> inside the menu
-    if (this.mobileMenu) {
-      this.mobileMenu.addEventListener('click', function(e) {
-        var link = e.target.closest('a[href]');
-        if (!link) return;
-        e.preventDefault();
-        var url = link.getAttribute('href');
-        var menu = document.getElementById('mobileMenu');
-        var hamburger = document.getElementById('hamburger');
-        if (menu) menu.classList.remove('open');
-        if (hamburger) hamburger.classList.remove('open');
-        document.body.style.overflow = '';
-        window.location.href = url;
-      });
-    }
-
     // User dropdown
     const userMenuBtn = document.getElementById('userMenuBtn');
     const userDropdown = document.getElementById('userDropdown');
@@ -689,16 +678,16 @@ const Nav = {
   },
 
   toggleMobile() {
-    this.isOpen = !this.isOpen;
-    this.hamburger.classList.toggle('open', this.isOpen);
-    this.mobileMenu.classList.toggle('open', this.isOpen);
+    const toggle = document.getElementById('hamburgerToggle');
+    if (toggle) toggle.checked = !toggle.checked;
+    this.isOpen = toggle ? toggle.checked : false;
     document.body.style.overflow = this.isOpen ? 'hidden' : '';
   },
 
   closeMobile() {
     this.isOpen = false;
-    if (this.hamburger) this.hamburger.classList.remove('open');
-    if (this.mobileMenu) this.mobileMenu.classList.remove('open');
+    const toggle = document.getElementById('hamburgerToggle');
+    if (toggle) toggle.checked = false;
     document.body.style.overflow = '';
   },
 
@@ -718,6 +707,7 @@ function buildHeader(base) {
   const wishlistCount = parseInt(localStorage.getItem('fe-wishlist-count') || 0);
 
   return `
+  <input type="checkbox" id="hamburgerToggle" class="hamburger-toggle" aria-hidden="true">
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a href="${base}index.html" class="nav-logo">
@@ -768,9 +758,9 @@ function buildHeader(base) {
         <a href="${base}pages/login.html" class="btn btn-primary btn-sm">Login</a>
         `}
 
-        <button class="hamburger" id="hamburger" aria-label="Menu">
+        <label for="hamburgerToggle" class="hamburger" id="hamburger" aria-label="Toggle menu">
           <span></span><span></span><span></span>
-        </button>
+        </label>
       </div>
     </div>
   </nav>
