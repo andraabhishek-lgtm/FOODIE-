@@ -638,38 +638,41 @@ const Nav = {
   isOpen: false,
 
   init() {
-    // ISSUE 5: all selectors run after injectLayout() so DOM is ready
-    this.navbar    = document.getElementById('navbar');
-    this.hamburger = document.getElementById('hamburger');
-    this.mobileMenu = document.getElementById('mobileMenu');
-    this.overlay   = document.getElementById('mobileOverlay');
-    const closeBtn = document.getElementById('mobileMenuClose');
+    // Exact pattern as specified — querySelector, named functions, reads actual DOM class
+    const hamburger = document.querySelector('#hamburger');
+    const mobileMenu = document.querySelector('#mobileMenu');
+    const closeBtn   = document.querySelector('#mobileMenuClose');
+    const overlay    = document.querySelector('#mobileOverlay');
 
-    // ISSUE 3: named functions lock / restore body scroll
-    const openMenu = () => {
-      this.isOpen = true;
-      if (this.mobileMenu) this.mobileMenu.classList.add('open');
-      if (this.overlay)    this.overlay.classList.add('open');
-      if (this.hamburger)  this.hamburger.classList.add('open');
+    if (!hamburger || !mobileMenu) return;
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      if (overlay)   overlay.classList.add('open');
+      hamburger.classList.add('open');
       document.body.style.overflow = 'hidden';
-    };
+    }
 
-    const closeMenu = () => {
-      this.isOpen = false;
-      if (this.mobileMenu) this.mobileMenu.classList.remove('open');
-      if (this.overlay)    this.overlay.classList.remove('open');
-      if (this.hamburger)  this.hamburger.classList.remove('open');
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      if (overlay)   overlay.classList.remove('open');
+      hamburger.classList.remove('open');
       document.body.style.overflow = '';
-    };
+    }
 
-    // ISSUE 1 / ISSUE 2 / ISSUE 3: one listener each, no duplication
-    if (this.hamburger) this.hamburger.addEventListener('click', () => this.isOpen ? closeMenu() : openMenu());
-    if (closeBtn)       closeBtn.addEventListener('click', closeMenu);       // ISSUE 1
-    if (this.overlay)   this.overlay.addEventListener('click', closeMenu);   // ISSUE 2
+    hamburger.addEventListener('click', function() {
+      mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay)  overlay.addEventListener('click', closeMenu);
 
+    // Keep closeMobile() working for external callers (e.g. CartSidebar)
+    this.closeMobile = closeMenu;
+
+    this.navbar = document.querySelector('#navbar');
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
-    // Active link — nav
+    // Active link — desktop nav
     const page = getPageName();
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-links .nav-link').forEach(link => {
@@ -681,14 +684,13 @@ const Nav = {
     });
 
     // User dropdown
-    const userMenuBtn = document.getElementById('userMenuBtn');
-    const userDropdown = document.getElementById('userDropdown');
+    const userMenuBtn = document.querySelector('#userMenuBtn');
+    const userDropdown = document.querySelector('#userDropdown');
     if (userMenuBtn && userDropdown) {
       userMenuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         userDropdown.classList.toggle('open');
       });
-
       document.addEventListener('click', () => userDropdown.classList.remove('open'));
     }
   },
@@ -789,17 +791,17 @@ function buildHeader(base) {
       <span class="mobile-menu-title">Menu</span>
       <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">✕</button>
     </div>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html"              class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/index.html';return false">🏠 Home</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html';return false">🍽️ Restaurants</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html"        class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html';return false">ℹ️ About Us</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html"      class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html';return false">📞 Contact</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html"          class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html';return false">❓ FAQ</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html"              class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/index.html'">🏠 Home</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html'">🍽️ Restaurants</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html"        class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html'">ℹ️ About Us</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html"      class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html'">📞 Contact</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html"          class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html'">❓ FAQ</a>
     ${user ? `
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html';return false">👤 Profile</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html"  class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html';return false">📦 My Orders</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html'">👤 Profile</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html"  class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html'">📦 My Orders</a>
     <div class="mobile-nav-link mobile-nav-logout" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html';return false">Login / Signup</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html'">Login / Signup</a>
     `}
   </div>
   <div class="mobile-overlay" id="mobileOverlay"></div>
