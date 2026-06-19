@@ -2385,6 +2385,7 @@ input, textarea, select {
   flex-direction: column;
   gap: 10px;
   max-width: 360px;
+  pointer-events: none; /* container is click-through; individual toasts opt back in */
 }
 
 .toast {
@@ -2399,6 +2400,7 @@ input, textarea, select {
   animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
+  pointer-events: auto; /* re-enable so dismiss button works */
 }
 
 .toast.removing {
