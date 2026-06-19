@@ -638,34 +638,34 @@ const Nav = {
   isOpen: false,
 
   init() {
-    this.navbar   = document.getElementById('navbar');
+    // ISSUE 5: all selectors run after injectLayout() so DOM is ready
+    this.navbar    = document.getElementById('navbar');
     this.hamburger = document.getElementById('hamburger');
     this.mobileMenu = document.getElementById('mobileMenu');
     this.overlay   = document.getElementById('mobileOverlay');
+    const closeBtn = document.getElementById('mobileMenuClose');
 
+    // ISSUE 3: named functions lock / restore body scroll
     const openMenu = () => {
       this.isOpen = true;
-      this.mobileMenu && this.mobileMenu.classList.add('open');
-      this.overlay    && this.overlay.classList.add('open');
-      this.hamburger  && this.hamburger.classList.add('open');
+      if (this.mobileMenu) this.mobileMenu.classList.add('open');
+      if (this.overlay)    this.overlay.classList.add('open');
+      if (this.hamburger)  this.hamburger.classList.add('open');
       document.body.style.overflow = 'hidden';
     };
+
     const closeMenu = () => {
       this.isOpen = false;
-      this.mobileMenu && this.mobileMenu.classList.remove('open');
-      this.overlay    && this.overlay.classList.remove('open');
-      this.hamburger  && this.hamburger.classList.remove('open');
+      if (this.mobileMenu) this.mobileMenu.classList.remove('open');
+      if (this.overlay)    this.overlay.classList.remove('open');
+      if (this.hamburger)  this.hamburger.classList.remove('open');
       document.body.style.overflow = '';
     };
 
-    if (this.hamburger) {
-      this.hamburger.addEventListener('click', () =>
-        this.isOpen ? closeMenu() : openMenu()
-      );
-    }
-    const closeBtn = document.getElementById('mobileMenuClose');
-    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-    if (this.overlay) this.overlay.addEventListener('click', closeMenu);
+    // ISSUE 1 / ISSUE 2 / ISSUE 3: one listener each, no duplication
+    if (this.hamburger) this.hamburger.addEventListener('click', () => this.isOpen ? closeMenu() : openMenu());
+    if (closeBtn)       closeBtn.addEventListener('click', closeMenu);       // ISSUE 1
+    if (this.overlay)   this.overlay.addEventListener('click', closeMenu);   // ISSUE 2
 
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 

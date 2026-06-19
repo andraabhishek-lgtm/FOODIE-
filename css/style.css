@@ -751,13 +751,16 @@ input, textarea, select {
   color: var(--text-primary);
 }
 .mobile-menu-close {
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
   color: var(--text-secondary);
   line-height: 1;
-  padding: 4px 8px;
+  padding: 6px 10px;
+  border: none;
+  background: none;
   border-radius: var(--radius-xs);
   transition: var(--transition);
+  touch-action: manipulation;
 }
 .mobile-menu-close:hover { color: var(--text-primary); }
 

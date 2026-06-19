@@ -2,6 +2,13 @@
    FOODIE EXPRESS - Responsive Stylesheet
    ===================================================== */
 
+/* ISSUE 4: explicitly hide hamburger + mobile menu on desktop */
+@media (min-width: 901px) {
+  .hamburger   { display: none !important; }
+  .mobile-menu { display: none !important; }
+  .mobile-overlay { display: none !important; }
+}
+
 /* ---- Tablet: max 1100px ---- */
 @media (max-width: 1100px) {
   :root { --max-width: 960px; }
