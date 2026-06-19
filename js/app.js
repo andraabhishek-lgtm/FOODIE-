@@ -638,6 +638,10 @@ const Nav = {
   isOpen: false,
 
   init() {
+    // FIX 1: Guard — prevents duplicate listeners if init() is ever called more than once
+    if (window._hamburgerInitDone) return;
+    window._hamburgerInitDone = true;
+
     this.navbar = document.getElementById('navbar');
     this.hamburger = document.getElementById('hamburger');
     this.mobileMenu = document.getElementById('mobileMenu');
@@ -653,12 +657,36 @@ const Nav = {
 
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
-    // Active link
+    // FIX 2: Clone every mobile nav link to wipe any residual handlers,
+    // then attach ONE clean listener that closes the menu and lets href navigate normally
+    if (this.mobileMenu) {
+      this.mobileMenu.querySelectorAll('a').forEach(function(link) {
+        var fresh = link.cloneNode(true);
+        link.parentNode.replaceChild(fresh, link);
+        fresh.addEventListener('click', function() {
+          var t = document.getElementById('hamburgerToggle');
+          if (t) t.checked = false;
+          document.body.style.overflow = '';
+          // href navigation fires automatically — no preventDefault
+        });
+      });
+    }
+
+    // FIX 5: Active page highlight matched against current URL
+    var currentURL = window.location.href;
+    document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+      var page = (link.getAttribute('href') || '').split('/').pop().split('?')[0];
+      if (page && currentURL.includes(page)) {
+        link.classList.add('active');
+      }
+    });
+
+    // Active link — desktop nav
     const page = getPageName();
     const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-link').forEach(link => {
+    document.querySelectorAll('.nav-links .nav-link').forEach(link => {
       const href = link.getAttribute('href') || '';
-      const cleanHref = href.replace('../', '').replace('./', '');
+      const cleanHref = href.replace('../', '').replace('./', '').split('/').pop();
       const isActive = (cleanHref && currentPath.includes(cleanHref)) ||
                        (page === 'index' && (href.includes('index') || href === '#'));
       link.classList.toggle('active', isActive);
@@ -766,17 +794,17 @@ function buildHeader(base) {
   </nav>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="${base}index.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🏠 Home</a>
-    <a href="${base}pages/restaurants.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🍽️ Restaurants</a>
-    <a href="${base}pages/about.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">ℹ️ About Us</a>
-    <a href="${base}pages/contact.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📞 Contact</a>
-    <a href="${base}pages/faq.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">❓ FAQ</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🏠 Home</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">🍽️ Restaurants</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">ℹ️ About Us</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📞 Contact</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">❓ FAQ</a>
     ${user ? `
-    <a href="${base}pages/profile.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">👤 Profile</a>
-    <a href="${base}pages/orders.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">👤 Profile</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
     <div class="nav-link" style="font-size:16px;padding:14px 0;color:var(--error);cursor:pointer" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="${base}pages/login.html" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
     `}
   </div>
 

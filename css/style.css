@@ -763,6 +763,13 @@ input, textarea, select {
   text-decoration: none;
 }
 
+/* FIX 4: Guarantee links in the mobile menu are always clickable */
+.mobile-menu a {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 1;
+}
+
 /* =====================================================
    HERO SECTION
    ===================================================== */
