@@ -13,7 +13,6 @@ const CATEGORIES = [
   { id: 'south-indian', name: 'South Indian', icon: '🥘', count: 22 },
   { id: 'chinese', name: 'Chinese', icon: '🥡', count: 31 },
   { id: 'desserts', name: 'Desserts', icon: '🍰', count: 40 },
-  { id: 'beverages', name: 'Beverages', icon: '🧃', count: 25 },
   { id: 'healthy', name: 'Healthy', icon: '🥗', count: 18 },
   { id: 'fast-food', name: 'Fast Food', icon: '🌮', count: 44 },
   { id: 'vegetarian', name: 'Vegetarian', icon: '🥦', count: 33 },
