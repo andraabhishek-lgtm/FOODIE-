@@ -247,6 +247,73 @@
   .toast-container { right: 8px; left: 8px; max-width: none; }
 }
 
+/* ---- Mobile portrait: max 480px — hero 3-bug fix ---- */
+@media (max-width: 480px) {
+
+  /* Bug 3 fix: hero must be full viewport width, no overflow gap */
+  .hero,
+  .hero-enhanced {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Bug 1 fix: explicit flex column so image never overlaps text */
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;          /* tight but not zero so they don't touch */
+    width: 100%;
+  }
+
+  /* Image always sits above text (visual = order 0, text = order 1) */
+  .hero-visual {
+    order: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-text {
+    order: 1;
+    width: 100%;
+    text-align: center;  /* keep centred as set at 900px */
+  }
+
+  /* Bug 2 fix: pad text away from the left edge */
+  .hero-text,
+  .hero-title,
+  .hero-subtitle,
+  .hero-tag,
+  .hero-popular-row,
+  .hero-stats {
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+  }
+
+  /* Keep search bar flush with the padding applied above */
+  .hero-search {
+    margin-left: 16px;
+    margin-right: 16px;
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+  }
+
+  /* Bug 1 fix: shrink the circular image so it fits without overlap */
+  .hero-img-wrapper {
+    max-width: 200px;
+    width: 200px;
+  }
+
+  .hero-main-img {
+    max-width: 200px;
+    animation: none; /* stop float bounce that can push into text */
+  }
+}
+
 /* ---- Small mobile: max 400px ---- */
 @media (max-width: 400px) {
   .categories-grid { grid-template-columns: repeat(3, 1fr); }
@@ -258,6 +325,232 @@
   .profile-nav { grid-template-columns: 1fr 1fr; }
 
   .btn-lg { padding: 13px 24px; font-size: 14px; }
+}
+
+/* ══════════════════════════════════════════════════════
+   ADDITIONAL RESPONSIVE — fills 768px gap + edge cases
+   ══════════════════════════════════════════════════════ */
+
+/* ── 768px — iPad portrait / large phone ── */
+@media (max-width: 768px) {
+  /* Prevent any stray element from triggering a horizontal scrollbar */
+  html { overflow-x: clip; }
+
+  /* Tighter section spacing between 900px and 640px */
+  .section { padding: 52px 0; }
+  .page-header { padding: calc(var(--nav-height) + 24px) 0 24px; }
+
+  /* Auth */
+  .auth-form-section { padding: 36px 28px; }
+
+  /* Restaurant card image slightly shorter */
+  .restaurant-img-wrap { height: 175px; }
+  .dish-img-wrap { height: 158px; }
+
+  /* Food modal — single column on tablets */
+  .food-modal-grid { grid-template-columns: 1fr; }
+  .food-modal-img  { height: 230px; width: 100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0; }
+
+  /* Modal wrapper */
+  .modal { max-width: calc(100vw - 32px); margin: 0 16px; }
+  .modal-overlay { padding: 16px; align-items: flex-end; }
+
+  /* Cart sidebar (slide-out) — never exceed viewport */
+  .cart-sidebar { width: min(420px, 100vw); }
+
+  /* Profile nav 2 col */
+  .profile-nav { grid-template-columns: repeat(2, 1fr); }
+
+  /* Steps — keep 2 col */
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Page title */
+  .page-title { font-size: clamp(20px, 5vw, 28px); }
+
+  /* Nav — reduce button size and hide login btn (mobile menu handles auth) */
+  .nav-logo .logo-text { font-size: 17px; }
+  .nav-btn { width: 38px; height: 38px; }
+  .nav-actions > a.btn { display: none; }   /* hide Login btn — in mobile menu */
+  .hamburger { display: flex !important; }  /* always show hamburger */
+
+  /* Checkout address 1-col */
+  .address-cards { grid-template-columns: 1fr; }
+
+  /* Footer 2-col → 1-col earlier */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-grid > :first-child { grid-column: 1 / -1; }
+
+  /* Section header stack on narrow tablets */
+  .section-header { gap: 10px; }
+}
+
+/* ── Swiper nav: hide arrow buttons below 768px (touch swipe suffices) ── */
+@media (max-width: 768px) {
+  .swiper-restaurants-prev,
+  .swiper-restaurants-next,
+  .swiper-dishes-prev,
+  .swiper-dishes-next { display: none; }
+
+  /* rc-ed card: slightly shorter on tablet */
+  .rc-ed-card { height: 340px; }
+}
+
+/* ── Improved 640px coverage ── */
+@media (max-width: 640px) {
+  /* Tighter page header */
+  .page-header { padding: calc(var(--nav-height) + 16px) 0 18px; }
+
+  /* ── NAV: shrink buttons so hamburger always fits ── */
+  .nav-inner { gap: 6px; }
+  .nav-actions { gap: 4px; }
+  .nav-btn { width: 36px; height: 36px; font-size: 16px; }
+
+  /* Logo shrinks to give room — never pushes hamburger off-screen */
+  .nav-logo { flex-shrink: 1; min-width: 60px; overflow: hidden; }
+  .nav-logo img { height: 34px !important; max-width: 100%; }
+
+  /* Avatar sits inside a width:auto button (inline style) — shrink it */
+  .nav-avatar { width: 30px; height: 30px; }
+
+  /* Hide wishlist from topbar — it's in the mobile menu */
+  #wishlistBtn { display: none; }
+
+  /* Hide Login button from topbar — mobile menu has it */
+  .nav-actions > a.btn { display: none; }
+
+  /* Hamburger must always display flex */
+  .hamburger { display: flex !important; }
+  /* ─────────────────────────────────────────────────── */
+
+  /* Profile nav stays 2 col (not 3) */
+  .profile-nav { grid-template-columns: repeat(2, 1fr); }
+
+  /* Modal full-screen on mobile */
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal { width: 100%; max-width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin: 0; }
+
+  /* Dish card tighter */
+  .dish-name { font-size: 13px; }
+  .dish-price { font-size: 14px; }
+
+  /* Sort select full width */
+  .sort-select { font-size: 12px; padding: 6px 10px; }
+
+  /* Filter chip smaller */
+  .filter-chip { font-size: 12px; padding: 5px 11px; }
+
+  /* Cart page item: tighter image */
+  .cart-page-item { grid-template-columns: 64px 1fr auto; gap: 12px; padding: 16px; }
+  .cart-page-item img { width: 64px; height: 64px; }
+  .cart-page-item-info h3 { font-size: 14px; }
+
+  /* Cart page header tighter */
+  .cart-page-header { padding: 16px 16px; }
+
+  /* Order summary card padding */
+  .order-summary-card { padding: 20px 16px; }
+
+  /* Checkout section */
+  .checkout-section { margin-bottom: 16px; }
+  .checkout-section-body { padding: 16px; }
+
+  /* Category grid — 4 per row, don't go to 3 until 400px */
+  .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .category-card { padding: 16px 6px; }
+  .cat-icon { font-size: 26px; }
+  .cat-name { font-size: 10px; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
+  .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+  /* Swiper restaurant card shorter on mobile */
+  .rc-ed-card { height: 300px; }
+
+  /* App download */
+  .app-btn-icon { font-size: 22px; }
+
+  /* Toast */
+  .toast-container { right: 0; left: 0; bottom: 0; max-width: 100%; padding: 0; }
+  .toast { border-radius: var(--radius-md) var(--radius-md) 0 0; margin: 0; }
+
+  /* Breadcrumb */
+  .breadcrumb { font-size: 12px; }
+
+  /* Newsletter */
+  .newsletter-title { font-size: 20px; }
+  .newsletter-sub   { font-size: 13px; }
+
+  /* App download */
+  .app-download-text h2 { font-size: 22px; }
+  .app-download-text p  { font-size: 14px; }
+}
+
+/* ── 480px ── */
+@media (max-width: 480px) {
+  /* Category — 4 per row */
+  .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+  /* Restaurants — 1 column */
+  .restaurants-grid { grid-template-columns: 1fr; }
+
+  /* Dishes — 2 column tight */
+  .dishes-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .dish-img-wrap { height: 130px; }
+  .dish-name { font-size: 12px; }
+  .dish-price { font-size: 13px; }
+
+  /* Filter bar search won't break below threshold */
+  .filters-inner > div:first-child { min-width: 160px !important; }
+
+  /* Modal */
+  .food-modal-img { height: 180px; }
+
+  /* Page title */
+  .page-title { font-size: 18px; }
+
+  /* Cart item — wrap price to next row */
+  .cart-page-item { grid-template-columns: 60px 1fr; }
+  .cart-page-item-price { grid-column: 1 / -1; justify-self: end; }
+
+  /* Steps single column */
+  .steps-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Profile nav 2 cols */
+  .profile-nav { grid-template-columns: repeat(2, 1fr); }
+
+  /* Nav — absolute minimum */
+  .nav-inner { gap: 4px; }
+  .nav-actions { gap: 3px; }
+  .nav-btn { width: 34px; height: 34px; font-size: 14px; }
+  .nav-btn span { display: none; }
+  /* Logo smaller so hamburger never clips */
+  .nav-logo img { height: 30px !important; }
+  .nav-avatar { width: 26px; height: 26px; }
+  .hamburger { display: flex !important; }
+  #cartNavBtn { display: flex; }
+}
+
+/* ── 360px (small Android phones) ── */
+@media (max-width: 360px) {
+  .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .cat-icon { font-size: 22px; }
+  .dishes-grid { grid-template-columns: 1fr; }
+  .restaurants-grid { grid-template-columns: 1fr; }
+  .page-title { font-size: 16px; }
+  .hero-main-img { max-width: 160px; }
+  .profile-nav { grid-template-columns: 1fr 1fr; }
+
+  /* Nav — absolute floor: shrink everything so hamburger stays on-screen */
+  .nav-inner { gap: 2px; }
+  .nav-actions { gap: 2px; }
+  .nav-btn { width: 32px; height: 32px; }
+  .nav-logo img { height: 26px !important; }
+  .nav-avatar { width: 22px; height: 22px; }
+  #themeToggle { display: none; }
 }
 
 /* ---- Print ---- */

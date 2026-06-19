@@ -107,6 +107,41 @@
     .rph-stat:last-child { border-right: none; }
     .rph-stat-val { font-size: 17px; font-weight: 800; color: var(--brand-primary, #E23744); }
     .rph-stat-lbl { font-size: 11px; color: var(--text-muted, rgba(255,255,255,0.45)); font-weight: 500; margin-top: 1px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .rph-caption { top: 12px; right: 12px; padding: 6px 10px; }
+      .rph-caption-name { font-size: 12px; }
+      .rph-caption-sub  { font-size: 10px; }
+      .rph-stat { min-width: 90px; padding: 10px 14px; }
+      .rph-stat-val { font-size: 15px; }
+    }
+
+    @media (max-width: 640px) {
+      /* Caption moves to top-left and shrinks */
+      .rph-caption { top: 10px; right: auto; left: 10px; text-align: left; padding: 5px 10px; }
+      /* Stats strip: 2×2 grid */
+      .rph-stats { display: grid; grid-template-columns: 1fr 1fr; }
+      .rph-stat { border-right: none; border-bottom: 1px solid var(--border, rgba(255,255,255,0.08)); }
+      .rph-stat:nth-child(odd)  { border-right: 1px solid var(--border, rgba(255,255,255,0.08)); }
+      .rph-stat:nth-child(n+3)  { border-bottom: none; }
+      /* Filter search shrinks */
+      #restaurantSearch { min-width: 0 !important; width: 100%; }
+      .filters-inner > div:first-child { min-width: 140px !important; max-width: 180px; flex: 1; }
+    }
+
+    @media (max-width: 480px) {
+      /* Hero caption hidden — too small to read comfortably */
+      .rph-caption { display: none; }
+      /* Content padding tighter */
+      .rph-content { padding: 14px 16px; }
+      .rph-title { font-size: clamp(18px, 5vw, 26px); }
+      .rph-tag { font-size: 10px; padding: 3px 10px; }
+      /* Stat items uniform size */
+      .rph-stat-val { font-size: 14px; }
+      .rph-stat-lbl { font-size: 10px; }
+      .rph-stat { padding: 8px 10px; }
+    }
   </style>
 </head>
 <body>
@@ -215,7 +250,14 @@
         <span class="filter-chip" data-filter-status="all">All</span>
         <span class="filter-chip" data-filter-status="open">🟢 Open Now</span>
 
-        <span style="margin-left:auto;flex-shrink:0">
+        <span style="margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:8px">
+          <button id="locationBtn" onclick="detectLocation()"
+            style="display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);border-radius:99px;padding:5px 12px;font-size:13px;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:border-color 0.2s,color 0.2s;flex-shrink:0;white-space:nowrap"
+            onmouseover="this.style.borderColor='var(--brand-primary)';this.style.color='var(--brand-primary)'"
+            onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
+            <span id="locationIcon">📍</span>
+            <span id="locationText">Detect my location</span>
+          </button>
           <select id="restaurantSort" class="sort-select">
             <option value="popularity">Sort: Popularity</option>
             <option value="rating">Sort: Rating</option>
@@ -232,17 +274,8 @@
   <!-- Restaurants Section -->
   <section class="section" style="padding:40px 0 80px">
     <div class="container">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div style="margin-bottom:20px">
         <p id="restaurantCount" style="font-size:15px;color:var(--text-secondary);font-weight:500">Loading restaurants...</p>
-        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted)">
-          <button id="locationBtn" onclick="detectLocation()"
-            style="display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);border-radius:99px;padding:5px 12px;font-size:13px;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:border-color 0.2s,color 0.2s"
-            onmouseover="this.style.borderColor='var(--brand-primary)';this.style.color='var(--brand-primary)'"
-            onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
-            <span id="locationIcon">📍</span>
-            <span id="locationText">Detect my location</span>
-          </button>
-        </div>
       </div>
 
       <div class="restaurants-grid" id="restaurantsGrid">

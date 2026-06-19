@@ -18,6 +18,39 @@
   <link rel="stylesheet" href="../css/layouts.css" />
   <link rel="stylesheet" href="../css/animations.css" />
   <link rel="stylesheet" href="../css/utilities.css" />
+  <style>
+    /* ── Menu page responsive ── */
+    .menu-restaurant-banner { display: block; width: 100%; height: clamp(160px, 28vw, 320px); object-fit: cover; }
+    .menu-restaurant-info { padding: clamp(12px, 3vw, 24px); }
+
+    @media (max-width: 768px) {
+      /* Restaurant name smaller */
+      #restaurantName { font-size: clamp(18px, 4vw, 22px) !important; }
+      /* Menu container padding */
+      .container[style*="padding:32px"] { padding: 20px 0 !important; }
+      /* Filter search */
+      .filters-inner > div[style*="min-width:200px"] { min-width: 150px !important; flex: 1; }
+    }
+
+    @media (max-width: 640px) {
+      /* Restaurant name */
+      #restaurantName { font-size: clamp(16px, 4.5vw, 20px) !important; }
+      /* Restaurant meta row wrap */
+      .menu-restaurant-info > div:first-child > div:first-child > div[style*="flex-wrap:wrap"] { gap: 8px !important; }
+      /* Floating cart button full-width */
+      #floatingCart > button { min-width: calc(100vw - 48px) !important; }
+      /* Filter search narrows */
+      .filters-inner > div[style*="min-width:200px"] { min-width: 120px !important; }
+    }
+
+    @media (max-width: 480px) {
+      /* Restaurant name */
+      #restaurantName { font-size: 17px !important; }
+      /* Floating cart button */
+      #floatingCart { left: 16px !important; right: 16px !important; transform: none !important; }
+      #floatingCart > button { min-width: 0 !important; width: 100%; }
+    }
+  </style>
 </head>
 <body>
 

@@ -821,8 +821,8 @@ function buildFooter(base) {
         <nav class="ft-nav">
           <a href="${base}pages/about.html" class="ft-link">About Us</a>
           <a href="${base}pages/contact.html" class="ft-link">Contact Us</a>
-          <a href="#" class="ft-link">Careers</a>
-          <a href="#" class="ft-link">Partner With Us</a>
+          <a href="${base}pages/careers.html" class="ft-link">Careers</a>
+          <a href="${base}pages/partner.html" class="ft-link">Partner With Us</a>
         </nav>
       </div>
 
@@ -831,7 +831,7 @@ function buildFooter(base) {
         <nav class="ft-nav">
           <a href="${base}pages/faq.html" class="ft-link">FAQ</a>
           <a href="${base}pages/orders.html" class="ft-link">Track Order</a>
-          <a href="#" class="ft-link">Refund Policy</a>
+          <a href="${base}pages/refund-policy.html" class="ft-link">Refund Policy</a>
           <a href="${base}pages/contact.html" class="ft-link">Help Center</a>
         </nav>
       </div>
@@ -857,9 +857,9 @@ function buildFooter(base) {
     <div class="ft-bottom">
       <p class="ft-copy">© 2026 Foodie. All rights reserved.</p>
       <div class="ft-legal">
-        <a href="#" class="ft-legal-link">Privacy Policy</a>
+        <a href="${base}pages/404.html" class="ft-legal-link">Privacy Policy</a>
         <span class="ft-sep">|</span>
-        <a href="#" class="ft-legal-link">Terms of Service</a>
+        <a href="${base}pages/404.html" class="ft-legal-link">Terms of Service</a>
       </div>
     </div>
 

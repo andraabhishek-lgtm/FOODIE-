@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers — FoodieExpress</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/dark-theme.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/typography.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layouts.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/utilities.css" />
+  <style>
+    .careers-hero { text-align: center; padding: 60px 24px 48px; }
+    .careers-hero h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 800; color: var(--text-primary); margin-bottom: 14px; }
+    .careers-hero p  { font-size: 16px; color: var(--text-secondary); max-width: 580px; margin: 0 auto 32px; line-height: 1.7; }
+    .careers-hero .hero-cta { display: inline-block; background: var(--brand-primary); color: #fff; border-radius: 99px; padding: 13px 32px; font-weight: 700; font-size: 15px; text-decoration: none; }
+    .careers-hero .hero-cta:hover { opacity: .88; }
+
+    .perks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 64px; }
+    .perk-card { background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 16px; padding: 28px 22px; text-align: center; }
+    .perk-icon  { font-size: 36px; margin-bottom: 12px; }
+    .perk-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+    .perk-desc  { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    .jobs-section h2 { font-size: 24px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+    .jobs-section .sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; }
+    .job-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+    .job-filter { padding: 7px 16px; border-radius: 99px; border: 1px solid var(--border-light); background: var(--bg-secondary); font-size: 13px; color: var(--text-secondary); cursor: pointer; transition: all .2s; }
+    .job-filter.active, .job-filter:hover { background: var(--brand-primary); color: #fff; border-color: var(--brand-primary); }
+
+    .job-card { background: var(--bg-primary); border: 1px solid var(--border-light); border-radius: 16px; padding: 22px 24px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; transition: box-shadow .2s, transform .2s; }
+    .job-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .job-dept   { display: inline-block; background: rgba(226,55,68,0.10); color: var(--brand-primary); border-radius: 99px; padding: 3px 12px; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+    .job-title  { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .job-meta   { font-size: 13px; color: var(--text-secondary); display: flex; gap: 14px; flex-wrap: wrap; }
+    .job-meta span { display: flex; align-items: center; gap: 5px; }
+    .apply-btn  { flex-shrink: 0; background: var(--brand-primary); color: #fff; border: none; border-radius: 10px; padding: 10px 22px; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; white-space: nowrap; }
+    .apply-btn:hover { opacity: .88; }
+
+    .open-app-cta { background: linear-gradient(135deg, #E23744, #ff6b6b); border-radius: 20px; padding: 40px 36px; text-align: center; color: #fff; margin-top: 60px; }
+    .open-app-cta h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+    .open-app-cta p  { font-size: 15px; opacity: .85; margin-bottom: 22px; }
+    .open-app-cta a  { display: inline-block; background: #fff; color: #E23744; border-radius: 99px; padding: 12px 32px; font-weight: 700; font-size: 14px; text-decoration: none; }
+
+    @media (max-width: 768px) { .perks-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .perks-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <div class="page-header fade-up">
+    <div class="container page-header-content">
+      <h1 class="page-title">💼 Careers</h1>
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="sep">›</span>
+        <span class="current">Careers</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="careers-hero">
+        <h1>Build the Future of Food Delivery 🚀</h1>
+        <p>Join a passionate team making delicious food accessible to everyone, everywhere. We're growing fast and looking for talented people to grow with us.</p>
+        <a href="#open-roles" class="hero-cta">View Open Roles</a>
+      </div>
+
+      <!-- Perks -->
+      <div class="perks-grid">
+        <div class="perk-card"><div class="perk-icon">💰</div><div class="perk-title">Competitive Pay</div><div class="perk-desc">Market-beating salaries with performance bonuses and ESOPs for early joiners.</div></div>
+        <div class="perk-card"><div class="perk-icon">🏠</div><div class="perk-title">Remote Friendly</div><div class="perk-desc">Work from anywhere in India. We care about results, not where you sit.</div></div>
+        <div class="perk-card"><div class="perk-icon">🍕</div><div class="perk-title">Free Meals</div><div class="perk-desc">Monthly FoodieExpress credits so you're never hungry while building the product.</div></div>
+        <div class="perk-card"><div class="perk-icon">📚</div><div class="perk-title">Learning Budget</div><div class="perk-desc">₹50,000 per year for courses, conferences, and books of your choice.</div></div>
+        <div class="perk-card"><div class="perk-icon">🏥</div><div class="perk-title">Health Coverage</div><div class="perk-desc">Full family health insurance including dental and mental health support.</div></div>
+        <div class="perk-card"><div class="perk-icon">⚡</div><div class="perk-title">Fast Growth</div><div class="perk-desc">Flat hierarchy, huge ownership, and rapid career progression for top performers.</div></div>
+      </div>
+
+      <!-- Open Roles -->
+      <div class="jobs-section" id="open-roles">
+        <h2>Open Positions</h2>
+        <p class="sub">We're hiring across multiple teams. Find your fit below.</p>
+
+        <div class="job-filters">
+          <span class="job-filter active">All</span>
+          <span class="job-filter">Engineering</span>
+          <span class="job-filter">Design</span>
+          <span class="job-filter">Operations</span>
+          <span class="job-filter">Marketing</span>
+        </div>
+
+        <div class="job-card">
+          <div><div class="job-dept">Engineering</div><div class="job-title">Senior Frontend Engineer</div><div class="job-meta"><span>📍 Bangalore / Remote</span><span>🕐 Full-time</span><span>💼 3–6 yrs exp</span></div></div>
+          <a href="contact.html" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card">
+          <div><div class="job-dept">Engineering</div><div class="job-title">Backend Engineer – Node.js</div><div class="job-meta"><span>📍 Remote</span><span>🕐 Full-time</span><span>💼 2–5 yrs exp</span></div></div>
+          <a href="contact.html" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card">
+          <div><div class="job-dept">Design</div><div class="job-title">Product Designer (UX/UI)</div><div class="job-meta"><span>📍 Mumbai / Remote</span><span>🕐 Full-time</span><span>💼 2–4 yrs exp</span></div></div>
+          <a href="contact.html" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card">
+          <div><div class="job-dept">Operations</div><div class="job-title">City Operations Manager</div><div class="job-meta"><span>📍 Hyderabad</span><span>🕐 Full-time</span><span>💼 4+ yrs exp</span></div></div>
+          <a href="contact.html" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card">
+          <div><div class="job-dept">Marketing</div><div class="job-title">Growth Marketing Lead</div><div class="job-meta"><span>📍 Delhi / Remote</span><span>🕐 Full-time</span><span>💼 3–6 yrs exp</span></div></div>
+          <a href="contact.html" class="apply-btn">Apply Now</a>
+        </div>
+        <div class="job-card">
+          <div><div class="job-dept">Operations</div><div class="job-title">Delivery Partner Onboarding</div><div class="job-meta"><span>📍 Pan India</span><span>🕐 Full-time</span><span>💼 1+ yrs exp</span></div></div>
+          <a href="contact.html" class="apply-btn">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="open-app-cta">
+        <h3>Don't see the right role?</h3>
+        <p>We're always looking for exceptional talent. Drop us your resume and we'll reach out when the right opportunity opens up.</p>
+        <a href="contact.html">Send Open Application →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.querySelectorAll('.job-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.job-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

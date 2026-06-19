@@ -1385,6 +1385,9 @@
   .hero-img-ring  { inset: -16px; }
   .newsletter     { padding: 48px 24px !important; }
   .app-download   { padding: 32px 24px !important; }
+  /* Clip off-screen swiper slides so they don't create horizontal scroll */
+  .swiper-restaurants,
+  .swiper-dishes  { overflow: hidden !important; }
 }
 
 @media (max-width: 640px) {
