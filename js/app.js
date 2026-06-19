@@ -638,15 +638,13 @@ const Nav = {
   isOpen: false,
 
   init() {
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay    = document.getElementById('mobileOverlay');
-    const closeBtn   = document.getElementById('mobileMenuClose');
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    var overlay    = document.getElementById('mobileOverlay');
+    var closeBtn   = document.getElementById('mobileMenuClose');
 
     if (!hamburger || !mobileMenu) return;
-
-    // Guard — attach listeners once only
-    if (hamburger._initDone) return;
+    if (hamburger._initDone) return;   // guard: attach listeners exactly once
     hamburger._initDone = true;
 
     function openMenu() {
@@ -663,31 +661,32 @@ const Nav = {
       document.body.style.overflow = '';
     }
 
+    // ── Hamburger toggle ──────────────────────────────
     hamburger.addEventListener('click', function(e) {
       e.stopPropagation();
       mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
     });
 
+    // ── Close triggers ────────────────────────────────
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
     if (overlay)  overlay.addEventListener('click', closeMenu);
-
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeMenu();
     });
 
-    // Clone each link → wipe stale listeners → navigate explicitly via window.location.href
-    mobileMenu.querySelectorAll('a[href]').forEach(function(link) {
+    // ── Nav link navigation via event delegation ──────
+    // One listener on the container — never stacks, survives DOM updates
+    mobileMenu.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
       var dest = link.getAttribute('href');
-      var fresh = link.cloneNode(true);
-      link.parentNode.replaceChild(fresh, link);
-      fresh.addEventListener('click', function(e) {
-        e.preventDefault();
-        closeMenu();
-        window.location.href = dest;
-      });
+      if (!dest) return;
+      e.preventDefault();
+      closeMenu();
+      window.location.href = dest;
     });
 
-    // Highlight the current page link
+    // ── Active link highlight ─────────────────────────
     var currentURL = window.location.href;
     mobileMenu.querySelectorAll('a[href]').forEach(function(link) {
       var page = (link.getAttribute('href') || '').split('/').pop().split('?')[0];
@@ -696,39 +695,44 @@ const Nav = {
 
     Nav._closeMenu = closeMenu;
 
-    // Navbar scroll
+    // ── Desktop: scroll effect ────────────────────────
     this.navbar = document.querySelector('#navbar');
     window.addEventListener('scroll', () => this.onScroll(), { passive: true });
 
-    // Desktop active link highlight
-    const page = getPageName();
-    const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-links .nav-link').forEach(link => {
-      const href = link.getAttribute('href') || '';
-      const cleanHref = href.replace('../', '').replace('./', '').split('/').pop();
-      const isActive = (cleanHref && currentPath.includes(cleanHref)) ||
-                       (page === 'index' && (href.includes('index') || href === '#'));
+    // ── Desktop: active link highlight ────────────────
+    var page = getPageName();
+    var currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-links .nav-link').forEach(function(link) {
+      var href = link.getAttribute('href') || '';
+      var cleanHref = href.replace('../', '').replace('./', '').split('/').pop();
+      var isActive = (cleanHref && currentPath.includes(cleanHref)) ||
+                     (page === 'index' && (href.includes('index') || href === '#'));
       link.classList.toggle('active', isActive);
     });
 
-    // User dropdown
-    const userMenuBtn = document.querySelector('#userMenuBtn');
-    const userDropdown = document.querySelector('#userDropdown');
+    // ── User dropdown ─────────────────────────────────
+    var userMenuBtn = document.querySelector('#userMenuBtn');
+    var userDropdown = document.querySelector('#userDropdown');
     if (userMenuBtn && userDropdown) {
-      userMenuBtn.addEventListener('click', (e) => {
+      userMenuBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         userDropdown.classList.toggle('open');
       });
-      document.addEventListener('click', () => userDropdown.classList.remove('open'));
+      document.addEventListener('click', function() {
+        userDropdown.classList.remove('open');
+      });
     }
   },
 
   toggleMobile() {
-    const mobileMenu = document.getElementById('mobileMenu');
+    var mobileMenu = document.getElementById('mobileMenu');
     if (!mobileMenu) return;
-    mobileMenu.classList.contains('open')
-      ? Nav._closeMenu && Nav._closeMenu()
-      : Nav._closeMenu; // open path handled by hamburger click
+    if (mobileMenu.classList.contains('open')) {
+      Nav._closeMenu && Nav._closeMenu();
+    } else {
+      var hamburger = document.getElementById('hamburger');
+      if (hamburger) hamburger.click();
+    }
   },
 
   closeMobile() {
