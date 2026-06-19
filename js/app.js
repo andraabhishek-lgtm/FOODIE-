@@ -647,9 +647,14 @@ const Nav = {
       }
     });
 
-    // Close mobile on link click
+    // Close mobile on link click and explicitly navigate
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', () => this.closeMobile());
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        e.preventDefault();
+        this.closeMobile();
+        if (href && href !== '#') window.location.href = href;
+      });
     });
 
     // User dropdown
@@ -763,7 +768,7 @@ function buildHeader(base) {
     <a href="${base}pages/orders.html" class="mobile-nav-link nav-link" style="font-size:16px;padding:14px 0;border-bottom:1px solid var(--border)">📦 My Orders</a>
     <div class="nav-link" style="font-size:16px;padding:14px 0;color:var(--error);cursor:pointer" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="${base}pages/login.html" class="btn btn-primary" style="margin-top:16px">Login / Signup</a>
+    <a href="${base}pages/login.html" class="mobile-nav-link btn btn-primary" style="margin-top:16px">Login / Signup</a>
     `}
   </div>
 

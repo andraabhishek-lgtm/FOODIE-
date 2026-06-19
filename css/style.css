@@ -707,10 +707,10 @@ input, textarea, select {
   right: 0;
   bottom: 0;
   background: var(--bg-primary);
-  z-index: 999;
+  z-index: 1150;
   flex-direction: column;
   padding: 24px;
-  gap: 8px;
+  gap: 0;
   overflow-y: auto;
   transform: translateX(-100%);
   transition: var(--transition);
@@ -718,6 +718,16 @@ input, textarea, select {
 
 .mobile-menu.open {
   transform: translateX(0);
+}
+
+/* Every item in the mobile menu must be a full-width block tap target */
+.mobile-menu .mobile-nav-link,
+.mobile-menu .nav-link {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /* =====================================================
