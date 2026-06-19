@@ -760,7 +760,10 @@ input, textarea, select {
 .mobile-overlay {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 280px;   /* starts after the drawer — never covers drawer links */
+  right: 0;
+  bottom: 0;
   background: rgba(0,0,0,0.45);
   z-index: 1199;
   cursor: pointer;
