@@ -789,17 +789,17 @@ function buildHeader(base) {
       <span class="mobile-menu-title">Menu</span>
       <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">✕</button>
     </div>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html" class="mobile-nav-link">🏠 Home</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link">🍽️ Restaurants</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html" class="mobile-nav-link">ℹ️ About Us</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html" class="mobile-nav-link">📞 Contact</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html" class="mobile-nav-link">❓ FAQ</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/index.html"              class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/index.html';return false">🏠 Home</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/restaurants.html';return false">🍽️ Restaurants</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html"        class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/about.html';return false">ℹ️ About Us</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html"      class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/contact.html';return false">📞 Contact</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html"          class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/faq.html';return false">❓ FAQ</a>
     ${user ? `
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link">👤 Profile</a>
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html" class="mobile-nav-link">📦 My Orders</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html" class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/profile.html';return false">👤 Profile</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html"  class="mobile-nav-link" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/orders.html';return false">📦 My Orders</a>
     <div class="mobile-nav-link mobile-nav-logout" onclick="Auth.logout()">🚪 Logout</div>
     ` : `
-    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login">Login / Signup</a>
+    <a href="https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html" class="mobile-nav-link mobile-nav-login" onclick="window.location.href='https://andraabhishek-lgtm.github.io/FOODIE-/pages/login.html';return false">Login / Signup</a>
     `}
   </div>
   <div class="mobile-overlay" id="mobileOverlay"></div>

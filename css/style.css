@@ -782,6 +782,8 @@ input, textarea, select {
   position: relative;
   z-index: 1;
   transition: background 0.15s;
+  touch-action: manipulation;   /* eliminates iOS 300ms tap delay */
+  -webkit-tap-highlight-color: rgba(0,0,0,0.08);
 }
 .mobile-nav-link:hover,
 .mobile-nav-link:active { background: var(--bg-secondary); }
