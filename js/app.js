@@ -762,7 +762,7 @@ function buildHeader(base) {
       </button>
 
       <a href="${base}index.html" class="nav-logo">
-        <img src="${base}images/stackly_logo_gold.webp" alt="Stackly" style="height:42px;width:auto;display:block">
+        <img src="${base}images/stackly_logo.png" alt="Stackly" style="height:56px;width:auto;display:block">
       </a>
 
       <div class="nav-search" id="navSearchWrap">
@@ -865,7 +865,7 @@ function buildFooter(base) {
 
       <div class="ft-brand">
         <div class="ft-logo">
-          <a href="${base}index.html"><img src="${base}images/stackly_logo_gold.webp" alt="Stackly" style="height:48px;width:auto;display:block"></a>
+          <a href="${base}index.html"><img src="${base}images/stackly_logo.png" alt="Stackly" style="height:64px;width:auto;display:block"></a>
         </div>
         <p class="ft-tagline">Delicious food, delivered fast.</p>
         <a href="${base}pages/restaurants.html" class="ft-cta">ORDER NOW</a>

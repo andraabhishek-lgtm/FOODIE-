@@ -535,37 +535,45 @@
   padding: var(--space-8) !important;
   border-radius: var(--radius-xl) !important;
   background: var(--gray-50) !important;
-  border: 1px solid var(--gray-100) !important;
+  border: 1px solid rgba(226, 55, 68, 0.18) !important;
+  border-top: 3px solid #e23744 !important;
   box-shadow: none !important;
   transition: box-shadow var(--transition-base), transform var(--transition-base) !important;
 }
 .feature-card:hover {
-  box-shadow: var(--shadow-md) !important;
+  box-shadow: 0 8px 32px rgba(226, 55, 68, 0.13) !important;
   transform: translateY(-5px) !important;
+  border-color: rgba(226, 55, 68, 0.35) !important;
+  border-top-color: #e23744 !important;
 }
 
 .feature-card .feature-icon {
-  width: 56px !important;
-  height: 56px !important;
-  border-radius: var(--radius-lg) !important;
-  background: rgba(226, 55, 68, 0.08) !important;
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 18px !important;
+  background: #E23744 !important;
+  box-shadow: 0 4px 16px rgba(226, 55, 68, 0.35) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 1.75rem !important;
+  font-size: 32px !important;
+  color: #fff !important;
+  filter: none !important;
+  opacity: 1 !important;
   margin: 0 auto var(--space-5) !important;
-  transition: background var(--transition-base), transform var(--transition-base) !important;
+  transition: transform var(--transition-base), box-shadow var(--transition-base) !important;
 }
 .feature-card:hover .feature-icon {
-  background: rgba(226, 55, 68, 0.14) !important;
-  transform: rotate(-6deg) scale(1.12) !important;
+  background: #E23744 !important;
+  box-shadow: 0 6px 24px rgba(226, 55, 68, 0.5) !important;
+  transform: scale(1.08) !important;
   animation: none !important;
 }
 .feature-card h3 {
   font-family: var(--font-display) !important;
   font-weight: var(--fw-bold) !important;
   font-size: var(--text-h5) !important;
-  color: var(--gray-900) !important;
+  color: #e23744 !important;
   margin-bottom: var(--space-2) !important;
 }
 .feature-card p {
